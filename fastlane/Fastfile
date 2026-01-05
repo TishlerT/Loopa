@@ -1,0 +1,54 @@
+# Fastfile - Loopa App Store Preparation
+
+default_platform(:ios)
+
+platform :ios do
+  
+  desc "Capture App Store screenshots"
+  lane :screenshots do
+    capture_screenshots(
+      workspace: nil,
+      project: "Loopa.xcodeproj",
+      scheme: "Loopa",
+      devices: [
+        "iPhone 16 Pro Max",
+        "iPhone 16 Pro",
+        "iPad Pro 13-inch (M4)"
+      ],
+      languages: ["en-US"],
+      output_directory: "./fastlane/screenshots",
+      clear_previous_screenshots: true,
+      override_status_bar: true,
+      stop_after_first_error: false,
+      launch_arguments: ["-SCREENSHOT_MODE 1"]
+    )
+  end
+
+  desc "Build for App Store"
+  lane :build_release do
+    build_app(
+      scheme: "Loopa",
+      export_method: "app-store",
+      output_directory: "./build",
+      output_name: "Loopa.ipa"
+    )
+  end
+
+  desc "Run all tests"
+  lane :test do
+    run_tests(
+      scheme: "Loopa",
+      devices: ["iPhone 16 Pro"],
+      clean: true
+    )
+  end
+
+  desc "Full release preparation"
+  lane :prepare_release do
+    test
+    screenshots
+    build_release
+  end
+
+end
+

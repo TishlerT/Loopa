@@ -1,0 +1,65 @@
+# =============================================================================
+# Maestro Flow: Play/Pause Toggle Test
+# =============================================================================
+# Tests play/pause functionality after recording a track
+# 
+# Run with: maestro test .maestro/play_pause_flow.yaml
+# =============================================================================
+
+appId: com.loopa.app
+---
+- launchApp:
+    clearState: true
+
+# Wait for app to fully load
+- waitForAnimationToEnd
+
+# First, record a track
+- assertVisible:
+    id: "recordButton"
+- tapOn:
+    id: "recordButton"
+
+# Wait during recording
+- extendedWaitUntil:
+    visible:
+      id: "recordButton"
+    timeout: 1000
+
+- tapOn:
+    id: "recordButton"
+
+# Wait for state to settle
+- waitForAnimationToEnd
+
+# Now test play/pause toggle
+- assertVisible:
+    id: "playPauseButton"
+
+# Pause
+- tapOn:
+    id: "playPauseButton"
+- waitForAnimationToEnd
+- takeScreenshot: paused
+
+# Resume
+- tapOn:
+    id: "playPauseButton"
+- waitForAnimationToEnd
+- takeScreenshot: resumed
+
+# Pause again
+- tapOn:
+    id: "playPauseButton"
+- waitForAnimationToEnd
+
+# Resume again
+- tapOn:
+    id: "playPauseButton"
+- waitForAnimationToEnd
+
+# Verify buttons still work
+- assertVisible:
+    id: "playPauseButton"
+- assertVisible:
+    id: "restartButton"

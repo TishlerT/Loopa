@@ -1,0 +1,80 @@
+# =============================================================================
+# Maestro Flow: Full App Flow Test
+# =============================================================================
+# Comprehensive test covering record, play, pause, restart, and quantize
+# 
+# Run with: maestro test .maestro/full_flow.yaml
+# =============================================================================
+
+appId: com.loopa.app
+---
+- launchApp:
+    clearState: true
+
+# Wait for app to fully load
+- waitForAnimationToEnd
+
+# === Initial State ===
+- takeScreenshot: initial_state
+
+# Verify all transport buttons exist
+- assertVisible:
+    id: "recordButton"
+- assertVisible:
+    id: "playPauseButton"
+- assertVisible:
+    id: "restartButton"
+- assertVisible:
+    id: "quantizeButton"
+
+# === Test Quantize Button (should always work) ===
+- tapOn:
+    id: "quantizeButton"
+- waitForAnimationToEnd
+- tapOn:
+    id: "quantizeButton"
+- waitForAnimationToEnd
+- takeScreenshot: quantize_toggled
+
+# === Record a Track ===
+- tapOn:
+    id: "recordButton"
+
+# Wait during recording
+- extendedWaitUntil:
+    visible:
+      id: "recordButton"
+    timeout: 1500
+
+- takeScreenshot: recording_in_progress
+- tapOn:
+    id: "recordButton"
+- waitForAnimationToEnd
+- takeScreenshot: track_recorded
+
+# === Play/Pause Test ===
+- tapOn:
+    id: "playPauseButton"
+- waitForAnimationToEnd
+- takeScreenshot: paused
+- tapOn:
+    id: "playPauseButton"
+- waitForAnimationToEnd
+- takeScreenshot: playing
+
+# === Restart Test ===
+- tapOn:
+    id: "restartButton"
+- waitForAnimationToEnd
+- takeScreenshot: restarted
+
+# === Final State ===
+- assertVisible:
+    id: "recordButton"
+- assertVisible:
+    id: "playPauseButton"
+- assertVisible:
+    id: "restartButton"
+- assertVisible:
+    id: "quantizeButton"
+- takeScreenshot: final_state

@@ -1,0 +1,53 @@
+# =============================================================================
+# Maestro Flow: Record Button Test
+# =============================================================================
+# Tests the basic recording flow: tap record, verify state, stop recording
+# 
+# Run with: maestro test .maestro/record_flow.yaml
+# =============================================================================
+
+appId: com.loopa.app
+---
+- launchApp:
+    clearState: true
+
+# Wait for app to fully load
+- waitForAnimationToEnd
+
+# Verify record button exists and tap it
+- assertVisible:
+    id: "recordButton"
+- tapOn:
+    id: "recordButton"
+
+# Wait for recording to start
+- waitForAnimationToEnd
+
+# Verify play/pause is now enabled (visible and interactive)
+- assertVisible:
+    id: "playPauseButton"
+
+# Take screenshot during recording
+- takeScreenshot: recording_started
+
+# Wait a moment using extendedWaitUntil with a condition that always passes
+- extendedWaitUntil:
+    visible:
+      id: "recordButton"
+    timeout: 1500
+
+# Stop recording
+- tapOn:
+    id: "recordButton"
+
+# Wait for state to update
+- waitForAnimationToEnd
+
+# Verify buttons are still visible
+- assertVisible:
+    id: "playPauseButton"
+- assertVisible:
+    id: "restartButton"
+
+# Take screenshot after recording
+- takeScreenshot: recording_stopped

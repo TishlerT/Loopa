@@ -1,0 +1,870 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		07BCAEBEF12708436A43EC1A /* ipad_centered_transport.png in Resources */ = {isa = PBXBuildFile; fileRef = DAA2124D7C2531BADE2EBFD5 /* ipad_centered_transport.png */; };
+		0A0C5961C8C1577E378988A9 /* simple_flow.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 29BEA18819BF78B678D02B7B /* simple_flow.yaml */; };
+		0B6DCE42191896D9FA41C0E9 /* QuantizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6681494C5D7CA4A1C0FF6E70 /* QuantizerTests.swift */; };
+		0F7DCE6F422A14222B8FC47C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E3D83399E281FB61C704DC7 /* Assets.xcassets */; };
+		1333328DC275366FD45005BA /* MultiTrackLooper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1491FB11175C506B76E97682 /* MultiTrackLooper.swift */; };
+		1AF38FF03B0F21576F84CC48 /* TrackFocusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75476A1A2B4B6502B8B634BF /* TrackFocusViewModel.swift */; };
+		1FF9129C80DBB70B3B1B474B /* MultiTrackLooperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEDF7C3358C705E1399FA29 /* MultiTrackLooperTests.swift */; };
+		2033F3DC46BF94B73AB43341 /* record_flow.yaml in Resources */ = {isa = PBXBuildFile; fileRef = E4611EF8D30E1D36BC5BBC83 /* record_flow.yaml */; };
+		28540F5DEED0E30A00192B2D /* FullKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C77E88281F71B68D4B7F1B1 /* FullKeyboardView.swift */; };
+		29E26E6A3909371A59669D4C /* LooperAudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9D850430825514BEBD9750 /* LooperAudioEngine.swift */; };
+		2D4E8428058D6D6165502CD0 /* LoopStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96960370FA1DDB0215C8BBA8 /* LoopStorage.swift */; };
+		30102D826FBECC18D998CECD /* SoloMuteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F2FFE8F388D7A34D69A978 /* SoloMuteTests.swift */; };
+		355A75826CA65783C39E94C9 /* PianoRollCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD126E13B7A9B0E49525F98 /* PianoRollCanvasView.swift */; };
+		360178D733E180E335029567 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F95AF5408BA052EDED1D1D2 /* DesignSystem.swift */; };
+		3A2335E0B4EA6A4102BC1123 /* ipad_layout_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BC72CBC9F7D39F22EDE614D /* ipad_layout_v2.png */; };
+		3DDC2D1AE7AD4BE82AE0537C /* ios-debug-logging.mdc in Resources */ = {isa = PBXBuildFile; fileRef = 482942D6770614A12606095A /* ios-debug-logging.mdc */; };
+		4281684C2F4C4E6D627A3B02 /* BPMEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792D4606838AFC12A854ABE2 /* BPMEditorView.swift */; };
+		43999CC3B850001AE5C0EC3B /* full_flow.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BC0CF7FFA4B313FC60E073E1 /* full_flow.yaml */; };
+		48017BAD8EAB7A088BD988CF /* ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A0184132542474EC3954C9 /* ViewModelTests.swift */; };
+		54F5743DA9292D0DDF8C46CB /* MidiLooper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0278E33ABE12A7EAB7CE743 /* MidiLooper.swift */; };
+		5EEAD58BE1803AA1CFBCE2B9 /* TransportControlsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1F85B0D79983C1B8DEC716 /* TransportControlsUITests.swift */; };
+		5F4912E6741D3A9E0DA56477 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214AE7723EC883266D8E5C5E /* AboutView.swift */; };
+		63C72C414989A06428AACE2F /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E3038C48A3E072D7CE711A /* Track.swift */; };
+		69D7B70626F8E9C2B4D8281E /* MidiNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5494C4E061CD5BC3D3B12FFA /* MidiNote.swift */; };
+		6A226B56785ABD0949BD4FFC /* TouchOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E821B36E3E409A67566E3F82 /* TouchOverlay.swift */; };
+		6B38D7D0EA96FFB3F68A308B /* ipad_screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 2712F23D78B3907D69B49310 /* ipad_screenshot.png */; };
+		6B40CFB2CF39C38A64205404 /* MidiLooperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C9A527DDBED589E5ACB68 /* MidiLooperTests.swift */; };
+		6E419582014B5B735FF8039D /* LooperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40A434C956E98B3A24716F8 /* LooperView.swift */; };
+		6FB0412F01E36FD0E07CEAD3 /* PlaybackSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E948CCA43D0E93AC9F50C4 /* PlaybackSyncTests.swift */; };
+		700F326005CF944DC08D82DB /* ipad_screenshot_updated.png in Resources */ = {isa = PBXBuildFile; fileRef = 111A8E3E80FD732A64A2093B /* ipad_screenshot_updated.png */; };
+		72324B47514E351C7385399C /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B340B5E78FB58691F88F4263 /* HapticManager.swift */; };
+		749787DDB513D3ED8AB8571C /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3C0B20E88C8A3AEA2D25F9 /* AudioEngine.swift */; };
+		773AA8AAF3494A98B8EE8D18 /* debug.log in Resources */ = {isa = PBXBuildFile; fileRef = F0E5059AE12EC0DA83D56D52 /* debug.log */; };
+		782898A8EB0E065B9CE2390B /* KeyboardLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F910FDCD786032F418029538 /* KeyboardLayer.swift */; };
+		7C32A40ED786E988B5783C83 /* MidiNoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDD95C549D0E6DF64FB66EF /* MidiNoteTests.swift */; };
+		7D19347269F3E909A8DC0678 /* LooperViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7852D84D2EB032184A806F09 /* LooperViewModel.swift */; };
+		7E0CB5BB4F00A680D6D3F426 /* TrackFocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6EFA3C34D7E0295A23FDA5 /* TrackFocusView.swift */; };
+		7F601620F360AE6033BB8473 /* SessionExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204294D160EF1EBE2585A7CC /* SessionExporter.swift */; };
+		7FF67AAF899C1B21451AA608 /* Metronome.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AD43D5A9DC1E7825F4B201 /* Metronome.swift */; };
+		81DBA282EFD0F4242A936AC8 /* TrackMixerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466B780B55BF01048D860DCF /* TrackMixerRow.swift */; };
+		89B78DA658900F428BFE34C2 /* AudioExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FB5D7CF5593787AE3A85B7 /* AudioExporter.swift */; };
+		8F72458F5DA5ABEB5F6570C1 /* SessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBBEA9A9FE2A0F6B106E715 /* SessionStorage.swift */; };
+		9B33402D33B75B7CC42DDE56 /* KeyboardLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F221393E83CA570B89E3740 /* KeyboardLayoutEngine.swift */; };
+		AA81D0C3125A41F693828E98 /* MidiEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9620862C28C66897B7B76951 /* MidiEvent.swift */; };
+		AF728846F02D9AF1009579A2 /* DrumGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0E8FAEF8E95004D7F3482B /* DrumGridView.swift */; };
+		B40701CCB5654C605D0A50B2 /* play_pause_flow.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 7EDE3AA9DDAA3B2C7792DEBB /* play_pause_flow.yaml */; };
+		B49A33AA476CF0D8FCDCF7C6 /* AudioEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C9349392DB40F96820E9DB /* AudioEngineTests.swift */; };
+		C0C1409A456B2C8706D41206 /* ipad_enlarged_buttons.png in Resources */ = {isa = PBXBuildFile; fileRef = FF62C5A89A6A5F7051CFCEE3 /* ipad_enlarged_buttons.png */; };
+		C10DFEB119D9BDD1F130B9CA /* GM.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 6ACE4E1D3A0F26A4E964AB01 /* GM.sf2 */; };
+		D0A4D8DBFCC7C6A68400BD84 /* Quantizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE670DA6FF1C74145A4B23C /* Quantizer.swift */; };
+		DB8B5F654546014018C10738 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9DB98D33F1FDCF34203649 /* SettingsView.swift */; };
+		E4D1D0229C0645BA0BA66F3F /* TracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0E2E200954EEB3E568FDF2 /* TracksView.swift */; };
+		E8A407ADD1CA5CC5623D7972 /* KeyboardSamplerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C91D5F3B5AA61D75C9D0C8 /* KeyboardSamplerTests.swift */; };
+		E9EFEA28CE2A53D27890B751 /* Tish88App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107EDEFE154BFEFB15CA439D /* Tish88App.swift */; };
+		EF05EC56A2BC70E013A62940 /* VocalRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867B29F0DA1BF37A5B9D6829 /* VocalRecorder.swift */; };
+		F05D62C5B58494EF26783639 /* TrackFocusViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8496616ABBE956B4A955F84 /* TrackFocusViewModelTests.swift */; };
+		F1A057117B548F4CE7385A94 /* KeyboardSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F749006886AFDB1FF234880D /* KeyboardSampler.swift */; };
+		F6A23486BBE1FD4D9A1CD364 /* MidiExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1494C0A67CFC1662CBA01 /* MidiExporter.swift */; };
+		F994EB010C75C4E5405FC373 /* RegressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78DF6F5DCD87DA59AE7DF9F /* RegressionTests.swift */; };
+		FA0F5CE711E82D77C23A683E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0AD139C7FD99934EEDCB9483 /* PrivacyInfo.xcprivacy */; };
+		FABACF92FCBA58516E08636B /* TracksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3A462414185815DA8B8E77 /* TracksViewModel.swift */; };
+		FF4B6569F7A471B89198FDB3 /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABBF635A31F011BABB495AE /* ScreenshotTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4EEE12A3E5D9D6DE5D4938C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8104BB59E67E763C5F52ED3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 75105A8F1CB568D6FC823AA5;
+			remoteInfo = Loopa;
+		};
+		E95AAE435F41301AE753BDF9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8104BB59E67E763C5F52ED3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 75105A8F1CB568D6FC823AA5;
+			remoteInfo = Loopa;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		089C9A527DDBED589E5ACB68 /* MidiLooperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiLooperTests.swift; sourceTree = "<group>"; };
+		0ABBF635A31F011BABB495AE /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
+		0AD139C7FD99934EEDCB9483 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		107EDEFE154BFEFB15CA439D /* Tish88App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tish88App.swift; sourceTree = "<group>"; };
+		111A8E3E80FD732A64A2093B /* ipad_screenshot_updated.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad_screenshot_updated.png; sourceTree = "<group>"; };
+		1491FB11175C506B76E97682 /* MultiTrackLooper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiTrackLooper.swift; sourceTree = "<group>"; };
+		1AD126E13B7A9B0E49525F98 /* PianoRollCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianoRollCanvasView.swift; sourceTree = "<group>"; };
+		1E3C0B20E88C8A3AEA2D25F9 /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		204294D160EF1EBE2585A7CC /* SessionExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionExporter.swift; sourceTree = "<group>"; };
+		214AE7723EC883266D8E5C5E /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		26A0184132542474EC3954C9 /* ViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelTests.swift; sourceTree = "<group>"; };
+		2712F23D78B3907D69B49310 /* ipad_screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad_screenshot.png; sourceTree = "<group>"; };
+		29BEA18819BF78B678D02B7B /* simple_flow.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = simple_flow.yaml; sourceTree = "<group>"; };
+		2EB74BF692ADC2FC93A0A1CD /* Snapfile */ = {isa = PBXFileReference; path = Snapfile; sourceTree = "<group>"; };
+		34F2FFE8F388D7A34D69A978 /* SoloMuteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoloMuteTests.swift; sourceTree = "<group>"; };
+		3BC72CBC9F7D39F22EDE614D /* ipad_layout_v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad_layout_v2.png; sourceTree = "<group>"; };
+		3C77E88281F71B68D4B7F1B1 /* FullKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullKeyboardView.swift; sourceTree = "<group>"; };
+		466B780B55BF01048D860DCF /* TrackMixerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMixerRow.swift; sourceTree = "<group>"; };
+		482942D6770614A12606095A /* ios-debug-logging.mdc */ = {isa = PBXFileReference; path = "ios-debug-logging.mdc"; sourceTree = "<group>"; };
+		4C6EFA3C34D7E0295A23FDA5 /* TrackFocusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFocusView.swift; sourceTree = "<group>"; };
+		4D0E2E200954EEB3E568FDF2 /* TracksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracksView.swift; sourceTree = "<group>"; };
+		5494C4E061CD5BC3D3B12FFA /* MidiNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiNote.swift; sourceTree = "<group>"; };
+		5E3D83399E281FB61C704DC7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5F1F85B0D79983C1B8DEC716 /* TransportControlsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportControlsUITests.swift; sourceTree = "<group>"; };
+		6292596B2BE3BE9F01623EFC /* LoopaTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LoopaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		62E3038C48A3E072D7CE711A /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		6681494C5D7CA4A1C0FF6E70 /* QuantizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantizerTests.swift; sourceTree = "<group>"; };
+		6ACE4E1D3A0F26A4E964AB01 /* GM.sf2 */ = {isa = PBXFileReference; path = GM.sf2; sourceTree = "<group>"; };
+		6F95AF5408BA052EDED1D1D2 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		75476A1A2B4B6502B8B634BF /* TrackFocusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFocusViewModel.swift; sourceTree = "<group>"; };
+		7852D84D2EB032184A806F09 /* LooperViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperViewModel.swift; sourceTree = "<group>"; };
+		792D4606838AFC12A854ABE2 /* BPMEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMEditorView.swift; sourceTree = "<group>"; };
+		7B9D850430825514BEBD9750 /* LooperAudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperAudioEngine.swift; sourceTree = "<group>"; };
+		7D0E8FAEF8E95004D7F3482B /* DrumGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrumGridView.swift; sourceTree = "<group>"; };
+		7EDE3AA9DDAA3B2C7792DEBB /* play_pause_flow.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = play_pause_flow.yaml; sourceTree = "<group>"; };
+		867B29F0DA1BF37A5B9D6829 /* VocalRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocalRecorder.swift; sourceTree = "<group>"; };
+		8EEDF7C3358C705E1399FA29 /* MultiTrackLooperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiTrackLooperTests.swift; sourceTree = "<group>"; };
+		9620862C28C66897B7B76951 /* MidiEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiEvent.swift; sourceTree = "<group>"; };
+		96960370FA1DDB0215C8BBA8 /* LoopStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopStorage.swift; sourceTree = "<group>"; };
+		9CBE55F001C963710F3EDABA /* LoopaUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LoopaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EB1494C0A67CFC1662CBA01 /* MidiExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiExporter.swift; sourceTree = "<group>"; };
+		9F221393E83CA570B89E3740 /* KeyboardLayoutEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutEngine.swift; sourceTree = "<group>"; };
+		A3E948CCA43D0E93AC9F50C4 /* PlaybackSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackSyncTests.swift; sourceTree = "<group>"; };
+		A6AD43D5A9DC1E7825F4B201 /* Metronome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metronome.swift; sourceTree = "<group>"; };
+		A78DF6F5DCD87DA59AE7DF9F /* RegressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegressionTests.swift; sourceTree = "<group>"; };
+		B340B5E78FB58691F88F4263 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		B5FB5D7CF5593787AE3A85B7 /* AudioExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioExporter.swift; sourceTree = "<group>"; };
+		B8496616ABBE956B4A955F84 /* TrackFocusViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFocusViewModelTests.swift; sourceTree = "<group>"; };
+		BA9DB98D33F1FDCF34203649 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		BBBBEA9A9FE2A0F6B106E715 /* SessionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStorage.swift; sourceTree = "<group>"; };
+		BC0CF7FFA4B313FC60E073E1 /* full_flow.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = full_flow.yaml; sourceTree = "<group>"; };
+		BC8523782BBA1168AF297946 /* Fastfile */ = {isa = PBXFileReference; path = Fastfile; sourceTree = "<group>"; };
+		C40A434C956E98B3A24716F8 /* LooperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperView.swift; sourceTree = "<group>"; };
+		CEDD95C549D0E6DF64FB66EF /* MidiNoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiNoteTests.swift; sourceTree = "<group>"; };
+		CF3A462414185815DA8B8E77 /* TracksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracksViewModel.swift; sourceTree = "<group>"; };
+		D0278E33ABE12A7EAB7CE743 /* MidiLooper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiLooper.swift; sourceTree = "<group>"; };
+		D21B97EA3867179F5AC8FB45 /* Loopa.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Loopa.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAA2124D7C2531BADE2EBFD5 /* ipad_centered_transport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad_centered_transport.png; sourceTree = "<group>"; };
+		DFE670DA6FF1C74145A4B23C /* Quantizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quantizer.swift; sourceTree = "<group>"; };
+		E1C9349392DB40F96820E9DB /* AudioEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngineTests.swift; sourceTree = "<group>"; };
+		E4611EF8D30E1D36BC5BBC83 /* record_flow.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = record_flow.yaml; sourceTree = "<group>"; };
+		E5C91D5F3B5AA61D75C9D0C8 /* KeyboardSamplerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSamplerTests.swift; sourceTree = "<group>"; };
+		E821B36E3E409A67566E3F82 /* TouchOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchOverlay.swift; sourceTree = "<group>"; };
+		F0E5059AE12EC0DA83D56D52 /* debug.log */ = {isa = PBXFileReference; path = debug.log; sourceTree = "<group>"; };
+		F749006886AFDB1FF234880D /* KeyboardSampler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSampler.swift; sourceTree = "<group>"; };
+		F910FDCD786032F418029538 /* KeyboardLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayer.swift; sourceTree = "<group>"; };
+		FF62C5A89A6A5F7051CFCEE3 /* ipad_enlarged_buttons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad_enlarged_buttons.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		16CFF33BDD3D4B172BA3A7C3 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				214AE7723EC883266D8E5C5E /* AboutView.swift */,
+				C40A434C956E98B3A24716F8 /* LooperView.swift */,
+				BA9DB98D33F1FDCF34203649 /* SettingsView.swift */,
+				4C6EFA3C34D7E0295A23FDA5 /* TrackFocusView.swift */,
+				4D0E2E200954EEB3E568FDF2 /* TracksView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		3497F7F04AA6FF8E2C7BB097 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D21B97EA3867179F5AC8FB45 /* Loopa.app */,
+				6292596B2BE3BE9F01623EFC /* LoopaTests.xctest */,
+				9CBE55F001C963710F3EDABA /* LoopaUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4A7B2ED246AE42BA02EEF70C /* Tish88 */ = {
+			isa = PBXGroup;
+			children = (
+				5E3D83399E281FB61C704DC7 /* Assets.xcassets */,
+				6ACE4E1D3A0F26A4E964AB01 /* GM.sf2 */,
+				DAA2124D7C2531BADE2EBFD5 /* ipad_centered_transport.png */,
+				FF62C5A89A6A5F7051CFCEE3 /* ipad_enlarged_buttons.png */,
+				3BC72CBC9F7D39F22EDE614D /* ipad_layout_v2.png */,
+				111A8E3E80FD732A64A2093B /* ipad_screenshot_updated.png */,
+				2712F23D78B3907D69B49310 /* ipad_screenshot.png */,
+				0AD139C7FD99934EEDCB9483 /* PrivacyInfo.xcprivacy */,
+				107EDEFE154BFEFB15CA439D /* Tish88App.swift */,
+				EDAE4EB25B318A6CFDB4DC9A /* .cursor */,
+				FAB419B2B617C501FF69A680 /* .maestro */,
+				C64E97F2E0C2BA14B4424535 /* Audio */,
+				E8303EDBAAB1D5C29E59DF99 /* fastlane */,
+				8D09C075461AF2CF0EBD2C50 /* Looper */,
+				8FCD3991C9FD2D42A383012B /* Models */,
+				CD8A4D7226869BE2EDDA14DC /* UI */,
+				FAACE9D095B762F9680C0A88 /* ViewModels */,
+			);
+			name = Tish88;
+			path = .;
+			sourceTree = "<group>";
+		};
+		58C6963825E823009BA4D882 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				792D4606838AFC12A854ABE2 /* BPMEditorView.swift */,
+				7D0E8FAEF8E95004D7F3482B /* DrumGridView.swift */,
+				3C77E88281F71B68D4B7F1B1 /* FullKeyboardView.swift */,
+				F910FDCD786032F418029538 /* KeyboardLayer.swift */,
+				9F221393E83CA570B89E3740 /* KeyboardLayoutEngine.swift */,
+				1AD126E13B7A9B0E49525F98 /* PianoRollCanvasView.swift */,
+				E821B36E3E409A67566E3F82 /* TouchOverlay.swift */,
+				466B780B55BF01048D860DCF /* TrackMixerRow.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		5ADCB531823C453AEB45D40E /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				E1C9349392DB40F96820E9DB /* AudioEngineTests.swift */,
+				E5C91D5F3B5AA61D75C9D0C8 /* KeyboardSamplerTests.swift */,
+				089C9A527DDBED589E5ACB68 /* MidiLooperTests.swift */,
+				CEDD95C549D0E6DF64FB66EF /* MidiNoteTests.swift */,
+				8EEDF7C3358C705E1399FA29 /* MultiTrackLooperTests.swift */,
+				A3E948CCA43D0E93AC9F50C4 /* PlaybackSyncTests.swift */,
+				6681494C5D7CA4A1C0FF6E70 /* QuantizerTests.swift */,
+				34F2FFE8F388D7A34D69A978 /* SoloMuteTests.swift */,
+				B8496616ABBE956B4A955F84 /* TrackFocusViewModelTests.swift */,
+				26A0184132542474EC3954C9 /* ViewModelTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		6A11DE68624F3CF9173CE1CA = {
+			isa = PBXGroup;
+			children = (
+				EDAE4EB25B318A6CFDB4DC9A /* .cursor */,
+				FAB419B2B617C501FF69A680 /* .maestro */,
+				C64E97F2E0C2BA14B4424535 /* Audio */,
+				E8303EDBAAB1D5C29E59DF99 /* fastlane */,
+				8D09C075461AF2CF0EBD2C50 /* Looper */,
+				8FCD3991C9FD2D42A383012B /* Models */,
+				5ADCB531823C453AEB45D40E /* Tests */,
+				4A7B2ED246AE42BA02EEF70C /* Tish88 */,
+				CD8A4D7226869BE2EDDA14DC /* UI */,
+				C6A03937EE1DC12E04E73F9D /* UI */,
+				FAACE9D095B762F9680C0A88 /* ViewModels */,
+				3497F7F04AA6FF8E2C7BB097 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		73FFE5416609FEB39824C235 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				6F95AF5408BA052EDED1D1D2 /* DesignSystem.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		8D09C075461AF2CF0EBD2C50 /* Looper */ = {
+			isa = PBXGroup;
+			children = (
+				96960370FA1DDB0215C8BBA8 /* LoopStorage.swift */,
+				9620862C28C66897B7B76951 /* MidiEvent.swift */,
+				9EB1494C0A67CFC1662CBA01 /* MidiExporter.swift */,
+				D0278E33ABE12A7EAB7CE743 /* MidiLooper.swift */,
+				1491FB11175C506B76E97682 /* MultiTrackLooper.swift */,
+				DFE670DA6FF1C74145A4B23C /* Quantizer.swift */,
+			);
+			path = Looper;
+			sourceTree = "<group>";
+		};
+		8FCD3991C9FD2D42A383012B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5494C4E061CD5BC3D3B12FFA /* MidiNote.swift */,
+				204294D160EF1EBE2585A7CC /* SessionExporter.swift */,
+				BBBBEA9A9FE2A0F6B106E715 /* SessionStorage.swift */,
+				62E3038C48A3E072D7CE711A /* Track.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C64E97F2E0C2BA14B4424535 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				1E3C0B20E88C8A3AEA2D25F9 /* AudioEngine.swift */,
+				B5FB5D7CF5593787AE3A85B7 /* AudioExporter.swift */,
+				B340B5E78FB58691F88F4263 /* HapticManager.swift */,
+				F749006886AFDB1FF234880D /* KeyboardSampler.swift */,
+				7B9D850430825514BEBD9750 /* LooperAudioEngine.swift */,
+				A6AD43D5A9DC1E7825F4B201 /* Metronome.swift */,
+				867B29F0DA1BF37A5B9D6829 /* VocalRecorder.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		C6A03937EE1DC12E04E73F9D /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				A78DF6F5DCD87DA59AE7DF9F /* RegressionTests.swift */,
+				0ABBF635A31F011BABB495AE /* ScreenshotTests.swift */,
+				5F1F85B0D79983C1B8DEC716 /* TransportControlsUITests.swift */,
+			);
+			name = UI;
+			path = Tests/UI;
+			sourceTree = "<group>";
+		};
+		CD8A4D7226869BE2EDDA14DC /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				58C6963825E823009BA4D882 /* Components */,
+				16CFF33BDD3D4B172BA3A7C3 /* Screens */,
+				73FFE5416609FEB39824C235 /* Theme */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		E07A8CC1B1FE0667D24AE2EC /* rules */ = {
+			isa = PBXGroup;
+			children = (
+				482942D6770614A12606095A /* ios-debug-logging.mdc */,
+			);
+			path = rules;
+			sourceTree = "<group>";
+		};
+		E8303EDBAAB1D5C29E59DF99 /* fastlane */ = {
+			isa = PBXGroup;
+			children = (
+				BC8523782BBA1168AF297946 /* Fastfile */,
+				2EB74BF692ADC2FC93A0A1CD /* Snapfile */,
+			);
+			path = fastlane;
+			sourceTree = "<group>";
+		};
+		EDAE4EB25B318A6CFDB4DC9A /* .cursor */ = {
+			isa = PBXGroup;
+			children = (
+				F0E5059AE12EC0DA83D56D52 /* debug.log */,
+				E07A8CC1B1FE0667D24AE2EC /* rules */,
+			);
+			path = .cursor;
+			sourceTree = "<group>";
+		};
+		FAACE9D095B762F9680C0A88 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				7852D84D2EB032184A806F09 /* LooperViewModel.swift */,
+				75476A1A2B4B6502B8B634BF /* TrackFocusViewModel.swift */,
+				CF3A462414185815DA8B8E77 /* TracksViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		FAB419B2B617C501FF69A680 /* .maestro */ = {
+			isa = PBXGroup;
+			children = (
+				BC0CF7FFA4B313FC60E073E1 /* full_flow.yaml */,
+				7EDE3AA9DDAA3B2C7792DEBB /* play_pause_flow.yaml */,
+				E4611EF8D30E1D36BC5BBC83 /* record_flow.yaml */,
+				29BEA18819BF78B678D02B7B /* simple_flow.yaml */,
+			);
+			path = .maestro;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6FDD6E0EA0739F00F3D7AE4D /* LoopaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 11539B12190152B22BBCE8A8 /* Build configuration list for PBXNativeTarget "LoopaTests" */;
+			buildPhases = (
+				C7FC4BC8B639F4ED7D757F4C /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3436E872E6486F55A82347E0 /* PBXTargetDependency */,
+			);
+			name = LoopaTests;
+			packageProductDependencies = (
+			);
+			productName = LoopaTests;
+			productReference = 6292596B2BE3BE9F01623EFC /* LoopaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		75105A8F1CB568D6FC823AA5 /* Loopa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B38BC731B1EDB0B3E6E4E39A /* Build configuration list for PBXNativeTarget "Loopa" */;
+			buildPhases = (
+				8BCAE5E7F7B9960DC712453C /* Sources */,
+				230DA9B347927967C4B6F73F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Loopa;
+			packageProductDependencies = (
+			);
+			productName = Loopa;
+			productReference = D21B97EA3867179F5AC8FB45 /* Loopa.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7FAAE6FCF5A6AC530A9992EE /* LoopaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 030DEAD5B886650CBC175075 /* Build configuration list for PBXNativeTarget "LoopaUITests" */;
+			buildPhases = (
+				DDBE65AA88579ED78146F9EC /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6BE31F06EDD06BC20CA8AC78 /* PBXTargetDependency */,
+			);
+			name = LoopaUITests;
+			packageProductDependencies = (
+			);
+			productName = LoopaUITests;
+			productReference = 9CBE55F001C963710F3EDABA /* LoopaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8104BB59E67E763C5F52ED3F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					6FDD6E0EA0739F00F3D7AE4D = {
+						DevelopmentTeam = K6J7TWJQK7;
+						ProvisioningStyle = Automatic;
+					};
+					75105A8F1CB568D6FC823AA5 = {
+						DevelopmentTeam = K6J7TWJQK7;
+						ProvisioningStyle = Automatic;
+					};
+					7FAAE6FCF5A6AC530A9992EE = {
+						DevelopmentTeam = K6J7TWJQK7;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 75105A8F1CB568D6FC823AA5;
+					};
+				};
+			};
+			buildConfigurationList = ACAB5C23E6B7C6062EAA6EFA /* Build configuration list for PBXProject "Loopa" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 6A11DE68624F3CF9173CE1CA;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				75105A8F1CB568D6FC823AA5 /* Loopa */,
+				6FDD6E0EA0739F00F3D7AE4D /* LoopaTests */,
+				7FAAE6FCF5A6AC530A9992EE /* LoopaUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		230DA9B347927967C4B6F73F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F7DCE6F422A14222B8FC47C /* Assets.xcassets in Resources */,
+				C10DFEB119D9BDD1F130B9CA /* GM.sf2 in Resources */,
+				FA0F5CE711E82D77C23A683E /* PrivacyInfo.xcprivacy in Resources */,
+				773AA8AAF3494A98B8EE8D18 /* debug.log in Resources */,
+				43999CC3B850001AE5C0EC3B /* full_flow.yaml in Resources */,
+				3DDC2D1AE7AD4BE82AE0537C /* ios-debug-logging.mdc in Resources */,
+				07BCAEBEF12708436A43EC1A /* ipad_centered_transport.png in Resources */,
+				C0C1409A456B2C8706D41206 /* ipad_enlarged_buttons.png in Resources */,
+				3A2335E0B4EA6A4102BC1123 /* ipad_layout_v2.png in Resources */,
+				6B38D7D0EA96FFB3F68A308B /* ipad_screenshot.png in Resources */,
+				700F326005CF944DC08D82DB /* ipad_screenshot_updated.png in Resources */,
+				B40701CCB5654C605D0A50B2 /* play_pause_flow.yaml in Resources */,
+				2033F3DC46BF94B73AB43341 /* record_flow.yaml in Resources */,
+				0A0C5961C8C1577E378988A9 /* simple_flow.yaml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8BCAE5E7F7B9960DC712453C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F4912E6741D3A9E0DA56477 /* AboutView.swift in Sources */,
+				749787DDB513D3ED8AB8571C /* AudioEngine.swift in Sources */,
+				89B78DA658900F428BFE34C2 /* AudioExporter.swift in Sources */,
+				4281684C2F4C4E6D627A3B02 /* BPMEditorView.swift in Sources */,
+				360178D733E180E335029567 /* DesignSystem.swift in Sources */,
+				AF728846F02D9AF1009579A2 /* DrumGridView.swift in Sources */,
+				28540F5DEED0E30A00192B2D /* FullKeyboardView.swift in Sources */,
+				72324B47514E351C7385399C /* HapticManager.swift in Sources */,
+				782898A8EB0E065B9CE2390B /* KeyboardLayer.swift in Sources */,
+				9B33402D33B75B7CC42DDE56 /* KeyboardLayoutEngine.swift in Sources */,
+				F1A057117B548F4CE7385A94 /* KeyboardSampler.swift in Sources */,
+				2D4E8428058D6D6165502CD0 /* LoopStorage.swift in Sources */,
+				29E26E6A3909371A59669D4C /* LooperAudioEngine.swift in Sources */,
+				6E419582014B5B735FF8039D /* LooperView.swift in Sources */,
+				7D19347269F3E909A8DC0678 /* LooperViewModel.swift in Sources */,
+				7FF67AAF899C1B21451AA608 /* Metronome.swift in Sources */,
+				AA81D0C3125A41F693828E98 /* MidiEvent.swift in Sources */,
+				F6A23486BBE1FD4D9A1CD364 /* MidiExporter.swift in Sources */,
+				54F5743DA9292D0DDF8C46CB /* MidiLooper.swift in Sources */,
+				69D7B70626F8E9C2B4D8281E /* MidiNote.swift in Sources */,
+				1333328DC275366FD45005BA /* MultiTrackLooper.swift in Sources */,
+				355A75826CA65783C39E94C9 /* PianoRollCanvasView.swift in Sources */,
+				D0A4D8DBFCC7C6A68400BD84 /* Quantizer.swift in Sources */,
+				7F601620F360AE6033BB8473 /* SessionExporter.swift in Sources */,
+				8F72458F5DA5ABEB5F6570C1 /* SessionStorage.swift in Sources */,
+				DB8B5F654546014018C10738 /* SettingsView.swift in Sources */,
+				E9EFEA28CE2A53D27890B751 /* Tish88App.swift in Sources */,
+				6A226B56785ABD0949BD4FFC /* TouchOverlay.swift in Sources */,
+				63C72C414989A06428AACE2F /* Track.swift in Sources */,
+				7E0CB5BB4F00A680D6D3F426 /* TrackFocusView.swift in Sources */,
+				1AF38FF03B0F21576F84CC48 /* TrackFocusViewModel.swift in Sources */,
+				81DBA282EFD0F4242A936AC8 /* TrackMixerRow.swift in Sources */,
+				E4D1D0229C0645BA0BA66F3F /* TracksView.swift in Sources */,
+				FABACF92FCBA58516E08636B /* TracksViewModel.swift in Sources */,
+				EF05EC56A2BC70E013A62940 /* VocalRecorder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7FC4BC8B639F4ED7D757F4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B49A33AA476CF0D8FCDCF7C6 /* AudioEngineTests.swift in Sources */,
+				E8A407ADD1CA5CC5623D7972 /* KeyboardSamplerTests.swift in Sources */,
+				6B40CFB2CF39C38A64205404 /* MidiLooperTests.swift in Sources */,
+				7C32A40ED786E988B5783C83 /* MidiNoteTests.swift in Sources */,
+				1FF9129C80DBB70B3B1B474B /* MultiTrackLooperTests.swift in Sources */,
+				6FB0412F01E36FD0E07CEAD3 /* PlaybackSyncTests.swift in Sources */,
+				0B6DCE42191896D9FA41C0E9 /* QuantizerTests.swift in Sources */,
+				30102D826FBECC18D998CECD /* SoloMuteTests.swift in Sources */,
+				F05D62C5B58494EF26783639 /* TrackFocusViewModelTests.swift in Sources */,
+				48017BAD8EAB7A088BD988CF /* ViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDBE65AA88579ED78146F9EC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F994EB010C75C4E5405FC373 /* RegressionTests.swift in Sources */,
+				FF4B6569F7A471B89198FDB3 /* ScreenshotTests.swift in Sources */,
+				5EEAD58BE1803AA1CFBCE2B9 /* TransportControlsUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3436E872E6486F55A82347E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 75105A8F1CB568D6FC823AA5 /* Loopa */;
+			targetProxy = 4EEE12A3E5D9D6DE5D4938C2 /* PBXContainerItemProxy */;
+		};
+		6BE31F06EDD06BC20CA8AC78 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 75105A8F1CB568D6FC823AA5 /* Loopa */;
+			targetProxy = E95AAE435F41301AE753BDF9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		03FE128C7B2DDE9A84241C79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K6J7TWJQK7;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.loopa.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Loopa.app/Loopa";
+			};
+			name = Debug;
+		};
+		1CD3E9FB165067B7E25EC9E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K6J7TWJQK7;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Loopa;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.loopa.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4A3F7B6FF29895AEDD6380AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K6J7TWJQK7;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.loopa.app.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Loopa;
+			};
+			name = Debug;
+		};
+		5E15D83772FC0D979FD33542 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K6J7TWJQK7;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.loopa.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Loopa.app/Loopa";
+			};
+			name = Release;
+		};
+		614E3E8815B91BF78568C107 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K6J7TWJQK7;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.loopa.app.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Loopa;
+			};
+			name = Release;
+		};
+		A5DF42FD806BA63B23423AF1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A926337B2DF6502ED136DF80 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K6J7TWJQK7;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Loopa;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.loopa.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CEF6110452C45F30BEF467CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		030DEAD5B886650CBC175075 /* Build configuration list for PBXNativeTarget "LoopaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A3F7B6FF29895AEDD6380AC /* Debug */,
+				614E3E8815B91BF78568C107 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		11539B12190152B22BBCE8A8 /* Build configuration list for PBXNativeTarget "LoopaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03FE128C7B2DDE9A84241C79 /* Debug */,
+				5E15D83772FC0D979FD33542 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		ACAB5C23E6B7C6062EAA6EFA /* Build configuration list for PBXProject "Loopa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5DF42FD806BA63B23423AF1 /* Debug */,
+				CEF6110452C45F30BEF467CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B38BC731B1EDB0B3E6E4E39A /* Build configuration list for PBXNativeTarget "Loopa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A926337B2DF6502ED136DF80 /* Debug */,
+				1CD3E9FB165067B7E25EC9E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8104BB59E67E763C5F52ED3F /* Project object */;
+}
