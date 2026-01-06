@@ -4,21 +4,18 @@
 App Store Submission Readiness - Preparing Loopa for App Store submission.
 
 ## Recent Work (This Session)
-1. **Fixed Volume Slider Real-Time Feedback** - Bug fix:
-   - **Root Cause:** In `TrackMixerRow.swift`, the volume slider only called `onVolumeChange()` when drag ended, not during dragging. This meant the audio engine didn't receive volume updates until finger release.
-   - **Effect:** User perceived that instruments "cut out" when adjusting volume slider during playback.
-   - **Fix:** Added `onVolumeChange(newVolume)` call inside `.onChanged` gesture handler for instant audio feedback.
-2. **Added TrackVolumeTests** - 18 new unit tests verifying:
-   - Track volume independence (changing one doesn't affect others)
-   - MIDI and vocal track volume isolation
-   - Volume clamping at 0.0-1.0 boundaries
-   - Volume persistence with mute/solo states
-   - Session loading volume preservation
-3. Previous session work:
-   - Fixed vocal recording audio glitch (stale `isPlaying` state)
-   - Fixed audio-visual sync issue (DisplayLink-based UI updates)
-   - Audited codebase for App Store submission requirements
-4. Verified all 119 unit tests pass on iPhone 16 Pro
+1. **Fixed Piano Roll Note Disappearing Bug** - Bug fix:
+   - **Issue:** When zoomed out in the piano roll editor, dragging a note and dropping it on the boundary between two pitch rows (e.g., between E and F) caused the note to disappear.
+   - **Root Cause:** Pitch calculation used delta-based approach with `round()` which had edge cases at row boundaries.
+   - **Fix:** Changed `handleDragChanged()` in `PianoRollCanvasView.swift` to use absolute Y-position with `floor()` to determine which pitch row the touch point is in. This ensures notes always snap to a valid pitch.
+2. **Fixed Multi-Bar Recording Bug** - Bug fix:
+   - **Root Cause:** In `MultiTrackLooper.addLiveEvent()`, event times were wrapped using `fmod(elapsed, loopLength)` where `loopLength` was based on the MAX of existing track lengths. When recording a 4-bar track after a 1-bar track, notes at beats 5-16 wrapped to beats 1-4.
+   - **Effect:** Notes got "crammed" into the first bar(s) when recording a longer track after a shorter one.
+   - **Fix:** Changed `addLiveEvent()` to use `recordStartTime` and `recordingLoopLengthBeats` (based on barCount setting) instead of global `loopLength`. Also fixed `stopRecording()` to use recording loop length for quantization and note conversion.
+2. **Added Multi-Bar Recording Tests** - 2 new unit tests verifying:
+   - Recording 4-bar track after 1-bar track places notes correctly
+   - Recording 4-bar track after 2-bar track places notes correctly
+3. Verified all 121 unit tests pass on iPhone 16 Pro
 
 ## App Store Readiness Checklist
 ### Already Complete (In Codebase)

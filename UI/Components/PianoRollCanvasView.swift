@@ -658,7 +658,7 @@ struct PianoRollCanvasView: View {
         if dragStartLocation == nil {
             dragStartLocation = value.startLocation
             
-            // NEW: Only allow dragging if playhead is already selected
+            // Only allow dragging if playhead is already selected
             if vm.isPlayheadSelected && !vm.isPlaying {
                 isDraggingPlayhead = true
                 isValidDrag = true
@@ -705,9 +705,7 @@ struct PianoRollCanvasView: View {
               vm.draggedNoteId != nil else { return }
         
         let deltaX = value.location.x - startLoc.x
-        let deltaY = value.location.y - startLoc.y
         let deltaBeats = (Double(deltaX) / Double(gridWidth)) * vm.loopLengthBeats
-        let deltaPitch = -Int(round(deltaY / rowHeight))  // Negative because Y increases downward
         
         if vm.isResizing {
             if vm.resizeEdge == .trailing {
@@ -723,8 +721,15 @@ struct PianoRollCanvasView: View {
         } else {
             // Moving: update both position and pitch
             let newStartBeat = startState.startBeat + deltaBeats
-            let newPitch = Int(startState.pitch) + deltaPitch
-            let clampedPitch = UInt8(max(0, min(127, newPitch)))
+            
+            // Calculate pitch from absolute Y position (fixes note disappearing when dropped on pitch boundary)
+            // Using floor() ensures consistent snapping - the row containing the touch point wins
+            let currentY = value.location.y
+            let pitchOffset = Int(floor(currentY / rowHeight))  // Which row from top (0-indexed)
+            let targetPitch = Int(pitchRange.upperBound) - pitchOffset
+            
+            // Clamp to BOTH valid MIDI range (0-127) AND visible pitch range to prevent note from going off-screen
+            let clampedPitch = UInt8(max(Int(pitchRange.lowerBound), min(Int(pitchRange.upperBound), targetPitch)))
             vm.updateDragPosition(newStartBeat: newStartBeat, newPitch: clampedPitch)
             
             // Trigger auto-scroll if pitch is near edge of range
@@ -766,10 +771,15 @@ struct PianoRollCanvasView: View {
         LongPressGesture(minimumDuration: 0.5)
             .sequenced(before: DragGesture(minimumDistance: 0))
             .onEnded { value in
+                // Don't delete if we're in the middle of a drag operation
+                guard !isValidDrag && vm.draggedNoteId == nil else { return }
+                
                 switch value {
                 case .second(true, let drag):
                     if let drag = drag,
                        let note = noteAt(point: drag.startLocation, gridWidth: gridWidth, pitchRange: pitchRange, rowHeight: rowHeight) {
+                        // Don't delete if this note is already selected (user is probably trying to drag it)
+                        if vm.selectedNoteId == note.id { return }
                         vm.selectNote(note.id)
                         vm.deleteNote(note.id)
                     }

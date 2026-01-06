@@ -269,6 +269,111 @@ final class MultiTrackLooperTests: XCTestCase {
 		XCTAssertFalse(looper.isPaused)
 		XCTAssertFalse(looper.isPlaying)
 	}
+	
+	// MARK: - Multi-Bar Recording After Shorter Track
+	
+	func testRecordingLongerTrackAfterShorterTrack() {
+		// This test verifies the fix for the bug where recording a 4-bar track
+		// after a 1-bar track caused notes to get "crammed" into the first bar.
+		// The issue was that addLiveEvent used global loopLength (based on max track length)
+		// instead of recordingLoopLength (based on barCount setting).
+		
+		looper.bpm = 120  // 0.5 seconds per beat, 2 seconds per bar
+		
+		// Step 1: Record a 1-bar drum track
+		looper.setBarCount(.one)
+		looper.startRecording(instrument: .drums)
+		looper.addLiveEvent(note: 36, velocity: 100, isNoteOn: true)
+		looper.addLiveEvent(note: 36, velocity: 0, isNoteOn: false)
+		looper.stopRecording()
+		
+		XCTAssertEqual(looper.tracks.count, 1)
+		XCTAssertEqual(looper.tracks[0].recordedLengthBeats, 4.0, "1 bar = 4 beats")
+		
+		// Step 2: Record a 4-bar piano track with notes at various positions
+		// At 120 BPM, event times: beat 1 = 0.5s, beat 5 = 2.5s, beat 9 = 4.5s, beat 13 = 6.5s
+		looper.setBarCount(.four)
+		looper.startRecording(instrument: .piano)
+		
+		// Simulate notes at beats 1, 5, 9, 13 (one per bar)
+		let secondsPerBeat = 60.0 / looper.bpm
+		
+		// Note at beat 1 (bar 1)
+		Thread.sleep(forTimeInterval: 0.1)  // Small delay
+		looper.addLiveEvent(note: 60, velocity: 100, isNoteOn: true)
+		looper.addLiveEvent(note: 60, velocity: 0, isNoteOn: false)
+		
+		// Note at beat 5 (bar 2) - should NOT wrap to beat 1
+		Thread.sleep(forTimeInterval: secondsPerBeat * 4)  // 4 beats later
+		looper.addLiveEvent(note: 62, velocity: 100, isNoteOn: true)
+		looper.addLiveEvent(note: 62, velocity: 0, isNoteOn: false)
+		
+		// Note at beat 9 (bar 3) - should NOT wrap to beat 1
+		Thread.sleep(forTimeInterval: secondsPerBeat * 4)  // 4 beats later
+		looper.addLiveEvent(note: 64, velocity: 100, isNoteOn: true)
+		looper.addLiveEvent(note: 64, velocity: 0, isNoteOn: false)
+		
+		looper.stopRecording()
+		
+		// Verify we have 2 tracks now
+		XCTAssertEqual(looper.tracks.count, 2, "Should have 2 tracks")
+		
+		// Verify the piano track has the correct recorded length
+		let pianoTrack = looper.tracks[1]
+		XCTAssertEqual(pianoTrack.recordedLengthBeats, 16.0, "4 bars = 16 beats")
+		XCTAssertEqual(pianoTrack.notes.count, 3, "Should have 3 notes")
+		
+		// Verify notes are spread across bars (not all crammed into first bar)
+		// Note at beat ~0 (bar 1)
+		let note1 = pianoTrack.notes.first { $0.pitch == 60 }
+		XCTAssertNotNil(note1, "Should have note at pitch 60")
+		XCTAssertLessThan(note1!.startBeat, 4.0, "First note should be in bar 1 (beats 0-4)")
+		
+		// Note at beat ~4-8 (bar 2) - the critical test!
+		let note2 = pianoTrack.notes.first { $0.pitch == 62 }
+		XCTAssertNotNil(note2, "Should have note at pitch 62")
+		XCTAssertGreaterThanOrEqual(note2!.startBeat, 4.0, "Second note should be in bar 2+ (beat 4+)")
+		XCTAssertLessThan(note2!.startBeat, 8.0, "Second note should be in bar 2 (beats 4-8)")
+		
+		// Note at beat ~8-12 (bar 3) - another critical test!
+		let note3 = pianoTrack.notes.first { $0.pitch == 64 }
+		XCTAssertNotNil(note3, "Should have note at pitch 64")
+		XCTAssertGreaterThanOrEqual(note3!.startBeat, 8.0, "Third note should be in bar 3+ (beat 8+)")
+		XCTAssertLessThan(note3!.startBeat, 12.0, "Third note should be in bar 3 (beats 8-12)")
+	}
+	
+	func testRecordingFourBarsAfterTwoBars() {
+		// Variation: 4 bars after 2 bars (notes should not wrap to first 2 bars)
+		looper.bpm = 120
+		
+		// Record a 2-bar track first
+		looper.setBarCount(.two)
+		looper.startRecording(instrument: .drums)
+		looper.addLiveEvent(note: 36, velocity: 100, isNoteOn: true)
+		looper.stopRecording()
+		
+		XCTAssertEqual(looper.tracks[0].recordedLengthBeats, 8.0, "2 bars = 8 beats")
+		
+		// Now record a 4-bar track
+		looper.setBarCount(.four)
+		looper.startRecording(instrument: .piano)
+		
+		let secondsPerBeat = 60.0 / looper.bpm
+		
+		// Note in bar 3 (beat 9)
+		Thread.sleep(forTimeInterval: secondsPerBeat * 9)
+		looper.addLiveEvent(note: 60, velocity: 100, isNoteOn: true)
+		looper.addLiveEvent(note: 60, velocity: 0, isNoteOn: false)
+		
+		looper.stopRecording()
+		
+		let pianoTrack = looper.tracks[1]
+		XCTAssertEqual(pianoTrack.notes.count, 1)
+		
+		// The note should be around beat 9, NOT wrapped to beat 1 (9 mod 8 = 1)
+		let note = pianoTrack.notes[0]
+		XCTAssertGreaterThanOrEqual(note.startBeat, 8.0, "Note should be in bar 3+ (beat 8+)")
+	}
 }
 
 // MARK: - Instrument Tests

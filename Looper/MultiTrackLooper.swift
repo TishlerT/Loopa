@@ -181,8 +181,11 @@ final class MultiTrackLooper: ObservableObject {
 		guard isRecording else { return }
 		
 		let now = CACurrentMediaTime()
-		let elapsed = now - playStartTime
-		let time = fmod(elapsed, loopLength)
+		// Use recordStartTime (not playStartTime) and recording loop length (not global loop length)
+		// This ensures notes are placed correctly when recording a longer track after a shorter one
+		let elapsed = now - recordStartTime
+		let recordingLoopSeconds = recordingLoopLengthBeats * (60.0 / bpm)
+		let time = fmod(elapsed, recordingLoopSeconds)
 		
 		let event = MidiEvent(
 			time: time,
@@ -200,21 +203,25 @@ final class MultiTrackLooper: ObservableObject {
 		
 		// Create track from recorded events
 		if !recordingEvents.isEmpty {
+			// Use recording loop length (barCount setting), not global loop length (max of existing tracks)
+			// This ensures notes are correctly placed when recording a longer track after a shorter one
+			let recordingLoopSeconds = recordingLoopLengthBeats * (60.0 / bpm)
+			
 			// Apply quantization to events if enabled
 			var finalEvents = recordingEvents
 			if let quantizer = quantizer {
-				finalEvents = quantizer.quantize(events: recordingEvents, loopLength: loopLength)
+				finalEvents = quantizer.quantize(events: recordingEvents, loopLength: recordingLoopSeconds)
 				finalEvents.sort { $0.time < $1.time }
 			}
 			
 			// Convert events to notes (pair note-on/off)
-			var notes = MidiNote.fromEvents(finalEvents, bpm: bpm, loopLengthBeats: loopLengthBeats)
+			var notes = MidiNote.fromEvents(finalEvents, bpm: bpm, loopLengthBeats: recordingLoopLengthBeats)
 			
 			// ALWAYS quantize drums to 16th notes for step sequencer visibility
 			// This ensures every drum hit snaps to a visible grid cell, even if global quantize is off
 			if recordingInstrument.isDrumKit {
 				let drumQuantizer = Quantizer(bpm: bpm, division: .sixteenth)
-				notes = drumQuantizer.quantize(notes: notes, loopLengthBeats: loopLengthBeats)
+				notes = drumQuantizer.quantize(notes: notes, loopLengthBeats: recordingLoopLengthBeats)
 			}
 			
 			// Check if we're punching into an existing track
