@@ -71,6 +71,8 @@
 - [x] **Fixed test build issues** - Fixed ScreenshotTests (added Fastlane stub functions) and TrackVolumeTests (Float vs Double type mismatch).
 - [x] **Note preview on add** - Adding notes in piano roll or drum grid now plays the sound immediately. Added `previewNote()` to LooperViewModel with auto-stop after ~150ms. Works for all instruments including drums.
 - [x] **Multi-note drag** - In multi-select mode, selecting multiple notes and dragging one now moves all selected notes together with their relative positions preserved. Tapping empty space no longer deselects notes (allows panning). Added 5 new unit tests for multi-drag behavior.
+- [x] **Compact track layout with inline volume slider** - Restructured TrackMixerRow to a single-row layout. M/S/Q/L buttons remain horizontal, and the volume slider is now a horizontal slider inline after the buttons (instead of a separate row below). This reduces vertical space per track, allowing more tracks to be visible simultaneously.
+- [x] **Editor hint in TracksView** - Added dismissible hint ("👆 Tap a track to open the editor") above the tracks list. Uses `@AppStorage` to hide permanently after user opens any track editor.
 
 ## Optional Future Enhancements
 - [ ] Add double-tap to add note in piano roll

@@ -31,11 +31,11 @@ struct TrackMixerRow: View {
     private var msqFontSize: CGFloat { isIPad ? 18 : 12 }
     private var deleteButtonSize: CGFloat { isIPad ? 44 : 28 }
     private var deleteFontSize: CGFloat { isIPad ? 20 : 14 }
-    private var sliderWidth: CGFloat { isIPad ? 14 : 10 }
-    private var sliderHeight: CGFloat { isIPad ? 80 : 56 }
-    private var thumbSize: CGFloat { isIPad ? 24 : 18 }
+    private var sliderWidth: CGFloat { isIPad ? 120 : 80 }
+    private var sliderHeight: CGFloat { isIPad ? 8 : 6 }
+    private var thumbSize: CGFloat { isIPad ? 28 : 20 }
     private var rowPaddingH: CGFloat { isIPad ? 24 : 12 }
-    private var rowPaddingV: CGFloat { isIPad ? 14 : 8 }
+    private var rowPaddingV: CGFloat { isIPad ? 14 : 10 }
     
     init(
         track: Track,
@@ -138,8 +138,8 @@ struct TrackMixerRow: View {
             .buttonStyle(PlainButtonStyle())
             .disabled(track.isVocal) // Disable tapping for vocal tracks
             
-            // M S Q L buttons (vertical stack)
-            VStack(spacing: isIPad ? 4 : 3) {
+            // M S Q L buttons (horizontal row)
+            HStack(spacing: isIPad ? 8 : 6) {
                 msqButton(
                     label: "M",
                     isActive: track.isMuted,
@@ -171,14 +171,14 @@ struct TrackMixerRow: View {
                     .accessibilityIdentifier("loopButton_\(track.id)")
             }
             
-            // Vertical volume slider
-            verticalVolumeSlider
+            // Horizontal volume slider (inline after M/S/Q/L buttons)
+            horizontalVolumeSlider
                 .accessibilityIdentifier("volumeSlider_\(track.id)")
             
             // Instrument button (only for melodic MIDI tracks - not vocals or drums)
             if !track.isVocal && !track.isDrumKit {
                 Button(action: onInstrumentTap) {
-                    VStack(spacing: isIPad ? 4 : 2) {
+                    HStack(spacing: isIPad ? 6 : 4) {
                         if let instrument = track.instrument {
                             Image(systemName: instrument.icon)
                                 .font(.system(size: isIPad ? 15 : 12))
@@ -187,7 +187,7 @@ struct TrackMixerRow: View {
                             .font(.system(size: isIPad ? 10 : 8))
                     }
                     .foregroundColor(.white.opacity(0.7))
-                    .padding(.horizontal, isIPad ? 10 : 6)
+                    .padding(.horizontal, isIPad ? 14 : 10)
                     .padding(.vertical, isIPad ? 10 : 8)
                     .background(Color.white.opacity(0.1))
                     .cornerRadius(isIPad ? 8 : 6)
@@ -212,50 +212,47 @@ struct TrackMixerRow: View {
         }
     }
     
-    // MARK: - Vertical Volume Slider
+    // MARK: - Horizontal Volume Slider (inline)
     
-    private var verticalVolumeSlider: some View {
+    private var horizontalVolumeSlider: some View {
         GeometryReader { geo in
-            ZStack(alignment: .bottom) {
+            ZStack(alignment: .leading) {
                 // Background track
-                RoundedRectangle(cornerRadius: isIPad ? 6 : 4)
+                RoundedRectangle(cornerRadius: isIPad ? 4 : 3)
                     .fill(Color.white.opacity(0.15))
-                    .frame(width: sliderWidth)
+                    .frame(height: sliderHeight)
                 
-                // Filled track (from bottom)
-                RoundedRectangle(cornerRadius: isIPad ? 6 : 4)
+                // Filled track
+                RoundedRectangle(cornerRadius: isIPad ? 4 : 3)
                     .fill(trackColor)
-                    .frame(width: sliderWidth, height: max(0, geo.size.height * CGFloat(volume)))
+                    .frame(width: max(0, geo.size.width * CGFloat(volume)), height: sliderHeight)
                 
                 // Thumb
                 Circle()
                     .fill(Color.white)
                     .frame(width: thumbSize, height: thumbSize)
                     .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 1)
-                    .offset(y: -max(0, min(geo.size.height - thumbSize, geo.size.height * CGFloat(volume) - thumbSize/2)))
+                    .offset(x: max(0, min(geo.size.width - thumbSize, geo.size.width * CGFloat(volume) - thumbSize/2)))
             }
-            .frame(width: thumbSize, height: geo.size.height)
+            .frame(height: thumbSize)
             .contentShape(Rectangle())
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
                         isDraggingVolume = true
-                        // Invert Y: top = 100%, bottom = 0%
-                        let normalizedY = 1.0 - (value.location.y / geo.size.height)
-                        let newVolume = Float(max(0, min(1, normalizedY)))
+                        let newVolume = Float(max(0, min(1, value.location.x / geo.size.width)))
                         volume = newVolume
                         onVolumeChange(newVolume)
                     }
                     .onEnded { value in
                         isDraggingVolume = false
-                        let normalizedY = 1.0 - (value.location.y / geo.size.height)
-                        let newVolume = Float(max(0, min(1, normalizedY)))
+                        let newVolume = Float(max(0, min(1, value.location.x / geo.size.width)))
                         volume = newVolume
                         onVolumeChange(volume)
                     }
             )
         }
-        .frame(width: thumbSize, height: sliderHeight)
+        .frame(width: sliderWidth, height: thumbSize)
     }
     
     // MARK: - Components

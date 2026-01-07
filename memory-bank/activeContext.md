@@ -1,9 +1,22 @@
 # Active Context
 
 ## Current Focus
-Piano Roll Editor Enhancements - Improving note editing UX.
+UX improvements and polish for app release.
 
 ## Recent Work (This Session)
+1. **Fixed Timeline Sync Bug** - Bug fix:
+   - **Issue:** When recording tracks with different bar counts, the beat indicator (highlighted box) and progress bar would desync visually.
+   - **Root Cause:** `synchronizedBeat` used `looper.synchronizedPlaybackPosition` (based on longest existing track's loop length), while `synchronizedProgressFraction` used `recordingProgress` (based on barCount setting) during recording. When these differed, the visuals desynced.
+   - **Fix:** Updated `synchronizedBeat` in `LooperViewModel.swift` to derive beat from `recordingProgress` during recording, ensuring both beat indicator and progress bar use the same timing source.
+   - All 20 tests pass
+
+2. **Editor Hint for TracksView** - UX improvement:
+   - Added dismissible hint above the tracks list: "👆 Tap a track to open the editor"
+   - Hint only appears when there are tracks and user hasn't opened an editor yet
+   - Uses `@AppStorage("hasOpenedEditor")` to persist preference across sessions
+   - Once user taps a track to open the editor, hint is hidden permanently
+
+## Previous Sessions
 1. **Multi-Note Drag Feature** - New feature:
    - In multi-select mode, dragging one selected note now moves ALL selected notes together
    - Relative positions between notes are preserved during drag

@@ -7,6 +7,7 @@ struct TracksView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var showingDeleteConfirmation = false
     @State private var trackToDelete: Track? = nil
+    @AppStorage("hasOpenedEditor") private var hasOpenedEditor = false
     
     // MARK: - iPad Detection & Sizing - Enlarged for better visibility/touch
     
@@ -34,6 +35,11 @@ struct TracksView: View {
                 
                 // Progress bar showing current position in loop
                 progressBar
+                
+                // Hint for first-time users
+                if !vm.tracks.isEmpty && !hasOpenedEditor {
+                    editorHint
+                }
                 
                 if vm.tracks.isEmpty {
                     emptyState
@@ -218,6 +224,21 @@ struct TracksView: View {
         return max(0, min(totalWidth, CGFloat(progress) * totalWidth))
     }
     
+    // MARK: - Editor Hint
+    
+    private var editorHint: some View {
+        HStack(spacing: isIPad ? 8 : 6) {
+            Text("👆")
+                .font(.system(size: isIPad ? 18 : 14))
+            Text("Tap a track to open the editor")
+                .font(.system(size: isIPad ? 16 : 13, weight: .medium))
+                .foregroundColor(.white.opacity(0.6))
+        }
+        .padding(.vertical, isIPad ? 10 : 6)
+        .padding(.horizontal, listPadH)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
     // MARK: - Empty State
     
     private var emptyState: some View {
@@ -252,6 +273,7 @@ struct TracksView: View {
                         onTap: {
                             // Only allow opening MIDI editor for non-vocal tracks
                             if !track.isVocal {
+                                hasOpenedEditor = true
                                 vm.selectTrackForFocus(track)
                             }
                         },

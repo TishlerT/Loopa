@@ -86,6 +86,14 @@ final class LooperViewModel: ObservableObject {
 	
 	/// Synchronized beat number for beat indicator display
 	var synchronizedBeat: Int {
+		// During recording, derive beat from recordingProgress to stay in sync with progress bar
+		// This ensures beat indicator and progress bar use the same timing source (barCount-based)
+		if isRecording {
+			let totalBeatsInRecording = Double(barCount.rawValue) * 4.0
+			return Int(recordingProgress * totalBeatsInRecording)
+		}
+		
+		// During playback, use synchronized position
 		let secondsPerBeat = 60.0 / bpm
 		guard secondsPerBeat > 0 else { return 0 }
 		let position = looper.synchronizedPlaybackPosition
