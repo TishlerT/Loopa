@@ -1074,6 +1074,21 @@ final class LooperViewModel: ObservableObject {
 		return drumMap[index]
 	}
 	
+	// MARK: - Note Preview (Editor Feedback)
+	
+	/// Play a short preview of a note (for editor feedback when adding notes)
+	func previewNote(pitch: UInt8, velocity: UInt8, trackId: UUID, duration: TimeInterval = 0.15) {
+		guard let track = track(withId: trackId),
+			  let instrument = Instrument(rawValue: track.instrumentName) else { return }
+		
+		audio.playTrackNote(pitch, velocity: velocity, trackId: trackId, instrument: instrument, volume: track.volume)
+		
+		// Auto-stop after short duration
+		DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
+			self?.audio.stopTrackNote(pitch, trackId: trackId, instrument: instrument)
+		}
+	}
+	
 	// MARK: - Playback Handling
 	
 	private func handlePlaybackEvent(_ event: MidiEvent, track: Track) {

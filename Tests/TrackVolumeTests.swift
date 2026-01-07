@@ -1,6 +1,17 @@
 import XCTest
 @testable import Loopa
 
+// Helper extension for comparing optional Float with Float accuracy
+extension XCTestCase {
+    func assertVolumeEqual(_ actual: Float?, _ expected: Float, accuracy: Float = 0.001, _ message: @autoclosure () -> String = "", file: StaticString = #filePath, line: UInt = #line) {
+        guard let actual = actual else {
+            XCTFail("Volume was nil, expected \(expected). \(message())", file: file, line: line)
+            return
+        }
+        XCTAssertEqual(actual, expected, accuracy: accuracy, message(), file: file, line: line)
+    }
+}
+
 /// Tests for track volume independence - verifying that changing one track's volume
 /// does not affect other tracks' volumes
 final class TrackVolumeTests: XCTestCase {
@@ -73,11 +84,11 @@ final class TrackVolumeTests: XCTestCase {
         
         // Verify track1's volume changed
         let updatedTrack1 = looper.track(withId: track1.id)
-        XCTAssertEqual(updatedTrack1?.volume, 0.2, accuracy: 0.001, "Track 1 volume should be 0.2")
+        assertVolumeEqual(updatedTrack1?.volume, 0.2, "Track 1 volume should be 0.2")
         
         // Verify track2's volume is unchanged
         let updatedTrack2 = looper.track(withId: track2.id)
-        XCTAssertEqual(updatedTrack2?.volume, 0.8, accuracy: 0.001, "Track 2 volume should remain 0.8")
+        assertVolumeEqual(updatedTrack2?.volume, 0.8, "Track 2 volume should remain 0.8")
     }
     
     func testSetMultipleTrackVolumesIndependently() {
@@ -108,9 +119,9 @@ final class TrackVolumeTests: XCTestCase {
         looper.setTrackVolume(track3.id, volume: 0.9)
         
         // Verify each track has its independent volume
-        XCTAssertEqual(looper.track(withId: track1.id)?.volume, 0.1, accuracy: 0.001)
-        XCTAssertEqual(looper.track(withId: track2.id)?.volume, 0.5, accuracy: 0.001)
-        XCTAssertEqual(looper.track(withId: track3.id)?.volume, 0.9, accuracy: 0.001)
+        assertVolumeEqual(looper.track(withId: track1.id)?.volume, 0.1)
+        assertVolumeEqual(looper.track(withId: track2.id)?.volume, 0.5)
+        assertVolumeEqual(looper.track(withId: track3.id)?.volume, 0.9)
     }
     
     func testVolumeClampingAtMinimum() {
@@ -128,7 +139,7 @@ final class TrackVolumeTests: XCTestCase {
         looper.setTrackVolume(track.id, volume: -0.5)
         
         // Should be clamped to 0
-        XCTAssertEqual(looper.track(withId: track.id)?.volume, 0.0, accuracy: 0.001)
+        assertVolumeEqual(looper.track(withId: track.id)?.volume, 0.0)
     }
     
     func testVolumeClampingAtMaximum() {
@@ -146,7 +157,7 @@ final class TrackVolumeTests: XCTestCase {
         looper.setTrackVolume(track.id, volume: 1.5)
         
         // Should be clamped to 1
-        XCTAssertEqual(looper.track(withId: track.id)?.volume, 1.0, accuracy: 0.001)
+        assertVolumeEqual(looper.track(withId: track.id)?.volume, 1.0)
     }
     
     func testVolumeAtZeroDoesNotAffectOtherTracks() {
@@ -173,8 +184,8 @@ final class TrackVolumeTests: XCTestCase {
         looper.setTrackVolume(track1.id, volume: 0.0)
         
         // Track2 should still be at full volume
-        XCTAssertEqual(looper.track(withId: track1.id)?.volume, 0.0, accuracy: 0.001)
-        XCTAssertEqual(looper.track(withId: track2.id)?.volume, 0.8, accuracy: 0.001)
+        assertVolumeEqual(looper.track(withId: track1.id)?.volume, 0.0)
+        assertVolumeEqual(looper.track(withId: track2.id)?.volume, 0.8)
     }
     
     // MARK: - Mixed MIDI and Vocal Track Tests
@@ -197,15 +208,15 @@ final class TrackVolumeTests: XCTestCase {
         looper.setTrackVolume(midiTrack.id, volume: 0.3)
         
         // Vocal track should be unaffected
-        XCTAssertEqual(looper.track(withId: midiTrack.id)?.volume, 0.3, accuracy: 0.001)
-        XCTAssertEqual(looper.track(withId: vocalTrack.id)?.volume, 0.8, accuracy: 0.001)
+        assertVolumeEqual(looper.track(withId: midiTrack.id)?.volume, 0.3)
+        assertVolumeEqual(looper.track(withId: vocalTrack.id)?.volume, 0.8)
         
         // Now change vocal track volume
         looper.setTrackVolume(vocalTrack.id, volume: 0.6)
         
         // MIDI track should still be at 0.3
-        XCTAssertEqual(looper.track(withId: midiTrack.id)?.volume, 0.3, accuracy: 0.001)
-        XCTAssertEqual(looper.track(withId: vocalTrack.id)?.volume, 0.6, accuracy: 0.001)
+        assertVolumeEqual(looper.track(withId: midiTrack.id)?.volume, 0.3)
+        assertVolumeEqual(looper.track(withId: vocalTrack.id)?.volume, 0.6)
     }
     
     // MARK: - Track Deletion Volume Persistence Tests
@@ -223,8 +234,8 @@ final class TrackVolumeTests: XCTestCase {
         looper.deleteTrack(track2)
         
         // Remaining tracks should keep their volumes
-        XCTAssertEqual(looper.track(withId: track1.id)?.volume, 0.3, accuracy: 0.001)
-        XCTAssertEqual(looper.track(withId: track3.id)?.volume, 0.7, accuracy: 0.001)
+        assertVolumeEqual(looper.track(withId: track1.id)?.volume, 0.3)
+        assertVolumeEqual(looper.track(withId: track3.id)?.volume, 0.7)
         XCTAssertNil(looper.track(withId: track2.id))
     }
     
@@ -248,7 +259,7 @@ final class TrackVolumeTests: XCTestCase {
         // Volume should be preserved even when muted
         let mutedTrack = looper.track(withId: track.id)
         XCTAssertTrue(mutedTrack?.isMuted ?? false)
-        XCTAssertEqual(mutedTrack?.volume, 0.6, accuracy: 0.001)
+        assertVolumeEqual(mutedTrack?.volume, 0.6)
     }
     
     func testVolumeIsPreservedWhenSoloed() {
@@ -269,7 +280,7 @@ final class TrackVolumeTests: XCTestCase {
         // Volume should be preserved when soloed
         let soloedTrack = looper.track(withId: track.id)
         XCTAssertTrue(soloedTrack?.isSolo ?? false)
-        XCTAssertEqual(soloedTrack?.volume, 0.4, accuracy: 0.001)
+        assertVolumeEqual(soloedTrack?.volume, 0.4)
     }
     
     func testChangingVolumeWhileMuted() {
@@ -291,7 +302,7 @@ final class TrackVolumeTests: XCTestCase {
         // Volume should update even when muted
         let updatedTrack = looper.track(withId: track.id)
         XCTAssertTrue(updatedTrack?.isMuted ?? false)
-        XCTAssertEqual(updatedTrack?.volume, 0.2, accuracy: 0.001)
+        assertVolumeEqual(updatedTrack?.volume, 0.2)
     }
     
     // MARK: - Edge Cases
@@ -313,7 +324,7 @@ final class TrackVolumeTests: XCTestCase {
         looper.setTrackVolume(fakeId, volume: 0.5)
         
         // Original track should be unaffected
-        XCTAssertEqual(looper.track(withId: track.id)?.volume, 0.8, accuracy: 0.001)
+        assertVolumeEqual(looper.track(withId: track.id)?.volume, 0.8)
         XCTAssertNil(looper.track(withId: fakeId))
     }
     
@@ -331,9 +342,9 @@ final class TrackVolumeTests: XCTestCase {
         looper.loadTracks(tracks)
         
         // Verify volumes are preserved after loading
-        XCTAssertEqual(looper.track(withId: tracks[0].id)?.volume, 0.3, accuracy: 0.001)
-        XCTAssertEqual(looper.track(withId: tracks[1].id)?.volume, 0.6, accuracy: 0.001)
-        XCTAssertEqual(looper.track(withId: tracks[2].id)?.volume, 0.9, accuracy: 0.001)
+        assertVolumeEqual(looper.track(withId: tracks[0].id)?.volume, 0.3)
+        assertVolumeEqual(looper.track(withId: tracks[1].id)?.volume, 0.6)
+        assertVolumeEqual(looper.track(withId: tracks[2].id)?.volume, 0.9)
     }
 }
 

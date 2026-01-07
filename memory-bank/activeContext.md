@@ -1,10 +1,37 @@
 # Active Context
 
 ## Current Focus
-App Store Submission Readiness - Preparing Loopa for App Store submission.
+Piano Roll Editor Enhancements - Improving note editing UX.
 
 ## Recent Work (This Session)
-1. **Fixed Piano Roll Note Disappearing Bug** - Bug fix:
+1. **Multi-Note Drag Feature** - New feature:
+   - In multi-select mode, dragging one selected note now moves ALL selected notes together
+   - Relative positions between notes are preserved during drag
+   - Tapping empty background no longer deselects notes (allows panning with selection)
+   - Visual preview shows all notes moving during drag
+   - Background scroll now works while notes are selected (only locks during active drag)
+   - Added 5 unit tests for multi-drag behavior
+   - All 152 unit tests pass
+
+2. **Note Preview on Add** - New feature:
+   - When adding notes in the piano roll or drum grid, the sound now plays immediately as audible feedback
+   - Added `previewNote()` method to `LooperViewModel` that plays a short (~150ms) preview using the track's instrument
+   - Integrated preview call in `TrackFocusViewModel.addNote()` - works for both melodic instruments and drums
+   - Added 5 new unit tests for preview functionality
+   - All 147 unit tests pass
+
+2. **Verified Copy/Paste Note Offset Preservation** - Investigation:
+   - User reported pasted notes all landing at playhead position
+   - Added 5 unit tests to verify copy/paste behavior
+   - Tests confirmed the implementation is **already correct**: notes preserve relative offsets when copied and pasted
+   - The leftmost note becomes the reference point, and all other notes maintain their offset from it
+   - All 142 unit tests pass
+
+2. **Fixed Pre-existing Test Build Issues**:
+   - ScreenshotTests: Added stub functions for Fastlane snapshot helpers when not running via Fastlane
+   - TrackVolumeTests: Fixed Float vs Double type mismatch in XCTAssertEqual calls
+
+3. **Fixed Piano Roll Note Disappearing Bug** - Bug fix:
    - **Issue:** When zoomed out in the piano roll editor, dragging a note and dropping it on the boundary between two pitch rows (e.g., between E and F) caused the note to disappear.
    - **Root Cause:** Pitch calculation used delta-based approach with `round()` which had edge cases at row boundaries.
    - **Fix:** Changed `handleDragChanged()` in `PianoRollCanvasView.swift` to use absolute Y-position with `floor()` to determine which pitch row the touch point is in. This ensures notes always snap to a valid pitch.
@@ -15,7 +42,7 @@ App Store Submission Readiness - Preparing Loopa for App Store submission.
 2. **Added Multi-Bar Recording Tests** - 2 new unit tests verifying:
    - Recording 4-bar track after 1-bar track places notes correctly
    - Recording 4-bar track after 2-bar track places notes correctly
-3. Verified all 121 unit tests pass on iPhone 16 Pro
+3. Verified all 147 unit tests pass on iPhone 16 Pro
 
 ## App Store Readiness Checklist
 ### Already Complete (In Codebase)

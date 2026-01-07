@@ -31,12 +31,11 @@ struct TrackMixerRow: View {
     private var msqFontSize: CGFloat { isIPad ? 18 : 12 }
     private var deleteButtonSize: CGFloat { isIPad ? 44 : 28 }
     private var deleteFontSize: CGFloat { isIPad ? 20 : 14 }
-    private var sliderHeight: CGFloat { isIPad ? 20 : 12 }
-    private var thumbSize: CGFloat { isIPad ? 34 : 22 }
-    private var speakerSize: CGFloat { isIPad ? 16 : 10 }
-    private var volumeTextSize: CGFloat { isIPad ? 17 : 11 }
+    private var sliderWidth: CGFloat { isIPad ? 14 : 10 }
+    private var sliderHeight: CGFloat { isIPad ? 80 : 56 }
+    private var thumbSize: CGFloat { isIPad ? 24 : 18 }
     private var rowPaddingH: CGFloat { isIPad ? 24 : 12 }
-    private var rowPaddingV: CGFloat { isIPad ? 18 : 10 }
+    private var rowPaddingV: CGFloat { isIPad ? 14 : 8 }
     
     init(
         track: Track,
@@ -76,181 +75,128 @@ struct TrackMixerRow: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Top row: Track info + M/S/Q + Instrument
-            HStack(spacing: isIPad ? 16 : 12) {
-                // Delete button (trash icon)
-                Button(action: onDelete) {
-                    Image(systemName: "trash")
-                        .font(.system(size: deleteFontSize))
-                        .foregroundColor(.red.opacity(0.7))
-                        .frame(width: deleteButtonSize, height: deleteButtonSize)
-                        .background(Color.red.opacity(0.1))
-                        .cornerRadius(isIPad ? 8 : 6)
-                }
-                .accessibilityIdentifier("deleteButton_\(track.id)")
-                
-                // TAPPABLE AREA: Track icon + name → opens MIDI editor (only for non-vocal)
-                Button(action: onTap) {
-                    HStack(spacing: isIPad ? 16 : 12) {
-                        // Track icon (large, easy to tap)
-                        ZStack {
-                            Circle()
-                                .fill(trackColor.opacity(isAudible ? 0.2 : 0.05))
-                                .frame(width: iconCircleSize, height: iconCircleSize)
-                            
-                            if track.isVocal {
-                                Image(systemName: "mic.fill")
-                                    .font(.system(size: iconSize))
-                                    .foregroundColor(isAudible ? trackColor : .white.opacity(0.3))
-                            } else if let instrument = track.instrument {
-                                Image(systemName: instrument.icon)
-                                    .font(.system(size: iconSize))
-                                    .foregroundColor(isAudible ? trackColor : .white.opacity(0.3))
-                            }
-                        }
-                        
-                        // Track name
-                        VStack(alignment: .leading, spacing: isIPad ? 3 : 2) {
-                            Text(track.instrumentName)
-                                .font(.system(size: trackNameSize, weight: .semibold))
-                                .foregroundColor(isAudible ? .white : .white.opacity(0.4))
-                            
-                            if track.isVocal {
-                                Text("Audio track")
-                                    .font(.system(size: trackSubtitleSize))
-                                    .foregroundColor(.white.opacity(0.4))
-                            } else {
-                                Text("\(track.notes.count) notes")
-                                    .font(.system(size: trackSubtitleSize))
-                                    .foregroundColor(.white.opacity(0.4))
-                            }
-                        }
-                        
-                        Spacer(minLength: 0)
-                        
-                        // Arrow indicator (only for MIDI tracks, not vocals)
-                        if !track.isVocal {
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: isIPad ? 14 : 12, weight: .semibold))
-                                .foregroundColor(.white.opacity(0.3))
-                        }
-                    }
-                    .contentShape(Rectangle())
-                }
-                .buttonStyle(PlainButtonStyle())
-                .disabled(track.isVocal) // Disable tapping for vocal tracks
-                
-                // M S Q buttons (separate - don't trigger MIDI editor)
-                HStack(spacing: isIPad ? 8 : 6) {
-                    msqButton(
-                        label: "M",
-                        isActive: track.isMuted,
-                        activeColor: Color.red,
-                        action: onToggleMute
-                    )
-                    .accessibilityIdentifier("muteButton_\(track.id)")
-                    
-                    msqButton(
-                        label: "S",
-                        isActive: track.isSolo,
-                        activeColor: Color.yellow,
-                        action: onToggleSolo
-                    )
-                    .accessibilityIdentifier("soloButton_\(track.id)")
-                    
-                    if !track.isVocal {
-                        msqButton(
-                            label: "Q",
-                            isActive: false,
-                            activeColor: Color(hex: "00FFCC"),
-                            action: onQuantize
-                        )
-                        .accessibilityIdentifier("quantizeButton_\(track.id)")
-                    }
-                    
-                    // L (Loop) button with red strikethrough when off
-                    loopButton
-                        .accessibilityIdentifier("loopButton_\(track.id)")
-                }
-                
-                // Instrument button (only for melodic MIDI tracks - not vocals or drums)
-                if !track.isVocal && !track.isDrumKit {
-                    Button(action: onInstrumentTap) {
-                        HStack(spacing: isIPad ? 6 : 4) {
-                            if let instrument = track.instrument {
-                                Image(systemName: instrument.icon)
-                                    .font(.system(size: isIPad ? 15 : 12))
-                            }
-                            Image(systemName: "chevron.down")
-                                .font(.system(size: isIPad ? 10 : 8))
-                        }
-                        .foregroundColor(.white.opacity(0.7))
-                        .padding(.horizontal, isIPad ? 14 : 10)
-                        .padding(.vertical, isIPad ? 10 : 8)
-                        .background(Color.white.opacity(0.1))
-                        .cornerRadius(isIPad ? 8 : 6)
-                    }
-                    .accessibilityIdentifier("instrumentButton_\(track.id)")
-                }
+        HStack(spacing: isIPad ? 16 : 12) {
+            // Delete button (trash icon)
+            Button(action: onDelete) {
+                Image(systemName: "trash")
+                    .font(.system(size: deleteFontSize))
+                    .foregroundColor(.red.opacity(0.7))
+                    .frame(width: deleteButtonSize, height: deleteButtonSize)
+                    .background(Color.red.opacity(0.1))
+                    .cornerRadius(isIPad ? 8 : 6)
             }
-            .padding(.horizontal, rowPaddingH)
-            .padding(.vertical, rowPaddingV)
+            .accessibilityIdentifier("deleteButton_\(track.id)")
             
-            // Volume slider row
-            HStack(spacing: isIPad ? 14 : 10) {
-                Image(systemName: "speaker.fill")
-                    .font(.system(size: speakerSize))
-                    .foregroundColor(.white.opacity(0.4))
-                
-                // Custom thicker volume slider
-                GeometryReader { geo in
-                    ZStack(alignment: .leading) {
-                        // Background track (thicker)
-                        RoundedRectangle(cornerRadius: isIPad ? 8 : 6)
-                            .fill(Color.white.opacity(0.15))
-                            .frame(height: sliderHeight)
-                        
-                        // Filled track
-                        RoundedRectangle(cornerRadius: isIPad ? 8 : 6)
-                            .fill(trackColor)
-                            .frame(width: max(0, geo.size.width * CGFloat(volume)), height: sliderHeight)
-                        
-                        // Thumb
+            // TAPPABLE AREA: Track icon + name → opens MIDI editor (only for non-vocal)
+            Button(action: onTap) {
+                HStack(spacing: isIPad ? 16 : 12) {
+                    // Track icon (large, easy to tap)
+                    ZStack {
                         Circle()
-                            .fill(Color.white)
-                            .frame(width: thumbSize, height: thumbSize)
-                            .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 1)
-                            .offset(x: max(0, min(geo.size.width - thumbSize, geo.size.width * CGFloat(volume) - thumbSize/2)))
+                            .fill(trackColor.opacity(isAudible ? 0.2 : 0.05))
+                            .frame(width: iconCircleSize, height: iconCircleSize)
+                        
+                        if track.isVocal {
+                            Image(systemName: "mic.fill")
+                                .font(.system(size: iconSize))
+                                .foregroundColor(isAudible ? trackColor : .white.opacity(0.3))
+                        } else if let instrument = track.instrument {
+                            Image(systemName: instrument.icon)
+                                .font(.system(size: iconSize))
+                                .foregroundColor(isAudible ? trackColor : .white.opacity(0.3))
+                        }
                     }
-                    .frame(height: thumbSize)
-                    .contentShape(Rectangle())
-                    .gesture(
-                        DragGesture(minimumDistance: 0)
-                            .onChanged { value in
-                                isDraggingVolume = true
-                                let newVolume = Float(max(0, min(1, value.location.x / geo.size.width)))
-                                volume = newVolume
-                                onVolumeChange(newVolume)  // Real-time volume update for instant feedback
-                            }
-                            .onEnded { value in
-                                isDraggingVolume = false
-                                let newVolume = Float(max(0, min(1, value.location.x / geo.size.width)))
-                                volume = newVolume
-                                onVolumeChange(volume)
-                            }
-                    )
+                    
+                    // Track name
+                    VStack(alignment: .leading, spacing: isIPad ? 3 : 2) {
+                        Text(track.instrumentName)
+                            .font(.system(size: trackNameSize, weight: .semibold))
+                            .foregroundColor(isAudible ? .white : .white.opacity(0.4))
+                        
+                        if track.isVocal {
+                            Text("Audio track")
+                                .font(.system(size: trackSubtitleSize))
+                                .foregroundColor(.white.opacity(0.4))
+                        } else {
+                            Text("\(track.notes.count) notes")
+                                .font(.system(size: trackSubtitleSize))
+                                .foregroundColor(.white.opacity(0.4))
+                        }
+                    }
+                    
+                    Spacer(minLength: 0)
+                    
+                    // Arrow indicator (only for MIDI tracks, not vocals)
+                    if !track.isVocal {
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: isIPad ? 14 : 12, weight: .semibold))
+                            .foregroundColor(.white.opacity(0.3))
+                    }
                 }
-                .frame(height: thumbSize)
-                
-                Text("\(Int(volume * 100))%")
-                    .font(.system(size: volumeTextSize, weight: .medium, design: .monospaced))
-                    .foregroundColor(.white.opacity(0.5))
-                    .frame(width: isIPad ? 48 : 38, alignment: .trailing)
+                .contentShape(Rectangle())
             }
-            .padding(.horizontal, rowPaddingH)
-            .padding(.bottom, isIPad ? 16 : 12)
+            .buttonStyle(PlainButtonStyle())
+            .disabled(track.isVocal) // Disable tapping for vocal tracks
+            
+            // M S Q L buttons (vertical stack)
+            VStack(spacing: isIPad ? 4 : 3) {
+                msqButton(
+                    label: "M",
+                    isActive: track.isMuted,
+                    activeColor: Color.red,
+                    action: onToggleMute
+                )
+                .accessibilityIdentifier("muteButton_\(track.id)")
+                
+                msqButton(
+                    label: "S",
+                    isActive: track.isSolo,
+                    activeColor: Color.yellow,
+                    action: onToggleSolo
+                )
+                .accessibilityIdentifier("soloButton_\(track.id)")
+                
+                if !track.isVocal {
+                    msqButton(
+                        label: "Q",
+                        isActive: false,
+                        activeColor: Color(hex: "00FFCC"),
+                        action: onQuantize
+                    )
+                    .accessibilityIdentifier("quantizeButton_\(track.id)")
+                }
+                
+                // L (Loop) button with red strikethrough when off
+                loopButton
+                    .accessibilityIdentifier("loopButton_\(track.id)")
+            }
+            
+            // Vertical volume slider
+            verticalVolumeSlider
+                .accessibilityIdentifier("volumeSlider_\(track.id)")
+            
+            // Instrument button (only for melodic MIDI tracks - not vocals or drums)
+            if !track.isVocal && !track.isDrumKit {
+                Button(action: onInstrumentTap) {
+                    VStack(spacing: isIPad ? 4 : 2) {
+                        if let instrument = track.instrument {
+                            Image(systemName: instrument.icon)
+                                .font(.system(size: isIPad ? 15 : 12))
+                        }
+                        Image(systemName: "chevron.down")
+                            .font(.system(size: isIPad ? 10 : 8))
+                    }
+                    .foregroundColor(.white.opacity(0.7))
+                    .padding(.horizontal, isIPad ? 10 : 6)
+                    .padding(.vertical, isIPad ? 10 : 8)
+                    .background(Color.white.opacity(0.1))
+                    .cornerRadius(isIPad ? 8 : 6)
+                }
+                .accessibilityIdentifier("instrumentButton_\(track.id)")
+            }
         }
+        .padding(.horizontal, rowPaddingH)
+        .padding(.vertical, rowPaddingV)
         .background(
             RoundedRectangle(cornerRadius: isIPad ? 16 : 12)
                 .fill(Color.white.opacity(isAudible ? 0.05 : 0.02))
@@ -264,6 +210,52 @@ struct TrackMixerRow: View {
                 volume = newValue
             }
         }
+    }
+    
+    // MARK: - Vertical Volume Slider
+    
+    private var verticalVolumeSlider: some View {
+        GeometryReader { geo in
+            ZStack(alignment: .bottom) {
+                // Background track
+                RoundedRectangle(cornerRadius: isIPad ? 6 : 4)
+                    .fill(Color.white.opacity(0.15))
+                    .frame(width: sliderWidth)
+                
+                // Filled track (from bottom)
+                RoundedRectangle(cornerRadius: isIPad ? 6 : 4)
+                    .fill(trackColor)
+                    .frame(width: sliderWidth, height: max(0, geo.size.height * CGFloat(volume)))
+                
+                // Thumb
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: thumbSize, height: thumbSize)
+                    .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 1)
+                    .offset(y: -max(0, min(geo.size.height - thumbSize, geo.size.height * CGFloat(volume) - thumbSize/2)))
+            }
+            .frame(width: thumbSize, height: geo.size.height)
+            .contentShape(Rectangle())
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        isDraggingVolume = true
+                        // Invert Y: top = 100%, bottom = 0%
+                        let normalizedY = 1.0 - (value.location.y / geo.size.height)
+                        let newVolume = Float(max(0, min(1, normalizedY)))
+                        volume = newVolume
+                        onVolumeChange(newVolume)
+                    }
+                    .onEnded { value in
+                        isDraggingVolume = false
+                        let normalizedY = 1.0 - (value.location.y / geo.size.height)
+                        let newVolume = Float(max(0, min(1, normalizedY)))
+                        volume = newVolume
+                        onVolumeChange(volume)
+                    }
+            )
+        }
+        .frame(width: thumbSize, height: sliderHeight)
     }
     
     // MARK: - Components

@@ -61,6 +61,9 @@ struct PianoRollCanvasView: View {
     @State private var dragStartLocation: CGPoint? = nil
     @State private var dragStartNoteState: (startBeat: Double, duration: Double, pitch: UInt8)? = nil
     
+    // State to track if we're actively dragging a note (controls scroll lock)
+    @State private var isNoteDragActive = false
+    
     // State for playhead dragging
     @State private var isDraggingPlayhead = false
     @State private var playheadDragBeat: Double? = nil
@@ -112,12 +115,12 @@ struct PianoRollCanvasView: View {
                     }
                     .frame(width: gridWidth + keyLabelWidth, height: totalHeight)
                     .contentShape(Rectangle())
-                    .gesture(createDragGesture(gridWidth: gridWidth, pitchRange: pitchRange, rowHeight: scaledRowHeight))
+                    .simultaneousGesture(createDragGesture(gridWidth: gridWidth, pitchRange: pitchRange, rowHeight: scaledRowHeight))
                     .simultaneousGesture(createLongPressGesture(gridWidth: gridWidth, pitchRange: pitchRange, rowHeight: scaledRowHeight))
                     .simultaneousGesture(createDoubleTapGesture(gridWidth: gridWidth, pitchRange: pitchRange, rowHeight: scaledRowHeight))
                     .simultaneousGesture(createTapGesture(gridWidth: gridWidth, pitchRange: pitchRange, rowHeight: scaledRowHeight))
                 }
-                .scrollDisabled(vm.isBackgroundLocked)  // Lock scroll when note or playhead is selected
+                .scrollDisabled(isNoteDragActive)  // Only lock scroll during active note/playhead drag
                 .scrollBounceBehavior(.basedOnSize)  // Reduce bounce
                 .scrollIndicatorsFlash(onAppear: false)
                 .disableScrollMomentum()  // Stop immediately when finger lifts
@@ -245,8 +248,17 @@ struct PianoRollCanvasView: View {
             var displayDuration = note.durationBeats
             var displayPitch = note.pitch
             
-            // Use preview values for dragged note
-            if note.id == vm.draggedNoteId {
+            // Check if this note is part of a multi-drag
+            let isInMultiDrag = vm.isMultiDragging && vm.selectedNoteIds.contains(note.id)
+            
+            if isInMultiDrag {
+                // Use multi-drag preview position
+                if let previewPos = vm.multiDragPreviewPosition(for: note.id) {
+                    displayBeat = previewPos.startBeat
+                    displayPitch = previewPos.pitch
+                }
+            } else if note.id == vm.draggedNoteId {
+                // Use preview values for single dragged note
                 if vm.isResizing {
                     if let previewDuration = vm.dragPreviewDuration {
                         displayDuration = previewDuration
@@ -281,7 +293,7 @@ struct PianoRollCanvasView: View {
             )
             
             let isSelected = vm.isNoteSelected(note.id)
-            let isDragging = note.id == vm.draggedNoteId
+            let isDragging = note.id == vm.draggedNoteId || isInMultiDrag
             let isInResizeMode = isSelected && vm.isResizeMode
             
             // Note body
@@ -607,14 +619,17 @@ struct PianoRollCanvasView: View {
                         vm.selectNote(note.id)
                     }
                 } else {
-                    // Tapping empty space - always deselect all and unlock background
+                    // Tapping empty space
                     if vm.isAddNoteMode {
-                        // Add note mode: add a note at this position, but also deselect first
-                        vm.deselectAll()
+                        // Add note mode: add a note at this position
                         if let pitch = pitchAt(point: value.location, pitchRange: pitchRange, rowHeight: rowHeight) {
                             let beat = beatAt(point: value.location, gridWidth: gridWidth)
                             vm.addNote(pitch: pitch, startBeat: beat, duration: vm.lastNoteDuration)
                         }
+                    } else if vm.isMultiSelectMode && !vm.selectedNoteIds.isEmpty {
+                        // Multi-select mode with notes selected - do NOT deselect
+                        // This allows panning the background without losing selection
+                        return
                     } else {
                         // Normal mode - deselect everything and unlock background
                         vm.deselectAll()
@@ -639,9 +654,9 @@ struct PianoRollCanvasView: View {
     }
     
     private func createDragGesture(gridWidth: CGFloat, pitchRange: ClosedRange<UInt8>, rowHeight: CGFloat) -> some Gesture {
-        // Lower minimumDistance when background is locked (something selected)
-        // This allows precise dragging. When unlocked, higher distance lets scroll work.
-        DragGesture(minimumDistance: vm.isBackgroundLocked ? 5 : 15)
+        // Use low minimumDistance to quickly detect note drags and lock scroll
+        // The simultaneousGesture allows scroll to work until we detect a note drag
+        DragGesture(minimumDistance: 5)
             .onChanged { value in
                 handleDragChanged(value: value, gridWidth: gridWidth, pitchRange: pitchRange, rowHeight: rowHeight)
             }
@@ -653,6 +668,10 @@ struct PianoRollCanvasView: View {
     // Track if we're in a valid drag (note or playhead) vs empty space drag
     @State private var isValidDrag = false
     
+    // Track if we're dragging multiple notes
+    @State private var isMultiNoteDrag = false
+    @State private var multiDragStartY: CGFloat = 0
+    
     private func handleDragChanged(value: DragGesture.Value, gridWidth: CGFloat, pitchRange: ClosedRange<UInt8>, rowHeight: CGFloat) {
         // Initialize drag on first movement
         if dragStartLocation == nil {
@@ -662,14 +681,34 @@ struct PianoRollCanvasView: View {
             if vm.isPlayheadSelected && !vm.isPlaying {
                 isDraggingPlayhead = true
                 isValidDrag = true
+                isNoteDragActive = true  // Lock scroll during playhead drag
                 playheadDragBeat = vm.currentBeat
                 return
             }
             
-            // NEW: Only allow dragging if a note is already selected
+            // Check if we're in multi-select mode with notes selected
+            if vm.isMultiSelectMode && !vm.selectedNoteIds.isEmpty {
+                // Check if drag started on a selected note
+                if let tappedNote = noteAt(point: value.startLocation, gridWidth: gridWidth, pitchRange: pitchRange, rowHeight: rowHeight),
+                   vm.selectedNoteIds.contains(tappedNote.id) {
+                    // Start multi-note drag
+                    isValidDrag = true
+                    isMultiNoteDrag = true
+                    isNoteDragActive = true  // Lock scroll during note drag
+                    multiDragStartY = value.startLocation.y
+                    vm.beginMultiDrag()
+                    return
+                }
+                // Tapped on empty space or non-selected note - allow scroll (no drag)
+                isValidDrag = false
+                return
+            }
+            
+            // Single-select mode: Only allow dragging if a note is already selected
             if let selectedId = vm.selectedNoteId,
                let note = track.notes.first(where: { $0.id == selectedId }) {
                 isValidDrag = true
+                isNoteDragActive = true  // Lock scroll during note drag
                 
                 // Only allow resize if in resize mode (activated by double-tap)
                 if vm.isResizeMode {
@@ -699,9 +738,24 @@ struct PianoRollCanvasView: View {
             return
         }
         
-        // Update drag preview
+        guard let startLoc = dragStartLocation else { return }
+        
+        // Handle multi-note dragging
+        if isMultiNoteDrag {
+            let deltaX = value.location.x - startLoc.x
+            let deltaBeats = (Double(deltaX) / Double(gridWidth)) * vm.loopLengthBeats
+            
+            // Calculate pitch delta from Y movement
+            let deltaY = value.location.y - multiDragStartY
+            let deltaPitchRows = Int(round(deltaY / rowHeight))
+            let deltaPitch = -deltaPitchRows  // Negative because moving down decreases pitch
+            
+            vm.updateMultiDragPosition(deltaBeats: deltaBeats, deltaPitch: deltaPitch)
+            return
+        }
+        
+        // Update single-note drag preview
         guard let startState = dragStartNoteState,
-              let startLoc = dragStartLocation,
               vm.draggedNoteId != nil else { return }
         
         let deltaX = value.location.x - startLoc.x
@@ -756,6 +810,19 @@ struct PianoRollCanvasView: View {
             playheadDragBeat = nil
             dragStartLocation = nil
             isValidDrag = false
+            isNoteDragActive = false  // Unlock scroll
+            autoScrollToPitch = nil
+            return
+        }
+        
+        // Handle multi-note drag end
+        if isMultiNoteDrag {
+            vm.endMultiDrag()
+            isMultiNoteDrag = false
+            multiDragStartY = 0
+            dragStartLocation = nil
+            isValidDrag = false
+            isNoteDragActive = false  // Unlock scroll
             autoScrollToPitch = nil
             return
         }
@@ -764,6 +831,7 @@ struct PianoRollCanvasView: View {
         dragStartLocation = nil
         dragStartNoteState = nil
         isValidDrag = false
+        isNoteDragActive = false  // Unlock scroll
         autoScrollToPitch = nil
     }
     

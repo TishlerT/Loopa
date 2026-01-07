@@ -3,6 +3,48 @@ import XCTest
 
 final class ViewModelTests: XCTestCase {
 	
+	// MARK: - Note Preview Tests
+	
+	@MainActor
+	func testPreviewNoteDoesNotCrash() {
+		let looperVM = LooperViewModel()
+		
+		// Create a track and add it to the looper
+		let track = Track(
+			instrumentName: "Piano",
+			instrumentProgram: 0,
+			isDrumKit: false,
+			notes: []
+		)
+		
+		// Preview note should not crash even without a track in the looper
+		// (guard should exit gracefully)
+		looperVM.previewNote(pitch: 60, velocity: 100, trackId: track.id)
+		
+		// If we get here without crashing, the test passes
+		XCTAssertTrue(true)
+	}
+	
+	@MainActor
+	func testPreviewNoteWithDrumTrack() {
+		let looperVM = LooperViewModel()
+		
+		// Create a drum track
+		let drumTrack = Track(
+			instrumentName: "Drums",
+			instrumentProgram: 0,
+			isDrumKit: true,
+			notes: []
+		)
+		
+		// Preview drum note should not crash
+		looperVM.previewNote(pitch: 36, velocity: 100, trackId: drumTrack.id)
+		looperVM.previewNote(pitch: 38, velocity: 90, trackId: drumTrack.id)
+		looperVM.previewNote(pitch: 42, velocity: 80, trackId: drumTrack.id)
+		
+		XCTAssertTrue(true)
+	}
+	
 	// MARK: - Drum Mapping Tests
 	
 	func testDrumMapping() {

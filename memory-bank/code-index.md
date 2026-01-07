@@ -32,9 +32,9 @@ One-paragraph summaries of source files for quick context loading.
 - **FreesoundModels.swift**: [EXCLUDED FROM BUILD] Decodable models for Freesound API responses. Excluded to remove Freesound API dependency.
 
 ## ViewModels/
-- **LooperViewModel.swift**: Main app state and business logic. Coordinates looper, audio engine, and UI state. Handles count-in timing, recording state, playback control, solo/mute, track quantization, and instrument changes. Uses CADisplayLink for screen-synced UI updates with `synchronizedProgressFraction` and `synchronizedBeat` computed properties that read directly from looper timing (bypasses Combine latency for audio-visual sync). Exposes state for TracksView and TrackFocusView.
+- **LooperViewModel.swift**: Main app state and business logic. Coordinates looper, audio engine, and UI state. Handles count-in timing, recording state, playback control, solo/mute, track quantization, and instrument changes. Uses CADisplayLink for screen-synced UI updates with `synchronizedProgressFraction` and `synchronizedBeat` computed properties that read directly from looper timing (bypasses Combine latency for audio-visual sync). Exposes state for TracksView and TrackFocusView. Includes `previewNote()` for audible feedback when adding notes in editors.
 - **TracksViewModel.swift**: ViewModel for Tracks mixer screen. Wraps LooperViewModel for track-specific operations (M/S/Q, volume, instrument). Manages quantize and instrument picker sheet state.
-- **TrackFocusViewModel.swift**: ViewModel for piano roll editor. Manages note selection, move, resize, delete operations. Supports grid snapping and loop bounds clamping. Syncs changes back to looper.
+- **TrackFocusViewModel.swift**: ViewModel for piano roll editor. Manages note selection, move, resize, delete operations. Supports grid snapping and loop bounds clamping. Syncs changes back to looper. Calls `previewNote()` when adding notes to provide audible feedback. Includes multi-select mode with `selectedNoteIds` set and multi-drag support: `beginMultiDrag()`, `updateMultiDragPosition()`, `endMultiDrag()` methods allow moving multiple selected notes together while preserving relative positions.
 - **TishViewModel.swift**: [EXCLUDED FROM BUILD] Legacy view model for ContentView. Excluded along with ContentView.
 
 ## UI/Screens/
@@ -52,7 +52,7 @@ One-paragraph summaries of source files for quick context loading.
 - **LoopVisualization.swift**: [EXCLUDED FROM BUILD] Loop timeline visualization for legacy ContentView.
 - **BPMEditorView.swift**: BPM editor sheet with +/- 1 and +/- 5 stepper buttons, numeric input field, and common tempo presets (80/100/120/140). Range clamped 40-240.
 - **TrackMixerRow.swift**: Single track row for Tracks mixer. Shows track icon, name, M/S/Q toggle buttons, volume slider (with real-time audio feedback during drag), and instrument picker button. Includes QuantizeOptionsSheet and InstrumentPickerSheet.
-- **PianoRollCanvasView.swift**: Canvas-based piano roll rendering. Draws grid lines, note rectangles (rounded, color-coded), selection border, and resize handles. Supports tap-to-select, drag-to-move, handle-drag-to-resize, and long-press-to-delete gestures.
+- **PianoRollCanvasView.swift**: Canvas-based piano roll rendering. Draws grid lines, note rectangles (rounded, color-coded), selection border, and resize handles. Supports tap-to-select, drag-to-move, handle-drag-to-resize, and long-press-to-delete gestures. In multi-select mode, supports dragging multiple selected notes together with visual preview for all notes during drag. Tapping empty space in multi-select mode does not deselect (allows panning with selection). Scroll is only disabled during active note/playhead drag (not just when notes are selected), so users can pan the canvas freely even with notes selected.
 - **DrumGridView.swift**: Step sequencer grid for drum tracks. Shows 16th-note cells per drum sound (General MIDI pitches). Tap to toggle notes; supports velocity display and current-step highlighting.
 - **KeyboardLayer.swift**: Static visual layer for piano key rendering. Uses KeyboardLayoutEngine to build white/black key rectangles.
 - **KeyboardLayoutEngine.swift**: Shared keyboard layout engine for consistent key positioning. Calculates key frames, handles hit testing (black keys prioritized), used by KeyboardView and KeyboardLayer.
@@ -70,7 +70,7 @@ One-paragraph summaries of source files for quick context loading.
 - **MidiNoteTests.swift**: Tests for beat-based quantization, grid snapping, duration clamping, and MidiEvent-to-MidiNote conversion.
 - **SoloMuteTests.swift**: Tests for Track.isAudible() logic covering mute, solo, and combinations.
 - **TrackVolumeTests.swift**: Tests for track volume independence. Verifies that changing one track's volume doesn't affect other tracks. Covers MIDI tracks, vocal tracks, mixed types, volume clamping (0-1), mute/solo interactions, and session loading.
-- **TrackFocusViewModelTests.swift**: Tests for note selection, move (with snap/clamp), resize (with minimum/clamp), delete, add, chords independence, grid step, and quantize track.
+- **TrackFocusViewModelTests.swift**: Tests for note selection, move (with snap/clamp), resize (with minimum/clamp), delete, add, chords independence, grid step, quantize track, copy/paste with relative offset preservation, and multi-drag (preserves relative positions, preview positions, background lock state, grid snapping, state cleanup on deselect).
 - **AudioEngineTests.swift**: Unit tests for AudioEngine initialization and playback.
 - **KeyboardSamplerTests.swift**: Unit tests for keyboard sampler note routing.
 - **MidiLooperTests.swift**: Unit tests for MIDI looper recording and playback.

@@ -34,8 +34,8 @@
   - Pre-configure audio session during count-in (prevents playback interruption)
 
 ## Test Status
-- Total: 141 tests (121 unit + 20 UI)
-- Passing: 121 unit tests (UI tests experiencing simulator infrastructure issues)
+- Total: 152 tests (unit tests, UI tests excluded due to simulator infrastructure issues)
+- Passing: 152 unit tests
 - Failing: 0 unit test failures
 
 ## Device Testing
@@ -67,6 +67,10 @@
 - [x] **Added TrackVolumeTests** - 18 new unit tests verifying track volume independence
 - [x] **Fixed multi-bar recording bug** - Recording a longer track after a shorter one no longer "crams" notes into first bar(s). Fixed `addLiveEvent()` and `stopRecording()` to use recording loop length instead of global loop length.
 - [x] **Fixed piano roll note disappearing bug** - Notes no longer disappear when dragged to pitch row boundaries. Changed `handleDragChanged()` to use absolute Y-position with `floor()` for reliable pitch snapping. Also added protection against long-press deletion during drag and for already-selected notes.
+- [x] **Verified copy/paste relative offset preservation** - Added 5 unit tests confirming that copied notes preserve their relative timing offsets when pasted. The leftmost note becomes the reference point (offset 0), and all other notes maintain their offsets from it. Implementation was already correct.
+- [x] **Fixed test build issues** - Fixed ScreenshotTests (added Fastlane stub functions) and TrackVolumeTests (Float vs Double type mismatch).
+- [x] **Note preview on add** - Adding notes in piano roll or drum grid now plays the sound immediately. Added `previewNote()` to LooperViewModel with auto-stop after ~150ms. Works for all instruments including drums.
+- [x] **Multi-note drag** - In multi-select mode, selecting multiple notes and dragging one now moves all selected notes together with their relative positions preserved. Tapping empty space no longer deselects notes (allows panning). Added 5 new unit tests for multi-drag behavior.
 
 ## Optional Future Enhancements
 - [ ] Add double-tap to add note in piano roll

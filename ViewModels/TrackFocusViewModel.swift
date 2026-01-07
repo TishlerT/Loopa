@@ -69,10 +69,27 @@ final class TrackFocusViewModel: ObservableObject {
     /// Last selected note duration (for new notes)
     @Published var lastNoteDuration: Double = 0.25
     
+    // MARK: - Multi-Drag State
+    
+    /// Whether we're currently dragging multiple notes
+    @Published var isMultiDragging = false
+    
+    /// Starting positions of all notes being dragged (captured at drag start)
+    var multiDragStartPositions: [UUID: (startBeat: Double, pitch: UInt8)] = [:]
+    
+    /// Delta values for multi-drag preview (applied to all selected notes)
+    @Published var multiDragDeltaBeats: Double = 0
+    @Published var multiDragDeltaPitch: Int = 0
+    
     // MARK: - Background Lock State (for tap-to-select-then-drag)
     
     /// When true, the ScrollView is locked and only the selected item can be dragged
-    @Published var isBackgroundLocked: Bool = false
+    /// Computed based on selection state - true when any note or playhead is selected
+    var isBackgroundLocked: Bool {
+        selectedNoteId != nil || 
+        isPlayheadSelected || 
+        (isMultiSelectMode && !selectedNoteIds.isEmpty)
+    }
     
     /// When true, the playhead is selected (for dragging)
     @Published var isPlayheadSelected: Bool = false
@@ -185,7 +202,6 @@ final class TrackFocusViewModel: ObservableObject {
     func selectNote(_ noteId: UUID?) {
         selectedNoteId = noteId
         isPlayheadSelected = false  // Deselect playhead when selecting a note
-        isBackgroundLocked = noteId != nil  // Lock background when note is selected
         // Track the duration of selected note for new notes
         if let noteId = noteId,
            let note = track.notes.first(where: { $0.id == noteId }) {
@@ -197,14 +213,12 @@ final class TrackFocusViewModel: ObservableObject {
     func deselectNote() {
         selectedNoteId = nil
         isResizeMode = false
-        isBackgroundLocked = false  // Unlock background
     }
     
     /// Select the playhead for dragging
     func selectPlayhead() {
         selectedNoteId = nil
         isPlayheadSelected = true
-        isBackgroundLocked = true
         HapticManager.shared.selectionChanged()
     }
     
@@ -214,7 +228,7 @@ final class TrackFocusViewModel: ObservableObject {
         selectedNoteIds.removeAll()
         isPlayheadSelected = false
         isResizeMode = false
-        isBackgroundLocked = false
+        clearMultiDragState()
     }
     
     /// Toggle resize mode for the selected note
@@ -511,6 +525,10 @@ final class TrackFocusViewModel: ObservableObject {
         track.notes.sort { $0.startBeat < $1.startBeat }
         selectedNoteId = note.id
         syncToLooper()
+        
+        // Play preview sound for the added note
+        looperVM.previewNote(pitch: pitch, velocity: velocity, trackId: trackId)
+        
         HapticManager.shared.selectionChanged()
     }
     
@@ -625,6 +643,84 @@ final class TrackFocusViewModel: ObservableObject {
         dragPreviewPitch = nil
         isResizing = false
         resizeEdge = .trailing
+    }
+    
+    // MARK: - Multi-Drag Handling
+    
+    /// Begin dragging multiple selected notes
+    func beginMultiDrag() {
+        guard isMultiSelectMode && !selectedNoteIds.isEmpty else { return }
+        
+        isMultiDragging = true
+        multiDragDeltaBeats = 0
+        multiDragDeltaPitch = 0
+        
+        // Capture starting positions of all selected notes
+        multiDragStartPositions.removeAll()
+        for noteId in selectedNoteIds {
+            if let note = track.notes.first(where: { $0.id == noteId }) {
+                multiDragStartPositions[noteId] = (startBeat: note.startBeat, pitch: note.pitch)
+            }
+        }
+    }
+    
+    /// Update multi-drag preview with delta from start position
+    func updateMultiDragPosition(deltaBeats: Double, deltaPitch: Int) {
+        multiDragDeltaBeats = snapToGrid(deltaBeats)
+        multiDragDeltaPitch = deltaPitch
+    }
+    
+    /// Get preview position for a note during multi-drag
+    func multiDragPreviewPosition(for noteId: UUID) -> (startBeat: Double, pitch: UInt8)? {
+        guard isMultiDragging,
+              let startPos = multiDragStartPositions[noteId] else { return nil }
+        
+        let newStartBeat = max(0, startPos.startBeat + multiDragDeltaBeats)
+        let newPitch = max(0, min(127, Int(startPos.pitch) + multiDragDeltaPitch))
+        
+        return (startBeat: newStartBeat, pitch: UInt8(newPitch))
+    }
+    
+    /// Commit multi-drag - move all selected notes by the delta
+    func endMultiDrag() {
+        guard isMultiDragging else { return }
+        
+        saveUndoState()
+        
+        // Apply delta to all selected notes
+        for noteId in selectedNoteIds {
+            guard let startPos = multiDragStartPositions[noteId],
+                  let index = track.notes.firstIndex(where: { $0.id == noteId }) else { continue }
+            
+            let note = track.notes[index]
+            
+            // Calculate new position
+            let newStartBeat = startPos.startBeat + multiDragDeltaBeats
+            let newPitch = Int(startPos.pitch) + multiDragDeltaPitch
+            
+            // Clamp values
+            let clampedBeat = clampStartBeat(snapToGrid(newStartBeat), duration: note.durationBeats)
+            let clampedPitch = UInt8(max(0, min(127, newPitch)))
+            
+            track.notes[index].startBeat = clampedBeat
+            track.notes[index].pitch = clampedPitch
+        }
+        
+        syncToLooper()
+        clearMultiDragState()
+    }
+    
+    /// Cancel multi-drag without applying changes
+    func cancelMultiDrag() {
+        clearMultiDragState()
+    }
+    
+    /// Clear multi-drag state
+    private func clearMultiDragState() {
+        isMultiDragging = false
+        multiDragStartPositions.removeAll()
+        multiDragDeltaBeats = 0
+        multiDragDeltaPitch = 0
     }
     
     // MARK: - Sync to Looper
