@@ -4,6 +4,13 @@
 UX improvements and polish for app release.
 
 ## Recent Work (This Session)
+1. **Fixed iPad MIDI Editor Playhead Selection Bug** - Bug fix:
+   - **Issue:** On iPad, tapping notes in the piano roll editor would accidentally select the playhead instead.
+   - **Root Cause:** Two issues: (1) `playheadHitWidth` was fixed at 30pt and didn't scale for iPad's larger screen, (2) tap gesture checked playhead BEFORE notes, so any tap near the playhead would select it instead of the intended note.
+   - **Fix:** Made `playheadHitWidth` adaptive (20pt on iPad, 30pt on iPhone) and reordered tap gesture to check notes FIRST, then playhead only if no note was found.
+   - All 158 unit tests + 20 UI tests pass on both iPad and iPhone
+
+## Previous Sessions
 1. **Fixed First Vocal Recording Bug** - Bug fix:
    - **Issue:** First vocal recording after app restart failed silently. Waveform visual incorrectly responded to metronome during count-in instead of actual voice input.
    - **Root Cause:** `stopMonitoring()` reset audio session to `.playback` mode even when `sessionPreparedForRecording` was true (set during count-in). Then `startRecording()` skipped session config because it thought session was already prepared.

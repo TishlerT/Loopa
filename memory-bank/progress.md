@@ -59,6 +59,7 @@
 4. Apple Developer account verification
 
 ## Final Fixes (Jan 2026)
+- [x] Fixed iPad MIDI editor playhead selection: Notes now have priority over playhead in tap detection, and playhead hit zone is tighter on iPad (20pt vs 30pt on iPhone)
 - [x] Fixed audio export: MIDI notes now render correctly in offline mode (sample-accurate triggering)
 - [x] Share Beat now exports playable M4A audio instead of .loopa project files
 - [x] Privacy Policy now links to tishstudios.com/privacy instead of showing in-app view
