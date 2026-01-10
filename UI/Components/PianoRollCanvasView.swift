@@ -43,8 +43,8 @@ struct PianoRollCanvasView: View {
     private var isIPad: Bool { sizeClass == .regular }
     
     // Layout constants - scale up for iPad
-    private var keyLabelWidth: CGFloat { isIPad ? 88 : 66 }    // Piano key (34) + text label (54) on iPad
-    private var baseRowHeight: CGFloat { isIPad ? 36 : 28 }    // Base height, scaled by vertical zoom
+    private var keyLabelWidth: CGFloat { isIPad ? 100 : 66 }    // Piano key (40) + text label (60) on iPad
+    private var baseRowHeight: CGFloat { isIPad ? 48 : 28 }    // Base height, scaled by vertical zoom
     private let handleWidth: CGFloat = 28      // Visual handle width
     private let handleHitWidth: CGFloat = 44   // Larger hit area for easier grabbing
     private let minNoteWidth: CGFloat = 22  // Increased for easier selection
@@ -52,8 +52,8 @@ struct PianoRollCanvasView: View {
     private let blackKeyWidthRatio: CGFloat = 0.65  // Black keys are narrower
     
     // Piano key label sizes
-    private var pianoKeyWidth: CGFloat { isIPad ? 34 : 26 }
-    private var textLabelWidth: CGFloat { isIPad ? 54 : 40 }
+    private var pianoKeyWidth: CGFloat { isIPad ? 40 : 26 }
+    private var textLabelWidth: CGFloat { isIPad ? 60 : 40 }
     private var cNoteFontSize: CGFloat { isIPad ? 14 : 10 }
     private var otherNoteFontSize: CGFloat { isIPad ? 12 : 9 }
     
@@ -67,7 +67,8 @@ struct PianoRollCanvasView: View {
     // State for playhead dragging
     @State private var isDraggingPlayhead = false
     @State private var playheadDragBeat: Double? = nil
-    private let playheadHitWidth: CGFloat = 30  // Hit area for playhead
+    // Playhead hit area - tighter on iPad to reduce accidental selection
+    private var playheadHitWidth: CGFloat { isIPad ? 20 : 30 }
     
     // State for pinch-to-zoom
     @State private var currentMagnification: CGFloat = 1.0
@@ -585,18 +586,8 @@ struct PianoRollCanvasView: View {
                 // Only handle taps when not dragging
                 guard dragStartLocation == nil else { return }
                 
-                // Check if tapping on playhead (only when paused)
-                if !vm.isPlaying && isOnPlayhead(point: value.location, gridWidth: gridWidth) {
-                    if vm.isPlayheadSelected {
-                        // Tapping already-selected playhead - deselect it
-                        vm.deselectAll()
-                    } else {
-                        // Select the playhead
-                        vm.selectPlayhead()
-                    }
-                    return
-                }
-                
+                // Check for note tap FIRST (higher priority than playhead)
+                // This prevents accidental playhead selection when tapping near notes
                 if let note = noteAt(point: value.location, gridWidth: gridWidth, pitchRange: pitchRange, rowHeight: rowHeight) {
                     // Delete mode: immediately delete the note
                     if vm.isDeleteMode {
@@ -618,22 +609,35 @@ struct PianoRollCanvasView: View {
                         vm.exitResizeMode()
                         vm.selectNote(note.id)
                     }
-                } else {
-                    // Tapping empty space
-                    if vm.isAddNoteMode {
-                        // Add note mode: add a note at this position
-                        if let pitch = pitchAt(point: value.location, pitchRange: pitchRange, rowHeight: rowHeight) {
-                            let beat = beatAt(point: value.location, gridWidth: gridWidth)
-                            vm.addNote(pitch: pitch, startBeat: beat, duration: vm.lastNoteDuration)
-                        }
-                    } else if vm.isMultiSelectMode && !vm.selectedNoteIds.isEmpty {
-                        // Multi-select mode with notes selected - do NOT deselect
-                        // This allows panning the background without losing selection
-                        return
-                    } else {
-                        // Normal mode - deselect everything and unlock background
+                    return
+                }
+                
+                // Check if tapping on playhead (only when paused and no note was tapped)
+                if !vm.isPlaying && isOnPlayhead(point: value.location, gridWidth: gridWidth) {
+                    if vm.isPlayheadSelected {
+                        // Tapping already-selected playhead - deselect it
                         vm.deselectAll()
+                    } else {
+                        // Select the playhead
+                        vm.selectPlayhead()
                     }
+                    return
+                }
+                
+                // Tapping empty space (no note, no playhead)
+                if vm.isAddNoteMode {
+                    // Add note mode: add a note at this position
+                    if let pitch = pitchAt(point: value.location, pitchRange: pitchRange, rowHeight: rowHeight) {
+                        let beat = beatAt(point: value.location, gridWidth: gridWidth)
+                        vm.addNote(pitch: pitch, startBeat: beat, duration: vm.lastNoteDuration)
+                    }
+                } else if vm.isMultiSelectMode && !vm.selectedNoteIds.isEmpty {
+                    // Multi-select mode with notes selected - do NOT deselect
+                    // This allows panning the background without losing selection
+                    return
+                } else {
+                    // Normal mode - deselect everything and unlock background
+                    vm.deselectAll()
                 }
             }
     }

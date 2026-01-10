@@ -27,10 +27,18 @@ struct DrumSound: Identifiable {
 /// Step sequencer grid view for drum tracks
 struct DrumGridView: View {
     @ObservedObject var vm: TrackFocusViewModel
+    @Environment(\.horizontalSizeClass) private var sizeClass
     
-    private let rowHeight: CGFloat = 44
-    private let cellWidth: CGFloat = 36
-    private let labelWidth: CGFloat = 60
+    private var isIPad: Bool { sizeClass == .regular }
+    
+    // Layout constants - scale up for iPad
+    private var rowHeight: CGFloat { isIPad ? 56 : 44 }
+    private var cellWidth: CGFloat { isIPad ? 48 : 36 }
+    private var labelWidth: CGFloat { isIPad ? 80 : 60 }
+    private var iconSize: CGFloat { isIPad ? 16 : 12 }
+    private var labelFontSize: CGFloat { isIPad ? 14 : 11 }
+    private var stepFontSize: CGFloat { isIPad ? 13 : 10 }
+    private var noteIconSize: CGFloat { isIPad ? 18 : 14 }
     
     // Filtered drum sounds that have notes or are standard
     private var activeDrumSounds: [DrumSound] {
@@ -94,7 +102,7 @@ struct DrumGridView: View {
         HStack(spacing: 0) {
             // Empty corner
             Text("")
-                .frame(width: labelWidth, height: 24)
+                .frame(width: labelWidth, height: isIPad ? 30 : 24)
                 .background(Color(hex: "1A1A30"))
             
             // Step numbers
@@ -103,9 +111,9 @@ struct DrumGridView: View {
                 let beat = step / 4 + 1
                 
                 Text(isDownbeat ? "\(beat)" : "")
-                    .font(.system(size: 10, weight: .medium, design: .monospaced))
+                    .font(.system(size: stepFontSize, weight: .medium, design: .monospaced))
                     .foregroundColor(.white.opacity(0.5))
-                    .frame(width: cellWidth, height: 24)
+                    .frame(width: cellWidth, height: isIPad ? 30 : 24)
                     .background(isDownbeat ? Color.white.opacity(0.05) : Color.clear)
             }
         }
@@ -117,13 +125,13 @@ struct DrumGridView: View {
     private func drumRow(drum: DrumSound, stepsCount: Int) -> some View {
         HStack(spacing: 0) {
             // Drum label
-            HStack(spacing: 6) {
+            HStack(spacing: isIPad ? 8 : 6) {
                 Image(systemName: drum.icon)
-                    .font(.system(size: 12))
+                    .font(.system(size: iconSize))
                     .foregroundColor(Color(hex: "FF9500"))
                 
                 Text(drum.shortName)
-                    .font(.system(size: 11, weight: .medium, design: .monospaced))
+                    .font(.system(size: labelFontSize, weight: .medium, design: .monospaced))
                     .foregroundColor(.white.opacity(0.8))
             }
             .frame(width: labelWidth, height: rowHeight)
@@ -164,7 +172,7 @@ struct DrumGridView: View {
                         .frame(width: cellWidth - 6, height: rowHeight - 8)
                     
                     Image(systemName: drum.icon)
-                        .font(.system(size: 14))
+                        .font(.system(size: noteIconSize))
                         .foregroundColor(.white)
                 }
             }

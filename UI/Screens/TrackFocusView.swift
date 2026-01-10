@@ -28,7 +28,7 @@ struct TrackFocusView: View {
     
     // Header bar sizing - further enlarged for iPad visibility/touch
     private var headerPadH: CGFloat { isIPad ? 36 : 12 }
-    private var headerPadV: CGFloat { isIPad ? 14 : 8 }  // Reduced vertical padding for more editor space
+    private var headerPadV: CGFloat { isIPad ? 10 : 8 }  // Reduced vertical padding for more editor space
     private var closeTextSize: CGFloat { isIPad ? 26 : 14 }
     private var headerTransportSize: CGFloat { isIPad ? 68 : 34 }
     private var headerTransportIconSize: CGFloat { isIPad ? 28 : 14 }
@@ -40,7 +40,7 @@ struct TrackFocusView: View {
     
     // Toolbar sizing - further enlarged for iPad visibility/touch
     private var toolbarPadH: CGFloat { isIPad ? 32 : 10 }
-    private var toolbarPadV: CGFloat { isIPad ? 10 : 6 }  // Reduced vertical padding for more editor space
+    private var toolbarPadV: CGFloat { isIPad ? 6 : 6 }  // Reduced vertical padding for more editor space
     private var toolbarButtonSize: CGFloat { isIPad ? 56 : 28 }
     private var toolbarIconSize: CGFloat { isIPad ? 26 : 14 }
     private var toolbarSmallIconSize: CGFloat { isIPad ? 24 : 12 }
@@ -50,7 +50,7 @@ struct TrackFocusView: View {
     
     // Helper bar sizing - further enlarged for iPad visibility/touch
     private var helperPadH: CGFloat { isIPad ? 40 : 16 }
-    private var helperPadV: CGFloat { isIPad ? 24 : 10 }
+    private var helperPadV: CGFloat { isIPad ? 14 : 10 }
     private var helperIconSize: CGFloat { isIPad ? 24 : 12 }
     private var helperTextSize: CGFloat { isIPad ? 20 : 11 }
     private var helperSpacing: CGFloat { isIPad ? 40 : 16 }
