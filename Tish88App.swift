@@ -12,6 +12,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
 struct LoopaApp: App {
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	@StateObject private var looperVM = LooperViewModel()
+	@Environment(\.scenePhase) private var scenePhase
 	
 	var body: some Scene {
 		WindowGroup {
@@ -20,6 +21,16 @@ struct LoopaApp: App {
 				.onOpenURL { url in
 					handleIncomingFile(url)
 				}
+				.onAppear {
+					// Restore working session on launch
+					looperVM.restoreWorkingSession()
+				}
+		}
+		.onChange(of: scenePhase) { oldPhase, newPhase in
+			if newPhase == .background || newPhase == .inactive {
+				// Auto-save when app goes to background
+				looperVM.saveWorkingSession()
+			}
 		}
 	}
 	

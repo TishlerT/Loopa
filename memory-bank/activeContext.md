@@ -4,6 +4,15 @@
 UX improvements and polish for app release.
 
 ## Recent Work (This Session)
+1. **Auto-Save/Auto-Restore Working Session** - New feature:
+   - App now automatically saves the current session when going to background
+   - On next launch, the session is automatically restored
+   - Works even if user swipes app away without saving
+   - Clears auto-save when user explicitly saves or clears all tracks
+   - Added 6 unit tests for working session persistence
+   - All 158 unit tests pass
+
+## Previous Sessions
 1. **Fixed Timeline Sync Bug** - Bug fix:
    - **Issue:** When recording tracks with different bar counts, the beat indicator (highlighted box) and progress bar would desync visually.
    - **Root Cause:** `synchronizedBeat` used `looper.synchronizedPlaybackPosition` (based on longest existing track's loop length), while `synchronizedProgressFraction` used `recordingProgress` (based on barCount setting) during recording. When these differed, the visuals desynced.

@@ -10,10 +10,21 @@ final class VocalRecorder: ObservableObject {
 	@Published private(set) var hasPermission = false
 	@Published var permissionDenied = false
 	
+	/// Current audio input level (0.0 to 1.0) for waveform visualization
+	@Published private(set) var currentLevel: Float = 0
+	
+	/// Whether input monitoring is active (for waveform display when not recording)
+	@Published private(set) var isMonitoring = false
+	
 	// MARK: - Audio Components
 	
 	private var audioRecorder: AVAudioRecorder?
 	private var audioPlayers: [UUID: AVAudioPlayer] = [:]
+	
+	// MARK: - Input Monitoring (for waveform when not recording)
+	
+	private var monitoringEngine: AVAudioEngine?
+	private var meteringTimer: Timer?
 	
 	// MARK: - File Management
 	
@@ -90,6 +101,11 @@ final class VocalRecorder: ObservableObject {
 			return nil
 		}
 		
+		// Stop monitoring if it was running (we'll use recorder metering instead)
+		if isMonitoring {
+			stopMonitoring()
+		}
+		
 		// Generate unique filename
 		let filename = "vocal_\(UUID().uuidString).m4a"
 		let fileURL = vocalsDirectory.appendingPathComponent(filename)
@@ -120,6 +136,10 @@ final class VocalRecorder: ObservableObject {
 			audioRecorder?.prepareToRecord()
 			audioRecorder?.record()
 			isRecording = true
+			
+			// Start metering for waveform visualization
+			startMeteringTimer()
+			
 			print("🎤 Started recording: \(filename)")
 			return filename
 		} catch {
@@ -131,6 +151,9 @@ final class VocalRecorder: ObservableObject {
 	/// Stop recording and return success
 	func stopRecording() -> Bool {
 		guard isRecording, let recorder = audioRecorder else { return false }
+		
+		// Stop metering timer
+		stopMeteringTimer()
 		
 		recorder.stop()
 		isRecording = false
@@ -249,6 +272,129 @@ final class VocalRecorder: ObservableObject {
 			if diff > 0.1 {
 				player.currentTime = normalizedPosition
 			}
+		}
+	}
+	
+	// MARK: - Input Monitoring (Waveform Display)
+	
+	/// Start monitoring microphone input for waveform visualization
+	/// Call this when entering vocal mode (before recording starts)
+	func startMonitoring() {
+		guard !isMonitoring && !isRecording else { return }
+		guard hasPermission else {
+			print("⚠️ Cannot monitor: no microphone permission")
+			return
+		}
+		
+		do {
+			let session = AVAudioSession.sharedInstance()
+			try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
+			try session.setActive(true)
+			
+			monitoringEngine = AVAudioEngine()
+			guard let engine = monitoringEngine else { return }
+			
+			let inputNode = engine.inputNode
+			let format = inputNode.outputFormat(forBus: 0)
+			
+			// Install a tap on the input to measure levels
+			inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { [weak self] buffer, _ in
+				self?.processAudioBuffer(buffer)
+			}
+			
+			try engine.start()
+			isMonitoring = true
+			print("🎤 Started input monitoring for waveform")
+		} catch {
+			print("❌ Failed to start input monitoring: \(error)")
+		}
+	}
+	
+	/// Stop monitoring microphone input
+	func stopMonitoring() {
+		guard isMonitoring else { return }
+		
+		monitoringEngine?.inputNode.removeTap(onBus: 0)
+		monitoringEngine?.stop()
+		monitoringEngine = nil
+		isMonitoring = false
+		currentLevel = 0
+		
+		// Only reset audio session if not recording
+		if !isRecording {
+			do {
+				let session = AVAudioSession.sharedInstance()
+				try session.setCategory(.playback, mode: .default)
+				try session.setActive(true)
+			} catch {
+				print("⚠️ Failed to reset audio session: \(error)")
+			}
+		}
+		
+		print("🎤 Stopped input monitoring")
+	}
+	
+	/// Process audio buffer to extract level for visualization
+	private func processAudioBuffer(_ buffer: AVAudioPCMBuffer) {
+		guard let channelData = buffer.floatChannelData?[0] else { return }
+		let frameLength = Int(buffer.frameLength)
+		
+		// Calculate RMS (root mean square) for better level representation
+		var sum: Float = 0
+		for i in 0..<frameLength {
+			let sample = channelData[i]
+			sum += sample * sample
+		}
+		let rms = sqrt(sum / Float(frameLength))
+		
+		// Convert to 0-1 range with some amplification for visual impact
+		// RMS values are typically quite small, so we amplify
+		let normalizedLevel = min(1.0, rms * 5.0)
+		
+		DispatchQueue.main.async { [weak self] in
+			// Smooth the level changes for better visual appearance
+			let smoothing: Float = 0.3
+			self?.currentLevel = (self?.currentLevel ?? 0) * (1 - smoothing) + normalizedLevel * smoothing
+		}
+	}
+	
+	/// Start metering timer for recording (uses AVAudioRecorder's built-in metering)
+	private func startMeteringTimer() {
+		audioRecorder?.isMeteringEnabled = true
+		
+		meteringTimer = Timer.scheduledTimer(withTimeInterval: 1.0/60.0, repeats: true) { [weak self] _ in
+			self?.updateRecordingLevel()
+		}
+	}
+	
+	/// Stop metering timer
+	private func stopMeteringTimer() {
+		meteringTimer?.invalidate()
+		meteringTimer = nil
+		currentLevel = 0
+	}
+	
+	/// Update level from AVAudioRecorder during recording
+	private func updateRecordingLevel() {
+		guard let recorder = audioRecorder, recorder.isRecording else { return }
+		
+		recorder.updateMeters()
+		
+		// Get average power in decibels (-160 to 0)
+		let decibels = recorder.averagePower(forChannel: 0)
+		
+		// Convert decibels to linear scale (0.0 to 1.0)
+		// -60 dB is effectively silence, 0 dB is max
+		let minDb: Float = -60
+		let normalizedLevel: Float
+		if decibels < minDb {
+			normalizedLevel = 0
+		} else {
+			normalizedLevel = (decibels - minDb) / abs(minDb)
+		}
+		
+		DispatchQueue.main.async { [weak self] in
+			self?.currentLevel = normalizedLevel
 		}
 	}
 }

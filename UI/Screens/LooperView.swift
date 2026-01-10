@@ -10,6 +10,10 @@ struct LooperView: View {
 	/// Preview position during drag (nil when not dragging)
 	@State private var seekPreviewPosition: Double? = nil
 	
+	/// New session confirmation alert
+	@State private var showNewSessionAlert = false
+	@State private var shouldClearAfterSave = false
+	
 	// MARK: - iPad Detection & Sizing
 	
 	private var isIPad: Bool { sizeClass == .regular }
@@ -89,71 +93,91 @@ struct LooperView: View {
 						Spacer()
 					}
 					
-					// Keyboard with octave controls
-					HStack(spacing: 0) {
-						// Octave down button
-						Button {
-							vm.octaveDown()
-						} label: {
-							VStack(spacing: 4) {
-								Image(systemName: "chevron.down")
-									.font(.system(size: octaveIconSize, weight: .bold))
-								Text("OCT")
-									.font(.system(size: octaveLabelSize, weight: .bold))
-							}
-							.foregroundColor(vm.octaveOffset > -2 ? .white : .white.opacity(0.3))
-							.frame(width: octaveButtonWidth)
-							.frame(maxHeight: .infinity)
-							.background(Color(hex: "2A2A4A"))
+					// Keyboard or Vocal Waveform (depending on mode)
+					if vm.isVocalMode {
+						// Vocal mode: show waveform visualization
+						VocalWaveformView(
+							audioLevel: vm.vocalRecorder.currentLevel,
+							isRecording: vm.isRecordingVocals,
+							isCountingIn: vm.isCountingIn,
+							countInBeat: vm.countInBeat
+						)
+						.frame(height: isIPad ? geo.size.height * 0.50 : nil)
+						.padding(.horizontal, isIPad ? 24 : 16)
+						.padding(.bottom, isIPad ? 16 : 8)
+						.onAppear {
+							vm.vocalRecorder.startMonitoring()
 						}
-						.disabled(vm.octaveOffset <= -2)
-						
-						// Keyboard
-						VStack(spacing: 0) {
-							// Octave indicator (hidden for drum kit)
-							if !vm.currentInstrument.isDrumKit {
-								Text(vm.currentOctaveName)
-									.font(.system(size: isIPad ? 14 : 11, weight: .bold, design: .monospaced))
-									.foregroundColor(.white.opacity(0.5))
-									.frame(height: isIPad ? 24 : 16)
-							} else {
-								Spacer().frame(height: isIPad ? 24 : 16)
+						.onDisappear {
+							vm.vocalRecorder.stopMonitoring()
+						}
+					} else {
+						// Instrument mode: show keyboard with octave controls
+						HStack(spacing: 0) {
+							// Octave down button
+							Button {
+								vm.octaveDown()
+							} label: {
+								VStack(spacing: 4) {
+									Image(systemName: "chevron.down")
+										.font(.system(size: octaveIconSize, weight: .bold))
+									Text("OCT")
+										.font(.system(size: octaveLabelSize, weight: .bold))
+								}
+								.foregroundColor(vm.octaveOffset > -2 ? .white : .white.opacity(0.3))
+								.frame(width: octaveButtonWidth)
+								.frame(maxHeight: .infinity)
+								.background(Color(hex: "2A2A4A"))
 							}
+							.disabled(vm.octaveOffset <= -2)
 							
-							FullKeyboardView(
-								startNote: vm.startNote,
-								keyCount: vm.keyCount,
-								isDrumKit: vm.currentInstrument.isDrumKit
-							) { event in
-								switch event {
-								case .down(let note, let velocity):
-									vm.noteOn(note, velocity: velocity)
-								case .up(let note):
-									vm.noteOff(note)
+							// Keyboard
+							VStack(spacing: 0) {
+								// Octave indicator (hidden for drum kit)
+								if !vm.currentInstrument.isDrumKit {
+									Text(vm.currentOctaveName)
+										.font(.system(size: isIPad ? 14 : 11, weight: .bold, design: .monospaced))
+										.foregroundColor(.white.opacity(0.5))
+										.frame(height: isIPad ? 24 : 16)
+								} else {
+									Spacer().frame(height: isIPad ? 24 : 16)
+								}
+								
+								FullKeyboardView(
+									startNote: vm.startNote,
+									keyCount: vm.keyCount,
+									isDrumKit: vm.currentInstrument.isDrumKit
+								) { event in
+									switch event {
+									case .down(let note, let velocity):
+										vm.noteOn(note, velocity: velocity)
+									case .up(let note):
+										vm.noteOff(note)
+									}
 								}
 							}
-						}
-						
-						// Octave up button
-						Button {
-							vm.octaveUp()
-						} label: {
-							VStack(spacing: 4) {
-								Image(systemName: "chevron.up")
-									.font(.system(size: octaveIconSize, weight: .bold))
-								Text("OCT")
-									.font(.system(size: octaveLabelSize, weight: .bold))
+							
+							// Octave up button
+							Button {
+								vm.octaveUp()
+							} label: {
+								VStack(spacing: 4) {
+									Image(systemName: "chevron.up")
+										.font(.system(size: octaveIconSize, weight: .bold))
+									Text("OCT")
+										.font(.system(size: octaveLabelSize, weight: .bold))
+								}
+								.foregroundColor(vm.octaveOffset < 2 ? .white : .white.opacity(0.3))
+								.frame(width: octaveButtonWidth)
+								.frame(maxHeight: .infinity)
+								.background(Color(hex: "2A2A4A"))
 							}
-							.foregroundColor(vm.octaveOffset < 2 ? .white : .white.opacity(0.3))
-							.frame(width: octaveButtonWidth)
-							.frame(maxHeight: .infinity)
-							.background(Color(hex: "2A2A4A"))
+							.disabled(vm.octaveOffset >= 2)
 						}
-						.disabled(vm.octaveOffset >= 2)
+						// On iPad, constrain keyboard height to ~50% of screen
+						.frame(height: isIPad ? geo.size.height * 0.50 : nil)
+						.padding(.bottom, isIPad ? 16 : 8)
 					}
-					// On iPad, constrain keyboard height to ~50% of screen
-					.frame(height: isIPad ? geo.size.height * 0.50 : nil)
-					.padding(.bottom, isIPad ? 16 : 8)
 				}
 				
 				// Right-edge Tracks button
@@ -163,6 +187,14 @@ struct LooperView: View {
 		.preferredColorScheme(.dark)
 		.onAppear {
 			tracksVM = TracksViewModel(looperVM: vm)
+		}
+		.onChange(of: vm.isVocalMode) { _, isVocal in
+			// Start/stop input monitoring when vocal mode changes
+			if isVocal {
+				vm.vocalRecorder.startMonitoring()
+			} else {
+				vm.vocalRecorder.stopMonitoring()
+			}
 		}
 		// On iPad, use fullScreenCover for TracksView; on iPhone, use sheet
 		.sheet(isPresented: Binding(
@@ -194,9 +226,16 @@ struct LooperView: View {
 				onSave: { name in
 					vm.saveCurrentSession(name: name)
 					vm.showingSaveSheet = false
+					// If triggered from New Session, clear after saving
+					if shouldClearAfterSave {
+						vm.clearAll()
+						vm.currentSessionName = ""
+						shouldClearAfterSave = false
+					}
 				},
 				onCancel: {
 					vm.showingSaveSheet = false
+					shouldClearAfterSave = false
 				}
 			)
 			.presentationDetents([.height(200)])
@@ -234,6 +273,19 @@ struct LooperView: View {
 			Button("Cancel", role: .cancel) {}
 		} message: {
 			Text("For best results, use headphones while recording vocals. This prevents the backing tracks from being picked up by your microphone.")
+		}
+		.alert("Save Session?", isPresented: $showNewSessionAlert) {
+			Button("Save") {
+				shouldClearAfterSave = true
+				vm.showingSaveSheet = true
+			}
+			Button("Don't Save", role: .destructive) {
+				vm.clearAll()
+				vm.currentSessionName = ""
+			}
+			Button("Cancel", role: .cancel) {}
+		} message: {
+			Text("Do you want to save your current session before starting a new one?")
 		}
 		.sheet(isPresented: $vm.showingSettings) {
 			SettingsView()
@@ -441,6 +493,20 @@ struct LooperView: View {
 			
 			// Save/Load/Share menu
 			Menu {
+				Button {
+					if vm.tracks.isEmpty {
+						// No tracks, just reset session name
+						vm.currentSessionName = ""
+					} else {
+						// Show save confirmation
+						showNewSessionAlert = true
+					}
+				} label: {
+					Label("New Session", systemImage: "plus")
+				}
+				
+				Divider()
+				
 				Button {
 					vm.showingSaveSheet = true
 				} label: {

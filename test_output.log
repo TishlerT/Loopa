@@ -1,14 +1,16 @@
 Command line invocation:
-    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project "/Users/tish/Documents/white iverson/Tish88/Loopa.xcodeproj" -scheme Loopa -destination "platform=iOS Simulator,name=iPhone 16 Pro" -resultBundlePath "/Users/tish/Documents/white iverson/Tish88/TestResults.xcresult" "-only-testing:LoopaUITests"
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project "/Users/tish/Documents/white iverson/Tish88/Loopa.xcodeproj" -scheme Loopa -destination "platform=iOS Simulator,name=iPhone 16 Pro" -resultBundlePath "/Users/tish/Documents/white iverson/Tish88/TestResults.xcresult" "-only-testing:LoopaTests"
 
-2026-01-03 23:37:49.346 xcodebuild[58365:4206220] warning:  The file reference for ".cursor" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
-2026-01-03 23:37:49.346 xcodebuild[58365:4206220] warning:  The file reference for ".maestro" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
-2026-01-03 23:37:49.346 xcodebuild[58365:4206220] warning:  The file reference for "Audio" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
-2026-01-03 23:37:49.346 xcodebuild[58365:4206220] warning:  The file reference for "fastlane" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
-2026-01-03 23:37:49.346 xcodebuild[58365:4206220] warning:  The file reference for "Looper" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
-2026-01-03 23:37:49.346 xcodebuild[58365:4206220] warning:  The file reference for "Models" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
-2026-01-03 23:37:49.346 xcodebuild[58365:4206220] warning:  The file reference for "UI" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
-2026-01-03 23:37:49.346 xcodebuild[58365:4206220] warning:  The file reference for "ViewModels" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
+2026-01-09 19:41:17.104 xcodebuild[1228:13493456] warning:  The file reference for ".cursor" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
+2026-01-09 19:41:17.105 xcodebuild[1228:13493456] warning:  The file reference for ".git" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
+2026-01-09 19:41:17.105 xcodebuild[1228:13493456] warning:  The file reference for ".maestro" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
+2026-01-09 19:41:17.105 xcodebuild[1228:13493456] warning:  The file reference for "Audio" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
+2026-01-09 19:41:17.105 xcodebuild[1228:13493456] warning:  The file reference for "fastlane" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
+2026-01-09 19:41:17.105 xcodebuild[1228:13493456] warning:  The file reference for "Looper" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
+2026-01-09 19:41:17.105 xcodebuild[1228:13493456] warning:  The file reference for "Models" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
+2026-01-09 19:41:17.105 xcodebuild[1228:13493456] warning:  The file reference for "screenshots" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
+2026-01-09 19:41:17.105 xcodebuild[1228:13493456] warning:  The file reference for "UI" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
+2026-01-09 19:41:17.105 xcodebuild[1228:13493456] warning:  The file reference for "ViewModels" is a member of multiple groups ("Tish88" and ""); this indicates a malformed project.  Only the membership in one of the groups will be preserved (but membership in targets will be unaffected).  If you want a reference to the same file in more than one group, please add another reference to the same path.
 Writing result bundle at path:
 	/Users/tish/Documents/white iverson/Tish88/TestResults.xcresult
 
@@ -46,57 +48,15 @@ SwiftDriver Loopa normal arm64 com.apple.xcode.tools.swift.compiler (in target '
     cd /Users/tish/Documents/white\ iverson/Tish88
     builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Loopa -Onone -enforce-exclusivity\=checked @/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/tish/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Index.noindex/DataStore -swift-version 5 -I /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -F /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -output-file-map /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/tish/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa_const_extract_protocols.json -Xcc -iquote -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-generated-files.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-own-target-headers.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-all-target-headers.hmap -Xcc -iquote -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-project-headers.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/DerivedSources-normal/arm64 -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/DerivedSources/arm64 -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa-Swift.h -working-directory /Users/tish/Documents/white\ iverson/Tish88 -experimental-emit-module-separately -disable-cmo
 
-SwiftEmitModule normal arm64 Emitting\ module\ for\ Loopa (in target 'Loopa' from project 'Loopa')
-
-EmitSwiftModule normal arm64 (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    
-
-SwiftCompile normal arm64 Compiling\ LooperAudioEngine.swift /Users/tish/Documents/white\ iverson/Tish88/Audio/LooperAudioEngine.swift (in target 'Loopa' from project 'Loopa')
-
-SwiftCompile normal arm64 /Users/tish/Documents/white\ iverson/Tish88/Audio/LooperAudioEngine.swift (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    
-
-SwiftCompile normal arm64 Compiling\ LooperViewModel.swift /Users/tish/Documents/white\ iverson/Tish88/ViewModels/LooperViewModel.swift (in target 'Loopa' from project 'Loopa')
-SwiftCompile normal arm64 /Users/tish/Documents/white\ iverson/Tish88/ViewModels/LooperViewModel.swift (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    
-
-SwiftDriverJobDiscovery normal arm64 Compiling LooperAudioEngine.swift (in target 'Loopa' from project 'Loopa')
-
 SwiftCompile normal arm64 Compiling\ LooperView.swift /Users/tish/Documents/white\ iverson/Tish88/UI/Screens/LooperView.swift (in target 'Loopa' from project 'Loopa')
+
 SwiftCompile normal arm64 /Users/tish/Documents/white\ iverson/Tish88/UI/Screens/LooperView.swift (in target 'Loopa' from project 'Loopa')
     cd /Users/tish/Documents/white\ iverson/Tish88
     
 
-SwiftCompile normal arm64 Compiling\ PianoRollCanvasView.swift /Users/tish/Documents/white\ iverson/Tish88/UI/Components/PianoRollCanvasView.swift (in target 'Loopa' from project 'Loopa')
+SwiftEmitModule normal arm64 Emitting\ module\ for\ Loopa (in target 'Loopa' from project 'Loopa')
 
-SwiftCompile normal arm64 /Users/tish/Documents/white\ iverson/Tish88/UI/Components/PianoRollCanvasView.swift (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    
-
-SwiftCompile normal arm64 Compiling\ TrackFocusView.swift /Users/tish/Documents/white\ iverson/Tish88/UI/Screens/TrackFocusView.swift (in target 'Loopa' from project 'Loopa')
-
-SwiftCompile normal arm64 /Users/tish/Documents/white\ iverson/Tish88/UI/Screens/TrackFocusView.swift (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    
-
-SwiftCompile normal arm64 Compiling\ Tish88App.swift /Users/tish/Documents/white\ iverson/Tish88/Tish88App.swift (in target 'Loopa' from project 'Loopa')
-
-SwiftCompile normal arm64 /Users/tish/Documents/white\ iverson/Tish88/Tish88App.swift (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    
-
-SwiftCompile normal arm64 Compiling\ TracksView.swift /Users/tish/Documents/white\ iverson/Tish88/UI/Screens/TracksView.swift (in target 'Loopa' from project 'Loopa')
-
-SwiftCompile normal arm64 /Users/tish/Documents/white\ iverson/Tish88/UI/Screens/TracksView.swift (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    
-
-SwiftCompile normal arm64 Compiling\ DrumGridView.swift /Users/tish/Documents/white\ iverson/Tish88/UI/Components/DrumGridView.swift (in target 'Loopa' from project 'Loopa')
-
-SwiftCompile normal arm64 /Users/tish/Documents/white\ iverson/Tish88/UI/Components/DrumGridView.swift (in target 'Loopa' from project 'Loopa')
+EmitSwiftModule normal arm64 (in target 'Loopa' from project 'Loopa')
     cd /Users/tish/Documents/white\ iverson/Tish88
     
 
@@ -106,14 +66,6 @@ SwiftDriver\ Compilation\ Requirements Loopa normal arm64 com.apple.xcode.tools.
     cd /Users/tish/Documents/white\ iverson/Tish88
     builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Loopa -Onone -enforce-exclusivity\=checked @/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/tish/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Index.noindex/DataStore -swift-version 5 -I /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -F /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -output-file-map /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/tish/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa_const_extract_protocols.json -Xcc -iquote -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-generated-files.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-own-target-headers.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-all-target-headers.hmap -Xcc -iquote -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-project-headers.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/DerivedSources-normal/arm64 -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/DerivedSources/arm64 -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa-Swift.h -working-directory /Users/tish/Documents/white\ iverson/Tish88 -experimental-emit-module-separately -disable-cmo
 
-Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.swiftmodule/arm64-apple-ios-simulator.swiftdoc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.swiftdoc (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.swiftdoc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.swiftmodule/arm64-apple-ios-simulator.swiftdoc
-
-Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.swiftmodule (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.swiftmodule /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.swiftmodule/arm64-apple-ios-simulator.swiftmodule
-
 Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.abi.json (in target 'Loopa' from project 'Loopa')
     cd /Users/tish/Documents/white\ iverson/Tish88
     builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.abi.json /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.swiftmodule/arm64-apple-ios-simulator.abi.json
@@ -122,79 +74,17 @@ Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeev
     cd /Users/tish/Documents/white\ iverson/Tish88
     builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.swiftsourceinfo /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
 
-SwiftDriver LoopaTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'LoopaTests' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name LoopaTests -Onone -enforce-exclusivity\=checked @/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/tish/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Index.noindex/DataStore -swift-version 5 -I /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -I /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -output-file-map /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/tish/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests-generated-files.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests-own-target-headers.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests-project-headers.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/DerivedSources/arm64 -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests-Swift.h -working-directory /Users/tish/Documents/white\ iverson/Tish88 -experimental-emit-module-separately -disable-cmo
-
-SwiftDriver\ Compilation\ Requirements LoopaTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'LoopaTests' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name LoopaTests -Onone -enforce-exclusivity\=checked @/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/tish/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Index.noindex/DataStore -swift-version 5 -I /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -I /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -output-file-map /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/tish/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests-generated-files.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests-own-target-headers.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests-project-headers.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/DerivedSources/arm64 -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests-Swift.h -working-directory /Users/tish/Documents/white\ iverson/Tish88 -experimental-emit-module-separately -disable-cmo
-
-SwiftDriver\ Compilation LoopaTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'LoopaTests' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name LoopaTests -Onone -enforce-exclusivity\=checked @/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/tish/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Index.noindex/DataStore -swift-version 5 -I /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -I /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -output-file-map /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/tish/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests-generated-files.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests-own-target-headers.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests-project-headers.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/DerivedSources/arm64 -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests-Swift.h -working-directory /Users/tish/Documents/white\ iverson/Tish88 -experimental-emit-module-separately -disable-cmo
-
-SwiftDriverJobDiscovery normal arm64 Compiling LooperViewModel.swift (in target 'Loopa' from project 'Loopa')
-
-SwiftDriverJobDiscovery normal arm64 Compiling Tish88App.swift (in target 'Loopa' from project 'Loopa')
-
-SwiftDriverJobDiscovery normal arm64 Compiling DrumGridView.swift (in target 'Loopa' from project 'Loopa')
-
-SwiftDriverJobDiscovery normal arm64 Compiling TracksView.swift (in target 'Loopa' from project 'Loopa')
-
-SwiftDriverJobDiscovery normal arm64 Compiling PianoRollCanvasView.swift (in target 'Loopa' from project 'Loopa')
-
-SwiftDriverJobDiscovery normal arm64 Compiling TrackFocusView.swift (in target 'Loopa' from project 'Loopa')
-
 SwiftDriverJobDiscovery normal arm64 Compiling LooperView.swift (in target 'Loopa' from project 'Loopa')
 
 SwiftDriver\ Compilation Loopa normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Loopa' from project 'Loopa')
     cd /Users/tish/Documents/white\ iverson/Tish88
     builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Loopa -Onone -enforce-exclusivity\=checked @/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/tish/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Index.noindex/DataStore -swift-version 5 -I /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -F /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -output-file-map /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/tish/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa_const_extract_protocols.json -Xcc -iquote -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-generated-files.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-own-target-headers.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-all-target-headers.hmap -Xcc -iquote -Xcc /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-project-headers.hmap -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/DerivedSources-normal/arm64 -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/DerivedSources/arm64 -Xcc -I/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa-Swift.h -working-directory /Users/tish/Documents/white\ iverson/Tish88 -experimental-emit-module-separately -disable-cmo
 
-Ld /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib normal (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -F/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -filelist /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.LinkFileList -install_name @rpath/Loopa.debug.dylib -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -debug_variant -Xlinker -dependency_info -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa_dependency_info.dat -fobjc-link-runtime -fprofile-instr-generate -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.swiftmodule -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib
-
-ConstructStubExecutorLinkFileList /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-ExecutorLinkFileList-normal-arm64.txt (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    construct-stub-executor-link-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-ExecutorLinkFileList-normal-arm64.txt
-note: Using stub executor library with Swift entry point. (in target 'Loopa' from project 'Loopa')
-
-Ld /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa normal (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -F/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -debug_variant -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-ExecutorLinkFileList-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.app-Simulated.xcent.der /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa
-
-CopySwiftLibs /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app (in target 'Loopa' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/SystemExtensions --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
-
 ExtractAppIntentsMetadata (in target 'Loopa' from project 'Loopa')
     cd /Users/tish/Documents/white\ iverson/Tish88
     /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name Loopa --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk --xcode-version 16F6 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.loopa.app --output /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa --dependency-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa_dependency_info.dat --stringsdata-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.SwiftFileList --metadata-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.DependencyMetadataFileList --static-metadata-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.DependencyStaticMetadataFileList --swift-const-vals-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
-2026-01-03 23:37:53.642 appintentsmetadataprocessor[58419:4206552] Starting appintentsmetadataprocessor export
-2026-01-03 23:37:53.643 appintentsmetadataprocessor[58419:4206552] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-
-Ld /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/LoopaTests normal (in target 'LoopaTests' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -filelist /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.LinkFileList -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -bundle_loader /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa -Xlinker -object_path_lto -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -debug_variant -Xlinker -dependency_info -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests_dependency_info.dat -fobjc-link-runtime -fprofile-instr-generate -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.swiftmodule -framework XCTest -lXCTestSwiftSupport /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/LoopaTests
-
-CopySwiftLibs /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest (in target 'LoopaTests' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/LoopaTests --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/Frameworks --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/PlugIns --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/SystemExtensions --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
-
-ExtractAppIntentsMetadata (in target 'LoopaTests' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name LoopaTests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk --xcode-version 16F6 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.loopa.app.tests --output /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/LoopaTests --dependency-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests_dependency_info.dat --stringsdata-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.SwiftFileList --metadata-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests.DependencyMetadataFileList --static-metadata-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
-2026-01-03 23:37:53.815 appintentsmetadataprocessor[58424:4206584] Starting appintentsmetadataprocessor export
-2026-01-03 23:37:53.816 appintentsmetadataprocessor[58424:4206584] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
-
-CodeSign /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest (in target 'LoopaTests' from project 'Loopa')
-    cd /Users/tish/Documents/white\ iverson/Tish88
-    
-    Signing Identity:     "Sign to Run Locally"
-    
-    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest
+2026-01-09 19:41:20.963 appintentsmetadataprocessor[1268:13493682] Starting appintentsmetadataprocessor export
+2026-01-09 19:41:20.964 appintentsmetadataprocessor[1268:13493682] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
 
 CodeSign /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib (in target 'Loopa' from project 'Loopa')
     cd /Users/tish/Documents/white\ iverson/Tish88
@@ -202,6 +92,7 @@ CodeSign /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxm
     Signing Identity:     "Sign to Run Locally"
     
     /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib
+/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib: replacing existing signature
 
 CodeSign /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/__preview.dylib (in target 'Loopa' from project 'Loopa')
     cd /Users/tish/Documents/white\ iverson/Tish88
@@ -217,636 +108,1720 @@ CodeSign /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxm
     Signing Identity:     "Sign to Run Locally"
     
     /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app
+/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app: replacing existing signature
 
 Validate /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app (in target 'Loopa' from project 'Loopa')
     cd /Users/tish/Documents/white\ iverson/Tish88
     builtin-validationUtility /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app -infoplist-subpath Info.plist
 
-2026-01-03 23:37:54.961033-0500 LoopaUITests-Runner[58434:4206772] [Default] Running tests...
-    t =      nans Interface orientation changed to Landscape Right
-Test Suite 'All tests' started at 2026-01-03 23:37:55.800.
-Test Suite 'LoopaUITests.xctest' started at 2026-01-03 23:37:55.800.
-Test Suite 'ScreenshotTests' started at 2026-01-03 23:37:55.800.
-Test Case '-[LoopaUITests.ScreenshotTests testScreenshot01_MainKeyboard]' started.
-    t =     0.00s Start Test at 2026-01-03 23:37:55.801
-    t =     0.02s Set Up
-    t =     0.02s     Open com.loopa.app
-    t =     0.02s         Launch com.loopa.app
-    t =     0.02s             Terminate com.loopa.app:58345
-    t =     0.15s                 Interface orientation changed to Portrait
-    t =     1.45s             Interface orientation changed to Landscape Right
-    t =     1.45s             Setting up automation session
-    t =     1.92s             Wait for com.loopa.app to idle
-    t =     3.19s Waiting 5.0s for "recordButton" Button to exist
-    t =     4.22s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.22s         Checking existence of `"recordButton" Button`
-    t =     4.39s Added attachment named '01_MainKeyboard'
-    t =     4.39s Tear Down
-    t =     4.48s     Added attachment named 'failure_-[ScreenshotTests testScreenshot01_MainKeyboard]'
-Test Case '-[LoopaUITests.ScreenshotTests testScreenshot01_MainKeyboard]' passed (4.691 seconds).
-Test Case '-[LoopaUITests.ScreenshotTests testScreenshot02_Recording]' started.
-    t =     0.00s Start Test at 2026-01-03 23:38:00.492
-    t =     0.03s Set Up
-    t =     0.03s     Open com.loopa.app
-    t =     0.03s         Launch com.loopa.app
-    t =     0.03s             Terminate com.loopa.app:58455
-    t =     0.17s                 Interface orientation changed to Portrait
-    t =     1.30s             Interface orientation changed to Landscape Right
-    t =     1.30s             Setting up automation session
-    t =     1.75s             Wait for com.loopa.app to idle
-    t =     3.01s Waiting 5.0s for "recordButton" Button to exist
-    t =     4.03s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.03s         Checking existence of `"recordButton" Button`
-    t =     4.11s Tap "recordButton" Button
-    t =     4.11s     Wait for com.loopa.app to idle
-    t =     4.11s     Find the "recordButton" Button
-    t =     4.13s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.14s     Synthesize event
-    t =     4.43s     Wait for com.loopa.app to idle
-    t =     7.52s Added attachment named '02_Recording'
-    t =     7.53s Tap "recordButton" Button
-    t =     7.53s     Wait for com.loopa.app to idle
-    t =     7.53s     Find the "recordButton" Button
-    t =     7.54s     Check for interrupting elements affecting "recordButton" Button
-    t =     7.56s     Synthesize event
-    t =     7.86s     Wait for com.loopa.app to idle
-    t =     7.86s Tear Down
-    t =     7.97s     Added attachment named 'failure_-[ScreenshotTests testScreenshot02_Recording]'
-Test Case '-[LoopaUITests.ScreenshotTests testScreenshot02_Recording]' passed (8.191 seconds).
-Test Case '-[LoopaUITests.ScreenshotTests testScreenshot03_TracksMixer]' started.
-    t =     0.00s Start Test at 2026-01-03 23:38:08.683
-    t =     0.03s Set Up
-    t =     0.03s     Open com.loopa.app
-    t =     0.03s         Launch com.loopa.app
-    t =     0.03s             Terminate com.loopa.app:58488
-    t =     0.16s                 Interface orientation changed to Portrait
-    t =     1.29s             Interface orientation changed to Landscape Right
-    t =     1.29s             Setting up automation session
-    t =     1.78s             Wait for com.loopa.app to idle
-    t =     3.05s Waiting 5.0s for "recordButton" Button to exist
-    t =     4.07s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.08s         Checking existence of `"recordButton" Button`
-    t =     4.15s Tap "recordButton" Button
-    t =     4.15s     Wait for com.loopa.app to idle
-    t =     4.16s     Find the "recordButton" Button
-    t =     4.17s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.18s     Synthesize event
-    t =     4.47s     Wait for com.loopa.app to idle
-2026-01-03 23:38:36.051441-0500 LoopaUITests-Runner[58719:4208673] [Default] Running tests...
-    t =      nans Interface orientation changed to Landscape Right
-
-Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
-
-Test Suite 'Selected tests' started at 2026-01-03 23:38:36.852.
-Test Suite 'LoopaUITests.xctest' started at 2026-01-03 23:38:36.853.
-Test Suite 'ScreenshotTests' started at 2026-01-03 23:38:36.853.
-Test Case '-[LoopaUITests.ScreenshotTests testScreenshot04_DrumKit]' started.
-    t =     0.00s Start Test at 2026-01-03 23:38:36.853
-    t =     0.02s Set Up
-    t =     0.03s     Open com.loopa.app
-    t =     0.03s         Launch com.loopa.app
-    t =     0.03s             Terminate com.loopa.app:58661
-    t =     0.16s                 Interface orientation changed to Portrait
-    t =     1.32s             Interface orientation changed to Landscape Right
-    t =     1.33s             Setting up automation session
-    t =     1.77s             Wait for com.loopa.app to idle
-    t =     3.04s Waiting 5.0s for "recordButton" Button to exist
-    t =     4.08s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.08s         Checking existence of `"recordButton" Button`
-    t =     4.25s Added attachment named '04_DrumKit'
-    t =     4.25s Tear Down
-    t =     4.34s     Added attachment named 'failure_-[ScreenshotTests testScreenshot04_DrumKit]'
-Test Case '-[LoopaUITests.ScreenshotTests testScreenshot04_DrumKit]' passed (4.547 seconds).
-Test Case '-[LoopaUITests.ScreenshotTests testScreenshot05_Settings]' started.
-    t =     0.00s Start Test at 2026-01-03 23:38:41.402
-    t =     0.03s Set Up
-    t =     0.03s     Open com.loopa.app
-    t =     0.03s         Launch com.loopa.app
-    t =     0.03s             Terminate com.loopa.app:58737
-    t =     0.17s                 Interface orientation changed to Portrait
-    t =     1.30s             Interface orientation changed to Landscape Right
-    t =     1.31s             Setting up automation session
-    t =     1.72s             Wait for com.loopa.app to idle
-    t =     2.96s Waiting 5.0s for "recordButton" Button to exist
-    t =     3.99s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     3.99s         Checking existence of `"recordButton" Button`
-    t =     4.16s Added attachment named '05_MainScreen'
-    t =     4.16s Tear Down
-    t =     4.25s     Added attachment named 'failure_-[ScreenshotTests testScreenshot05_Settings]'
-Test Case '-[LoopaUITests.ScreenshotTests testScreenshot05_Settings]' passed (4.458 seconds).
-Test Suite 'ScreenshotTests' passed at 2026-01-03 23:38:45.859.
-	 Executed 2 tests, with 0 failures (0 unexpected) in 9.005 (9.006) seconds
-Test Suite 'TransportControlsUITests' started at 2026-01-03 23:38:45.860.
-Test Case '-[LoopaUITests.TransportControlsUITests testFullRecordPauseResumeFlow]' started.
-    t =     0.00s Start Test at 2026-01-03 23:38:45.860
-    t =     0.03s Set Up
-    t =     0.03s     Open com.loopa.app
-    t =     0.03s         Launch com.loopa.app
-    t =     0.03s             Terminate com.loopa.app:58765
-    t =     0.16s                 Interface orientation changed to Portrait
-    t =     1.30s             Interface orientation changed to Landscape Right
-    t =     1.30s             Setting up automation session
-    t =     1.71s             Wait for com.loopa.app to idle
-    t =     2.96s Waiting 5.0s for "recordButton" Button to exist
-    t =     3.99s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     3.99s         Checking existence of `"recordButton" Button`
-    t =     4.04s Tap "recordButton" Button
-    t =     4.04s     Wait for com.loopa.app to idle
-    t =     4.04s     Find the "recordButton" Button
-    t =     4.05s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.06s     Synthesize event
-    t =     4.35s     Wait for com.loopa.app to idle
-    t =     5.16s Tap "recordButton" Button
-    t =     5.16s     Wait for com.loopa.app to idle
-    t =     5.16s     Find the "recordButton" Button
-    t =     5.20s     Check for interrupting elements affecting "recordButton" Button
-    t =     5.21s     Synthesize event
-    t =     5.50s     Wait for com.loopa.app to idle
-    t =     7.05s Checking `Expect predicate `isEnabled == 1` for object "playPauseButton" Button`
-    t =     7.05s     Find the "playPauseButton" Button
-    t =     7.08s Tap "playPauseButton" Button
-    t =     7.08s     Wait for com.loopa.app to idle
-    t =     7.09s     Find the "playPauseButton" Button
-    t =     7.10s     Check for interrupting elements affecting "playPauseButton" Button
-    t =     7.11s     Synthesize event
-    t =     7.40s     Wait for com.loopa.app to idle
-    t =     7.90s Tap "playPauseButton" Button
-    t =     7.90s     Wait for com.loopa.app to idle
-    t =     7.91s     Find the "playPauseButton" Button
-    t =     7.92s     Check for interrupting elements affecting "playPauseButton" Button
-    t =     7.95s     Synthesize event
-    t =     8.24s     Wait for com.loopa.app to idle
-    t =     8.75s Tap "restartButton" Button
-    t =     8.75s     Wait for com.loopa.app to idle
-    t =     8.75s     Find the "restartButton" Button
-    t =     8.78s     Check for interrupting elements affecting "restartButton" Button
-    t =     8.79s     Synthesize event
-    t =     9.08s     Wait for com.loopa.app to idle
-    t =     9.59s Checking existence of `"recordButton" Button`
-    t =     9.62s Checking existence of `"playPauseButton" Button`
-    t =     9.63s Checking existence of `"restartButton" Button`
-    t =     9.65s Tear Down
-    t =     9.74s     Added attachment named 'failure_-[TransportControlsUITests testFullRecordPauseResumeFlow]'
-Test Case '-[LoopaUITests.TransportControlsUITests testFullRecordPauseResumeFlow]' passed (9.990 seconds).
-Test Case '-[LoopaUITests.TransportControlsUITests testPlayPauseButtonToggles]' started.
-    t =     0.00s Start Test at 2026-01-03 23:38:55.851
-    t =     0.03s Set Up
-    t =     0.03s     Open com.loopa.app
-    t =     0.03s         Launch com.loopa.app
-    t =     0.03s             Terminate com.loopa.app:58798
-    t =     0.16s                 Interface orientation changed to Portrait
-    t =     1.29s             Interface orientation changed to Landscape Right
-    t =     1.30s             Setting up automation session
-2026-01-03 23:39:18.840493-0500 LoopaUITests-Runner[59015:4210745] [Default] Running tests...
-    t =      nans Interface orientation changed to Landscape Right
-
-Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
-
-Test Suite 'Selected tests' started at 2026-01-03 23:39:19.658.
-Test Suite 'LoopaUITests.xctest' started at 2026-01-03 23:39:19.658.
-Test Suite 'TransportControlsUITests' started at 2026-01-03 23:39:19.658.
-Test Case '-[LoopaUITests.TransportControlsUITests testQuantizeButtonCyclesSettings]' started.
-    t =     0.00s Start Test at 2026-01-03 23:39:19.658
-    t =     0.02s Set Up
-    t =     0.02s     Open com.loopa.app
-    t =     0.02s         Launch com.loopa.app
-    t =     0.03s             Terminate com.loopa.app:59014
-    t =     0.14s                 Interface orientation changed to Portrait
-    t =     1.27s             Interface orientation changed to Landscape Right
-    t =     1.27s             Setting up automation session
-    t =     1.72s             Wait for com.loopa.app to idle
-    t =     3.03s Waiting 5.0s for "quantizeButton" Button to exist
-    t =     4.07s     Checking `Expect predicate `existsNoRetry == 1` for object "quantizeButton" Button`
-    t =     4.07s         Checking existence of `"quantizeButton" Button`
-    t =     4.14s Tap "quantizeButton" Button
-    t =     4.14s     Wait for com.loopa.app to idle
-    t =     4.15s     Find the "quantizeButton" Button
-    t =     4.16s     Check for interrupting elements affecting "quantizeButton" Button
-    t =     4.17s     Synthesize event
-    t =     4.46s     Wait for com.loopa.app to idle
-    t =     4.67s Tap "quantizeButton" Button
-    t =     4.67s     Wait for com.loopa.app to idle
-    t =     4.68s     Find the "quantizeButton" Button
-    t =     4.71s     Check for interrupting elements affecting "quantizeButton" Button
-    t =     4.72s     Synthesize event
-    t =     5.01s     Wait for com.loopa.app to idle
-    t =     5.22s Tap "quantizeButton" Button
-    t =     5.22s     Wait for com.loopa.app to idle
-    t =     5.22s     Find the "quantizeButton" Button
-    t =     5.25s     Check for interrupting elements affecting "quantizeButton" Button
-    t =     5.27s     Synthesize event
-    t =     5.56s     Wait for com.loopa.app to idle
-    t =     5.76s Tap "quantizeButton" Button
-    t =     5.76s     Wait for com.loopa.app to idle
-    t =     5.77s     Find the "quantizeButton" Button
-    t =     5.80s     Check for interrupting elements affecting "quantizeButton" Button
-    t =     5.82s     Synthesize event
-    t =     6.11s     Wait for com.loopa.app to idle
-    t =     6.32s Checking existence of `"quantizeButton" Button`
-    t =     6.35s Tear Down
-    t =     6.46s     Added attachment named 'failure_-[TransportControlsUITests testQuantizeButtonCyclesSettings]'
-Test Case '-[LoopaUITests.TransportControlsUITests testQuantizeButtonCyclesSettings]' passed (6.674 seconds).
-Test Case '-[LoopaUITests.TransportControlsUITests testRecordButtonStartsRecording]' started.
-    t =     0.00s Start Test at 2026-01-03 23:39:26.333
-    t =     0.02s Set Up
-    t =     0.02s     Open com.loopa.app
-    t =     0.02s         Launch com.loopa.app
-    t =     0.02s             Terminate com.loopa.app:59027
-    t =     0.16s                 Interface orientation changed to Portrait
-    t =     1.28s             Interface orientation changed to Landscape Right
-    t =     1.29s             Setting up automation session
-    t =     1.68s             Wait for com.loopa.app to idle
-    t =     2.96s Waiting 5.0s for "recordButton" Button to exist
-    t =     4.00s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.00s         Checking existence of `"recordButton" Button`
-    t =     4.06s Tap "recordButton" Button
-    t =     4.06s     Wait for com.loopa.app to idle
-    t =     4.06s     Find the "recordButton" Button
-    t =     4.08s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.09s     Synthesize event
-    t =     4.38s     Wait for com.loopa.app to idle
-    t =     4.89s Find the "playPauseButton" Button
-    t =     4.91s Tear Down
-    t =     5.02s     Added attachment named 'failure_-[TransportControlsUITests testRecordButtonStartsRecording]'
-Test Case '-[LoopaUITests.TransportControlsUITests testRecordButtonStartsRecording]' passed (5.235 seconds).
-Test Case '-[LoopaUITests.TransportControlsUITests testRecordButtonTogglesRecording]' started.
-    t =     0.00s Start Test at 2026-01-03 23:39:31.568
-    t =     0.02s Set Up
-    t =     0.02s     Open com.loopa.app
-    t =     0.03s         Launch com.loopa.app
-    t =     0.03s             Terminate com.loopa.app:59076
-    t =     0.16s                 Interface orientation changed to Portrait
-    t =     1.30s             Interface orientation changed to Landscape Right
-    t =     1.30s             Setting up automation session
-    t =     1.73s             Wait for com.loopa.app to idle
-    t =     3.01s Waiting 5.0s for "recordButton" Button to exist
-    t =     4.04s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.04s         Checking existence of `"recordButton" Button`
-    t =     4.10s Tap "recordButton" Button
-    t =     4.10s     Wait for com.loopa.app to idle
-    t =     4.10s     Find the "recordButton" Button
-    t =     4.11s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.13s     Synthesize event
-    t =     4.42s     Wait for com.loopa.app to idle
-    t =     4.92s Tap "recordButton" Button
-    t =     4.92s     Wait for com.loopa.app to idle
-    t =     4.93s     Find the "recordButton" Button
-    t =     4.96s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.98s     Synthesize event
-    t =     5.27s     Wait for com.loopa.app to idle
-    t =     5.78s Find the "playPauseButton" Button
-    t =     5.81s Tear Down
-    t =     5.93s     Added attachment named 'failure_-[TransportControlsUITests testRecordButtonTogglesRecording]'
-Test Case '-[LoopaUITests.TransportControlsUITests testRecordButtonTogglesRecording]' passed (6.157 seconds).
-Test Case '-[LoopaUITests.TransportControlsUITests testRestartButtonRestartsFromBeginning]' started.
-    t =     0.00s Start Test at 2026-01-03 23:39:37.726
-    t =     0.03s Set Up
-    t =     0.03s     Open com.loopa.app
-    t =     0.03s         Launch com.loopa.app
-    t =     0.03s             Terminate com.loopa.app:59110
-    t =     0.15s                 Interface orientation changed to Portrait
-    t =     1.28s             Interface orientation changed to Landscape Right
-    t =     1.29s             Setting up automation session
-    t =     1.71s             Wait for com.loopa.app to idle
-2026-01-03 23:39:59.920554-0500 LoopaUITests-Runner[59300:4212359] [Default] Running tests...
-    t =      nans Interface orientation changed to Landscape Right
-
-Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
-
-Test Suite 'Selected tests' started at 2026-01-03 23:40:00.700.
-Test Suite 'LoopaUITests.xctest' started at 2026-01-03 23:40:00.700.
-Test Suite 'TransportControlsUITests' started at 2026-01-03 23:40:00.700.
-Test Case '-[LoopaUITests.TransportControlsUITests testTransportButtonsExist]' started.
-    t =     0.00s Start Test at 2026-01-03 23:40:00.700
-    t =     0.04s Set Up
-    t =     0.06s     Open com.loopa.app
-    t =     0.06s         Launch com.loopa.app
-    t =     0.06s             Terminate com.loopa.app:59277
-    t =     0.22s                 Interface orientation changed to Portrait
-    t =     1.23s             Interface orientation changed to Landscape Right
-    t =     1.30s             Setting up automation session
-    t =     1.70s             Wait for com.loopa.app to idle
-    t =     2.95s Waiting 5.0s for "recordButton" Button to exist
-    t =     3.99s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.00s         Checking existence of `"recordButton" Button`
-    t =     4.07s Checking existence of `"playPauseButton" Button`
-    t =     4.08s Checking existence of `"restartButton" Button`
-    t =     4.09s Checking existence of `"quantizeButton" Button`
-    t =     4.10s Tear Down
-    t =     4.20s     Added attachment named 'failure_-[TransportControlsUITests testTransportButtonsExist]'
-Test Case '-[LoopaUITests.TransportControlsUITests testTransportButtonsExist]' passed (4.403 seconds).
-Test Suite 'TransportControlsUITests' passed at 2026-01-03 23:40:05.104.
-	 Executed 1 test, with 0 failures (0 unexpected) in 4.403 (4.404) seconds
-Test Suite 'TransportRegressionTests' started at 2026-01-03 23:40:05.104.
-Test Case '-[LoopaUITests.TransportRegressionTests testButtonsWorkDuringRecording]' started.
-    t =     0.00s Start Test at 2026-01-03 23:40:05.105
-    t =     0.02s Set Up
-    t =     0.02s     Open com.loopa.app
-    t =     0.02s         Launch com.loopa.app
-    t =     0.02s             Terminate com.loopa.app:59312
-    t =     0.16s                 Interface orientation changed to Portrait
-    t =     1.29s             Interface orientation changed to Landscape Right
-    t =     1.29s             Setting up automation session
-    t =     1.72s             Wait for com.loopa.app to idle
-    t =     2.95s Waiting 5.0s for "recordButton" Button to exist
-    t =     3.99s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     3.99s         Checking existence of `"recordButton" Button`
-    t =     4.06s Tap "recordButton" Button
-    t =     4.06s     Wait for com.loopa.app to idle
-    t =     4.06s     Find the "recordButton" Button
-    t =     4.07s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.09s     Synthesize event
-    t =     4.37s     Wait for com.loopa.app to idle
-    t =     8.41s Checking `Expect predicate `isEnabled == 1` for object "playPauseButton" Button`
-    t =     8.41s     Find the "playPauseButton" Button
-    t =     8.44s Find the "playPauseButton" Button
-    t =     8.45s Find the "restartButton" Button
-    t =     8.46s Tap "recordButton" Button
-    t =     8.47s     Wait for com.loopa.app to idle
-    t =     8.47s     Find the "recordButton" Button
-    t =     8.49s     Check for interrupting elements affecting "recordButton" Button
-    t =     8.52s     Synthesize event
-    t =     8.81s     Wait for com.loopa.app to idle
-    t =     8.81s Tear Down
-    t =     8.92s     Added attachment named 'failure_-[TransportRegressionTests testButtonsWorkDuringRecording]'
-Test Case '-[LoopaUITests.TransportRegressionTests testButtonsWorkDuringRecording]' passed (9.154 seconds).
-Test Case '-[LoopaUITests.TransportRegressionTests testMultiplePauseResumeCycles]' started.
-    t =     0.00s Start Test at 2026-01-03 23:40:14.259
-    t =     0.02s Set Up
-    t =     0.03s     Open com.loopa.app
-    t =     0.03s         Launch com.loopa.app
-    t =     0.03s             Terminate com.loopa.app:59344
-    t =     0.17s                 Interface orientation changed to Portrait
-    t =     1.30s             Interface orientation changed to Landscape Right
-    t =     1.31s             Setting up automation session
-    t =     1.72s             Wait for com.loopa.app to idle
-    t =     2.96s Waiting 5.0s for "recordButton" Button to exist
-    t =     4.00s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.00s         Checking existence of `"recordButton" Button`
-    t =     4.05s Tap "recordButton" Button
-    t =     4.05s     Wait for com.loopa.app to idle
-    t =     4.05s     Find the "recordButton" Button
-    t =     4.06s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.07s     Synthesize event
-    t =     4.36s     Wait for com.loopa.app to idle
-    t =     4.87s Tap "recordButton" Button
-    t =     4.87s     Wait for com.loopa.app to idle
-    t =     4.87s     Find the "recordButton" Button
-    t =     4.90s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.92s     Synthesize event
-    t =     5.21s     Wait for com.loopa.app to idle
-    t =     5.52s Tap "playPauseButton" Button
-    t =     5.52s     Wait for com.loopa.app to idle
-    t =     5.53s     Find the "playPauseButton" Button
-    t =     5.56s     Check for interrupting elements affecting "playPauseButton" Button
-    t =     5.58s     Synthesize event
-    t =     5.86s     Wait for com.loopa.app to idle
-    t =     6.07s Find the "playPauseButton" Button
-    t =     6.08s Tap "playPauseButton" Button
-    t =     6.09s     Wait for com.loopa.app to idle
-    t =     6.09s     Find the "playPauseButton" Button
-    t =     6.10s     Check for interrupting elements affecting "playPauseButton" Button
-    t =     6.12s     Synthesize event
-    t =     6.41s     Wait for com.loopa.app to idle
-    t =     6.62s Find the "playPauseButton" Button
-    t =     6.65s Tap "playPauseButton" Button
-    t =     6.65s     Wait for com.loopa.app to idle
-    t =     6.65s     Find the "playPauseButton" Button
-    t =     6.66s     Check for interrupting elements affecting "playPauseButton" Button
-    t =     6.68s     Synthesize event
-2026-01-03 23:40:42.654660-0500 LoopaUITests-Runner[59587:4214506] [Default] Running tests...
-    t =      nans Interface orientation changed to Landscape Right
-
-Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
-
-Test Suite 'Selected tests' started at 2026-01-03 23:40:43.430.
-Test Suite 'LoopaUITests.xctest' started at 2026-01-03 23:40:43.430.
-Test Suite 'TransportRegressionTests' started at 2026-01-03 23:40:43.430.
-Test Case '-[LoopaUITests.TransportRegressionTests testPauseDoesNotRestart]' started.
-    t =     0.00s Start Test at 2026-01-03 23:40:43.431
-    t =     0.02s Set Up
-    t =     0.02s     Open com.loopa.app
-    t =     0.02s         Launch com.loopa.app
-    t =     0.02s             Terminate com.loopa.app:59570
-    t =     0.14s                 Interface orientation changed to Portrait
-    t =     1.33s             Interface orientation changed to Landscape Right
-    t =     1.34s             Setting up automation session
-    t =     1.76s             Wait for com.loopa.app to idle
-    t =     3.03s Waiting 5.0s for "recordButton" Button to exist
-    t =     4.06s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.06s         Checking existence of `"recordButton" Button`
-    t =     4.14s Tap "recordButton" Button
-    t =     4.14s     Wait for com.loopa.app to idle
-    t =     4.14s     Find the "recordButton" Button
-    t =     4.16s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.17s     Synthesize event
-    t =     4.46s     Wait for com.loopa.app to idle
-    t =     5.47s Tap "recordButton" Button
-    t =     5.47s     Wait for com.loopa.app to idle
-    t =     5.47s     Find the "recordButton" Button
-    t =     5.49s     Check for interrupting elements affecting "recordButton" Button
-    t =     5.50s     Synthesize event
-    t =     5.79s     Wait for com.loopa.app to idle
-    t =     6.60s Tap "playPauseButton" Button
-    t =     6.60s     Wait for com.loopa.app to idle
-    t =     6.61s     Find the "playPauseButton" Button
-    t =     6.64s     Check for interrupting elements affecting "playPauseButton" Button
-    t =     6.66s     Synthesize event
-    t =     6.94s     Wait for com.loopa.app to idle
-    t =     7.25s Tap "playPauseButton" Button
-    t =     7.25s     Wait for com.loopa.app to idle
-    t =     7.25s     Find the "playPauseButton" Button
-    t =     7.27s     Check for interrupting elements affecting "playPauseButton" Button
-    t =     7.29s     Synthesize event
-    t =     7.58s     Wait for com.loopa.app to idle
-    t =     7.89s Find the "playPauseButton" Button
-    t =     7.92s Tear Down
-    t =     8.04s     Added attachment named 'failure_-[TransportRegressionTests testPauseDoesNotRestart]'
-Test Case '-[LoopaUITests.TransportRegressionTests testPauseDoesNotRestart]' passed (8.251 seconds).
-Test Case '-[LoopaUITests.TransportRegressionTests testPlayPauseEnabledAfterRecording]' started.
-    t =     0.00s Start Test at 2026-01-03 23:40:51.682
-    t =     0.04s Set Up
-    t =     0.04s     Open com.loopa.app
-    t =     0.04s         Launch com.loopa.app
-    t =     0.04s             Terminate com.loopa.app:59603
-    t =     0.18s                 Interface orientation changed to Portrait
-    t =     1.32s             Interface orientation changed to Landscape Right
-    t =     1.32s             Setting up automation session
-    t =     1.73s             Wait for com.loopa.app to idle
-    t =     2.97s Waiting 5.0s for "recordButton" Button to exist
-    t =     4.00s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.01s         Checking existence of `"recordButton" Button`
-    t =     4.08s Tap "recordButton" Button
-    t =     4.08s     Wait for com.loopa.app to idle
-    t =     4.09s     Find the "recordButton" Button
-    t =     4.10s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.11s     Synthesize event
-    t =     4.40s     Wait for com.loopa.app to idle
-    t =     4.91s Tap "recordButton" Button
-    t =     4.91s     Wait for com.loopa.app to idle
-    t =     4.91s     Find the "recordButton" Button
-    t =     4.94s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.96s     Synthesize event
-    t =     5.25s     Wait for com.loopa.app to idle
-    t =     5.56s Find the "playPauseButton" Button
-    t =     5.59s Tear Down
-    t =     5.70s     Added attachment named 'failure_-[TransportRegressionTests testPlayPauseEnabledAfterRecording]'
-Test Case '-[LoopaUITests.TransportRegressionTests testPlayPauseEnabledAfterRecording]' passed (5.914 seconds).
-Test Case '-[LoopaUITests.TransportRegressionTests testQuantizeAlwaysEnabled]' started.
-    t =     0.00s Start Test at 2026-01-03 23:40:57.597
-    t =     0.02s Set Up
-    t =     0.02s     Open com.loopa.app
-    t =     0.02s         Launch com.loopa.app
-    t =     0.03s             Terminate com.loopa.app:59658
-    t =     0.15s                 Interface orientation changed to Portrait
-    t =     1.29s             Interface orientation changed to Landscape Right
-    t =     1.29s             Setting up automation session
-    t =     1.75s             Wait for com.loopa.app to idle
-    t =     3.04s Waiting 5.0s for "quantizeButton" Button to exist
-    t =     4.07s     Checking `Expect predicate `existsNoRetry == 1` for object "quantizeButton" Button`
-    t =     4.07s         Checking existence of `"quantizeButton" Button`
-    t =     4.14s Find the "quantizeButton" Button
-    t =     4.15s Tap "quantizeButton" Button
-    t =     4.15s     Wait for com.loopa.app to idle
-    t =     4.15s     Find the "quantizeButton" Button
-    t =     4.17s     Check for interrupting elements affecting "quantizeButton" Button
-    t =     4.18s     Synthesize event
-    t =     4.47s     Wait for com.loopa.app to idle
-    t =     4.57s Tap "quantizeButton" Button
-    t =     4.57s     Wait for com.loopa.app to idle
-    t =     4.58s     Find the "quantizeButton" Button
-    t =     4.61s     Check for interrupting elements affecting "quantizeButton" Button
-    t =     4.62s     Synthesize event
-    t =     4.91s     Wait for com.loopa.app to idle
-    t =     5.02s Tap "quantizeButton" Button
-    t =     5.02s     Wait for com.loopa.app to idle
-    t =     5.02s     Find the "quantizeButton" Button
-    t =     5.04s     Check for interrupting elements affecting "quantizeButton" Button
-    t =     5.05s     Synthesize event
-    t =     5.34s     Wait for com.loopa.app to idle
-    t =     5.45s Tap "quantizeButton" Button
-    t =     5.45s     Wait for com.loopa.app to idle
-    t =     5.45s     Find the "quantizeButton" Button
-    t =     5.48s     Check for interrupting elements affecting "quantizeButton" Button
-    t =     5.50s     Synthesize event
-    t =     5.79s     Wait for com.loopa.app to idle
-    t =     5.90s Tap "quantizeButton" Button
-    t =     5.90s     Wait for com.loopa.app to idle
-    t =     5.91s     Find the "quantizeButton" Button
-    t =     5.93s     Check for interrupting elements affecting "quantizeButton" Button
-    t =     5.94s     Synthesize event
-2026-01-03 23:41:25.418295-0500 LoopaUITests-Runner[59879:4216441] [Default] Running tests...
-    t =      nans Interface orientation changed to Landscape Right
-
-Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
-
-Test Suite 'Selected tests' started at 2026-01-03 23:41:26.184.
-Test Suite 'LoopaUITests.xctest' started at 2026-01-03 23:41:26.184.
-Test Suite 'TransportRegressionTests' started at 2026-01-03 23:41:26.184.
-Test Case '-[LoopaUITests.TransportRegressionTests testRecordButtonWorksWithZeroTracks]' started.
-    t =     0.00s Start Test at 2026-01-03 23:41:26.184
-    t =     0.02s Set Up
-    t =     0.02s     Open com.loopa.app
-    t =     0.02s         Launch com.loopa.app
-    t =     0.02s             Terminate com.loopa.app:59829
-    t =     0.14s                 Interface orientation changed to Portrait
-    t =     1.27s             Interface orientation changed to Landscape Right
-    t =     1.27s             Setting up automation session
-    t =     1.71s             Wait for com.loopa.app to idle
-    t =     2.99s Waiting 5.0s for "recordButton" Button to exist
-    t =     4.03s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.03s         Checking existence of `"recordButton" Button`
-    t =     4.10s Find the "recordButton" Button
-    t =     4.12s Tap "recordButton" Button
-    t =     4.12s     Wait for com.loopa.app to idle
-    t =     4.12s     Find the "recordButton" Button
-    t =     4.13s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.14s     Synthesize event
-    t =     4.43s     Wait for com.loopa.app to idle
-    t =     4.74s Checking existence of `"recordButton" Button`
-    t =     4.77s Tear Down
-    t =     4.88s     Added attachment named 'failure_-[TransportRegressionTests testRecordButtonWorksWithZeroTracks]'
-Test Case '-[LoopaUITests.TransportRegressionTests testRecordButtonWorksWithZeroTracks]' passed (5.099 seconds).
-Test Case '-[LoopaUITests.TransportRegressionTests testRestartEnabledAfterRecording]' started.
-    t =     0.00s Start Test at 2026-01-03 23:41:31.284
-    t =     0.03s Set Up
-    t =     0.03s     Open com.loopa.app
-    t =     0.03s         Launch com.loopa.app
-    t =     0.03s             Terminate com.loopa.app:59895
-    t =     0.17s                 Interface orientation changed to Portrait
-    t =     1.30s             Interface orientation changed to Landscape Right
-    t =     1.31s             Setting up automation session
-    t =     1.72s             Wait for com.loopa.app to idle
-    t =     2.97s Waiting 5.0s for "recordButton" Button to exist
-    t =     4.00s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.00s         Checking existence of `"recordButton" Button`
-    t =     4.07s Tap "recordButton" Button
-    t =     4.07s     Wait for com.loopa.app to idle
-    t =     4.07s     Find the "recordButton" Button
-    t =     4.09s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.10s     Synthesize event
-    t =     4.39s     Wait for com.loopa.app to idle
-    t =     7.40s Tap "recordButton" Button
-    t =     7.40s     Wait for com.loopa.app to idle
-    t =     7.40s     Find the "recordButton" Button
-    t =     7.41s     Check for interrupting elements affecting "recordButton" Button
-    t =     7.43s     Synthesize event
-    t =     7.73s     Wait for com.loopa.app to idle
-    t =     8.76s Checking `Expect predicate `isEnabled == 1` for object "restartButton" Button`
-    t =     8.76s     Find the "restartButton" Button
-    t =     8.78s Find the "restartButton" Button
-    t =     8.80s Tear Down
-    t =     8.90s     Added attachment named 'failure_-[TransportRegressionTests testRestartEnabledAfterRecording]'
-Test Case '-[LoopaUITests.TransportRegressionTests testRestartEnabledAfterRecording]' passed (9.116 seconds).
-Test Case '-[LoopaUITests.TransportRegressionTests testStoppingRecordDoesNotStopMusic]' started.
-    t =     0.00s Start Test at 2026-01-03 23:41:40.400
-    t =     0.02s Set Up
-    t =     0.02s     Open com.loopa.app
-    t =     0.02s         Launch com.loopa.app
-    t =     0.02s             Terminate com.loopa.app:59929
-    t =     0.15s                 Interface orientation changed to Portrait
-    t =     1.28s             Interface orientation changed to Landscape Right
-    t =     1.28s             Setting up automation session
-    t =     1.74s             Wait for com.loopa.app to idle
-    t =     3.03s Waiting 5.0s for "recordButton" Button to exist
-    t =     4.06s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
-    t =     4.06s         Checking existence of `"recordButton" Button`
-    t =     4.15s Tap "recordButton" Button
-    t =     4.15s     Wait for com.loopa.app to idle
-    t =     4.15s     Find the "recordButton" Button
-    t =     4.18s     Check for interrupting elements affecting "recordButton" Button
-    t =     4.19s     Synthesize event
-    t =     4.49s     Wait for com.loopa.app to idle
-    t =     4.99s Tap "recordButton" Button
-    t =     4.99s     Wait for com.loopa.app to idle
-    t =     5.00s     Find the "recordButton" Button
-    t =     5.03s     Check for interrupting elements affecting "recordButton" Button
-    t =     5.05s     Synthesize event
-    t =     5.34s     Wait for com.loopa.app to idle
-    t =     5.65s Find the "playPauseButton" Button
-    t =     5.67s Tear Down
-    t =     5.76s     Added attachment named 'failure_-[TransportRegressionTests testStoppingRecordDoesNotStopMusic]'
-Test Case '-[LoopaUITests.TransportRegressionTests testStoppingRecordDoesNotStopMusic]' passed (5.976 seconds).
-Test Suite 'TransportRegressionTests' passed at 2026-01-03 23:41:46.376.
-	 Executed 3 tests, with 0 failures (0 unexpected) in 20.190 (20.192) seconds
-Test Suite 'LoopaUITests.xctest' passed at 2026-01-03 23:41:46.377.
-	 Executed 3 tests, with 0 failures (0 unexpected) in 20.190 (20.193) seconds
-Test Suite 'Selected tests' passed at 2026-01-03 23:41:46.377.
-	 Executed 3 tests, with 0 failures (0 unexpected) in 20.190 (20.193) seconds
-2026-01-03 23:41:55.935 xcodebuild[58365:4206220] [MT] IDETestOperationsObserverDebug: 241.924 elapsed -- Testing started completed.
-2026-01-03 23:41:55.935 xcodebuild[58365:4206220] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
-2026-01-03 23:41:55.935 xcodebuild[58365:4206220] [MT] IDETestOperationsObserverDebug: 241.924 sec, +241.924 sec -- end
+2026-01-09 19:41:22.405465-0500 Loopa[1277:13493932] [library] load_eligibility_plist: Failed to open /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Data/Application/6C5C09BD-FD98-499C-AA62-CB2F8F6847FB/private/var/db/eligibilityd/eligibility.plist: No such file or directory(2)
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+2026-01-09 19:41:22.444653-0500 Loopa[1277:13494107] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x60000023e540> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002126580:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Suite 'All tests' started at 2026-01-09 19:41:23.099.
+Test Suite 'LoopaTests.xctest' started at 2026-01-09 19:41:23.099.
+Test Suite 'AudioEngineTests' started at 2026-01-09 19:41:23.099.
+Test Case '-[LoopaTests.AudioEngineTests testConfigureSession]' started.
+✓ Audio graph connected: L→reverb, R→reverb, click→mixer, reverb→mixer
+✓ Audio session configured: AVAudioSessionCategoryPlayback, buffer: 0.0026666666666666666s
+Test Case '-[LoopaTests.AudioEngineTests testConfigureSession]' passed (0.005 seconds).
+Test Case '-[LoopaTests.AudioEngineTests testEngineInitialization]' started.
+✓ Audio graph connected: L→reverb, R→reverb, click→mixer, reverb→mixer
+Test Case '-[LoopaTests.AudioEngineTests testEngineInitialization]' passed (0.005 seconds).
+Test Case '-[LoopaTests.AudioEngineTests testEngineStart]' started.
+✓ Audio graph connected: L→reverb, R→reverb, click→mixer, reverb→mixer
+✓ Audio session configured: AVAudioSessionCategoryPlayback, buffer: 0.0026666666666666666s
+Test Case '-[LoopaTests.AudioEngineTests testEngineStart]' passed (0.006 seconds).
+Test Case '-[LoopaTests.AudioEngineTests testEngineStartIdempotent]' started.
+✓ Audio graph connected: L→reverb, R→reverb, click→mixer, reverb→mixer
+✓ Audio session configured: AVAudioSessionCategoryPlayback, buffer: 0.0026666666666666666s
+Test Case '-[LoopaTests.AudioEngineTests testEngineStartIdempotent]' passed (0.012 seconds).
+Test Case '-[LoopaTests.AudioEngineTests testLoadSoundFonts]' started.
+✓ Audio graph connected: L→reverb, R→reverb, click→mixer, reverb→mixer
+✓ Loaded drum kit, gain=6.0
+Test Case '-[LoopaTests.AudioEngineTests testLoadSoundFonts]' passed (0.007 seconds).
+Test Case '-[LoopaTests.AudioEngineTests testReverbConfiguration]' started.
+✓ Audio graph connected: L→reverb, R→reverb, click→mixer, reverb→mixer
+Test Case '-[LoopaTests.AudioEngineTests testReverbConfiguration]' passed (0.004 seconds).
+Test Case '-[LoopaTests.AudioEngineTests testSamplersAttachedToEngine]' started.
+✓ Audio graph connected: L→reverb, R→reverb, click→mixer, reverb→mixer
+Test Case '-[LoopaTests.AudioEngineTests testSamplersAttachedToEngine]' passed (0.004 seconds).
+Test Case '-[LoopaTests.AudioEngineTests testSoundFontURLInitiallyNil]' started.
+✓ Audio graph connected: L→reverb, R→reverb, click→mixer, reverb→mixer
+Test Case '-[LoopaTests.AudioEngineTests testSoundFontURLInitiallyNil]' passed (0.004 seconds).
+Test Suite 'AudioEngineTests' passed at 2026-01-09 19:41:23.147.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.046 (0.047) seconds
+Test Suite 'AudioFlowIntegrationTests' started at 2026-01-09 19:41:23.147.
+Test Case '-[LoopaTests.AudioFlowIntegrationTests testFullAudioSetupSequence]' started.
+✓ Audio graph connected: L→reverb, R→reverb, click→mixer, reverb→mixer
+✓ Audio session configured: AVAudioSessionCategoryPlayback, buffer: 0.0026666666666666666s
+✓ Loaded drum kit, gain=6.0
+✓ Loaded drum kit, gain=6.0
+✓ Loaded program 0, gain=6.0
+Test Case '-[LoopaTests.AudioFlowIntegrationTests testFullAudioSetupSequence]' passed (0.016 seconds).
+Test Case '-[LoopaTests.AudioFlowIntegrationTests testInstrumentChangesDoNotCrash]' started.
+✓ Audio graph connected: L→reverb, R→reverb, click→mixer, reverb→mixer
+✓ Audio session configured: AVAudioSessionCategoryPlayback, buffer: 0.0026666666666666666s
+✓ Loaded drum kit, gain=6.0
+✓ Loaded program 0, gain=6.0
+✓ Loaded program 0, gain=6.0
+✓ Loaded program 4, gain=6.0
+✓ Loaded program 4, gain=6.0
+✓ Loaded program 16, gain=6.0
+✓ Loaded program 16, gain=6.0
+✓ Loaded program 24, gain=6.0
+✓ Loaded program 24, gain=6.0
+✓ Loaded program 48, gain=6.0
+✓ Loaded program 48, gain=6.0
+✓ Loaded program 80, gain=6.0
+✓ Loaded program 80, gain=6.0
+✓ Loaded program 88, gain=6.0
+✓ Loaded program 88, gain=6.0
+✓ Loaded drum kit, gain=6.0
+✓ Loaded drum kit, gain=6.0
+Test Case '-[LoopaTests.AudioFlowIntegrationTests testInstrumentChangesDoNotCrash]' passed (0.024 seconds).
+Test Case '-[LoopaTests.AudioFlowIntegrationTests testNoteRoutingDoesNotCrash]' started.
+✓ Audio graph connected: L→reverb, R→reverb, click→mixer, reverb→mixer
+✓ Audio session configured: AVAudioSessionCategoryPlayback, buffer: 0.0026666666666666666s
+✓ Loaded drum kit, gain=6.0
+✓ Loaded drum kit, gain=6.0
+✓ Loaded program 0, gain=6.0
+🎹 noteOn: 60, vel: 100, left: true, engine running: true
+📤 KeyboardSampler.send(noteOn: 60, velocity: 100) - isPercussion=true, program=0, gain=6.0
+🎹 noteOn: 60, vel: 100, left: false, engine running: true
+📤 KeyboardSampler.send(noteOn: 60, velocity: 100) - isPercussion=false, program=0, gain=6.0
+Test Case '-[LoopaTests.AudioFlowIntegrationTests testNoteRoutingDoesNotCrash]' passed (0.023 seconds).
+Test Suite 'AudioFlowIntegrationTests' passed at 2026-01-09 19:41:23.209.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.062 (0.063) seconds
+Test Suite 'BarCountTests' started at 2026-01-09 19:41:23.210.
+Test Case '-[LoopaTests.BarCountTests testAllBarCounts]' started.
+Test Case '-[LoopaTests.BarCountTests testAllBarCounts]' passed (0.000 seconds).
+Test Case '-[LoopaTests.BarCountTests testDisplayNames]' started.
+Test Case '-[LoopaTests.BarCountTests testDisplayNames]' passed (0.000 seconds).
+Test Suite 'BarCountTests' passed at 2026-01-09 19:41:23.210.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'EventTimingTests' started at 2026-01-09 19:41:23.211.
+Test Case '-[LoopaTests.EventTimingTests testEventPositionsWithinLoopBounds]' started.
+Test Case '-[LoopaTests.EventTimingTests testEventPositionsWithinLoopBounds]' passed (4.503 seconds).
+Test Case '-[LoopaTests.EventTimingTests testEventsDispatchAtCorrectPositions]' started.
+Test Case '-[LoopaTests.EventTimingTests testEventsDispatchAtCorrectPositions]' passed (2.503 seconds).
+Test Suite 'EventTimingTests' passed at 2026-01-09 19:41:30.218.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 7.006 (7.007) seconds
+Test Suite 'InstrumentProgramTests' started at 2026-01-09 19:41:30.218.
+Test Case '-[LoopaTests.InstrumentProgramTests testAllProgramsHaveDisplayNames]' started.
+Test Case '-[LoopaTests.InstrumentProgramTests testAllProgramsHaveDisplayNames]' passed (0.002 seconds).
+Test Case '-[LoopaTests.InstrumentProgramTests testExpectedProgramNumbers]' started.
+Test Case '-[LoopaTests.InstrumentProgramTests testExpectedProgramNumbers]' passed (0.001 seconds).
+Test Case '-[LoopaTests.InstrumentProgramTests testProgramRawValuesAreValidGM]' started.
+Test Case '-[LoopaTests.InstrumentProgramTests testProgramRawValuesAreValidGM]' passed (0.001 seconds).
+Test Suite 'InstrumentProgramTests' passed at 2026-01-09 19:41:30.224.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.004 (0.006) seconds
+Test Suite 'InstrumentTests' started at 2026-01-09 19:41:30.224.
+Test Case '-[LoopaTests.InstrumentTests testAllInstrumentsHaveIcons]' started.
+Test Case '-[LoopaTests.InstrumentTests testAllInstrumentsHaveIcons]' passed (0.001 seconds).
+Test Case '-[LoopaTests.InstrumentTests testDrumKitIdentification]' started.
+Test Case '-[LoopaTests.InstrumentTests testDrumKitIdentification]' passed (0.001 seconds).
+Test Case '-[LoopaTests.InstrumentTests testProgramNumbers]' started.
+Test Case '-[LoopaTests.InstrumentTests testProgramNumbers]' passed (0.003 seconds).
+Test Suite 'InstrumentTests' passed at 2026-01-09 19:41:30.230.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+Test Suite 'KeyboardSamplerTests' started at 2026-01-09 19:41:30.230.
+Test Case '-[LoopaTests.KeyboardSamplerTests testLoadDrumKit]' started.
+✓ Loaded drum kit, gain=6.0
+Test Case '-[LoopaTests.KeyboardSamplerTests testLoadDrumKit]' passed (0.027 seconds).
+Test Case '-[LoopaTests.KeyboardSamplerTests testLoadInvalidSoundFont]' started.
+2026-01-09 19:41:30.262108-0500 Loopa[1277:13493932]           GlobalState.cpp:486   DLS/SF2 bank load failed
+2026-01-09 19:41:30.262606-0500 Loopa[1277:13493932] [avae]            AVAEInternal.h:104   [AVAudioUnitSampler.mm:157:-[AVAudioUnitSampler loadSoundBankInstrumentAtURL:program:bankMSB:bankLSB:error:]: (error): error -43
+Test Case '-[LoopaTests.KeyboardSamplerTests testLoadInvalidSoundFont]' passed (0.007 seconds).
+Test Case '-[LoopaTests.KeyboardSamplerTests testLoadMelodicProgram]' started.
+✓ Loaded program 0, gain=6.0
+✓ Loaded program 4, gain=6.0
+✓ Loaded program 16, gain=6.0
+✓ Loaded program 24, gain=6.0
+✓ Loaded program 48, gain=6.0
+✓ Loaded program 80, gain=6.0
+✓ Loaded program 88, gain=6.0
+Test Case '-[LoopaTests.KeyboardSamplerTests testLoadMelodicProgram]' passed (0.015 seconds).
+Test Case '-[LoopaTests.KeyboardSamplerTests testSamplerInitialization]' started.
+Test Case '-[LoopaTests.KeyboardSamplerTests testSamplerInitialization]' passed (0.004 seconds).
+Test Case '-[LoopaTests.KeyboardSamplerTests testStopAllSendsControlMessages]' started.
+Test Case '-[LoopaTests.KeyboardSamplerTests testStopAllSendsControlMessages]' passed (0.003 seconds).
+Test Suite 'KeyboardSamplerTests' passed at 2026-01-09 19:41:30.287.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.057 (0.058) seconds
+Test Suite 'MidiLooperTests' started at 2026-01-09 19:41:30.288.
+Test Case '-[LoopaTests.MidiLooperTests testAddLiveEventDuringRecording]' started.
+Test Case '-[LoopaTests.MidiLooperTests testAddLiveEventDuringRecording]' passed (0.000 seconds).
+Test Case '-[LoopaTests.MidiLooperTests testClear]' started.
+Test Case '-[LoopaTests.MidiLooperTests testClear]' passed (0.000 seconds).
+Test Case '-[LoopaTests.MidiLooperTests testCurrentRecordingElapsed]' started.
+Test Case '-[LoopaTests.MidiLooperTests testCurrentRecordingElapsed]' passed (0.102 seconds).
+Test Case '-[LoopaTests.MidiLooperTests testFinalizeLoop]' started.
+Test Case '-[LoopaTests.MidiLooperTests testFinalizeLoop]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiLooperTests testInitialState]' started.
+Test Case '-[LoopaTests.MidiLooperTests testInitialState]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiLooperTests testOverdubAddsEvents]' started.
+Test Case '-[LoopaTests.MidiLooperTests testOverdubAddsEvents]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiLooperTests testStartOverdub]' started.
+Test Case '-[LoopaTests.MidiLooperTests testStartOverdub]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiLooperTests testStartRecording]' started.
+Test Case '-[LoopaTests.MidiLooperTests testStartRecording]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiLooperTests testStopPlayback]' started.
+Test Case '-[LoopaTests.MidiLooperTests testStopPlayback]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiLooperTests testUndo]' started.
+Test Case '-[LoopaTests.MidiLooperTests testUndo]' passed (0.001 seconds).
+Test Suite 'MidiLooperTests' passed at 2026-01-09 19:41:30.398.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.108 (0.110) seconds
+Test Suite 'MidiNoteTests' started at 2026-01-09 19:41:30.398.
+Test Case '-[LoopaTests.MidiNoteTests testConvertEventsToNotes]' started.
+Test Case '-[LoopaTests.MidiNoteTests testConvertEventsToNotes]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiNoteTests testDrumNotesAreQuantizedToSixteenthNotes]' started.
+Test Case '-[LoopaTests.MidiNoteTests testDrumNotesAreQuantizedToSixteenthNotes]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiNoteTests testDrumNotesVisibleInStepSequencerGrid]' started.
+Test Case '-[LoopaTests.MidiNoteTests testDrumNotesVisibleInStepSequencerGrid]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiNoteTests testQuantizeBeatWithLoopBounds]' started.
+Test Case '-[LoopaTests.MidiNoteTests testQuantizeBeatWithLoopBounds]' passed (0.005 seconds).
+Test Case '-[LoopaTests.MidiNoteTests testQuantizeDurationMinimum]' started.
+Test Case '-[LoopaTests.MidiNoteTests testQuantizeDurationMinimum]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiNoteTests testQuantizeMidiNote]' started.
+Test Case '-[LoopaTests.MidiNoteTests testQuantizeMidiNote]' passed (0.000 seconds).
+Test Case '-[LoopaTests.MidiNoteTests testQuantizeNotesArray]' started.
+Test Case '-[LoopaTests.MidiNoteTests testQuantizeNotesArray]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiNoteTests testQuantizeOffDoesNotModify]' started.
+Test Case '-[LoopaTests.MidiNoteTests testQuantizeOffDoesNotModify]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiNoteTests testSnapToGridQuarterNote]' started.
+Test Case '-[LoopaTests.MidiNoteTests testSnapToGridQuarterNote]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiNoteTests testSnapToGridSixteenthNote]' started.
+Test Case '-[LoopaTests.MidiNoteTests testSnapToGridSixteenthNote]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MidiNoteTests testStaticClamp]' started.
+Test Case '-[LoopaTests.MidiNoteTests testStaticClamp]' passed (0.000 seconds).
+Test Case '-[LoopaTests.MidiNoteTests testStaticClampDuration]' started.
+Test Case '-[LoopaTests.MidiNoteTests testStaticClampDuration]' passed (0.000 seconds).
+Test Case '-[LoopaTests.MidiNoteTests testStaticSnap]' started.
+Test Case '-[LoopaTests.MidiNoteTests testStaticSnap]' passed (0.001 seconds).
+Test Suite 'MidiNoteTests' passed at 2026-01-09 19:41:30.417.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.012 (0.019) seconds
+Test Suite 'MultiTrackLooperTests' started at 2026-01-09 19:41:30.418.
+Test Case '-[LoopaTests.MultiTrackLooperTests testClearAllTracks]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testClearAllTracks]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testDeleteSpecificTrack]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testDeleteSpecificTrack]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testEmptyRecordingDoesNotCreateTrack]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testEmptyRecordingDoesNotCreateTrack]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testInitialState]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testInitialState]' passed (0.000 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testLoopLengthCalculation]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testLoopLengthCalculation]' passed (0.000 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testLoopLengthWithDifferentBPM]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testLoopLengthWithDifferentBPM]' passed (0.000 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testMultipleTracks]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testMultipleTracks]' passed (0.000 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testPauseDoesNothingWhenNotPlaying]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testPauseDoesNothingWhenNotPlaying]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testPausePlayback]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testPausePlayback]' passed (0.004 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testRecordingFourBarsAfterTwoBars]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testRecordingFourBarsAfterTwoBars]' passed (4.504 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testRecordingLongerTrackAfterShorterTrack]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testRecordingLongerTrackAfterShorterTrack]' passed (4.113 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testResumePlayback]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testResumePlayback]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testResumeStartsPlaybackWhenNotPaused]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testResumeStartsPlaybackWhenNotPaused]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testSetBarCount]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testSetBarCount]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testStartPlayback]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testStartPlayback]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testStartRecording]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testStartRecording]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testStopClearsPausedState]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testStopClearsPausedState]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testStopPlayback]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testStopPlayback]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testStopRecordingCreatesTrack]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testStopRecordingCreatesTrack]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testToggleMute]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testToggleMute]' passed (0.001 seconds).
+Test Case '-[LoopaTests.MultiTrackLooperTests testUndoLastTrack]' started.
+Test Case '-[LoopaTests.MultiTrackLooperTests testUndoLastTrack]' passed (0.001 seconds).
+Test Suite 'MultiTrackLooperTests' passed at 2026-01-09 19:41:39.060.
+	 Executed 21 tests, with 0 failures (0 unexpected) in 8.633 (8.642) seconds
+Test Suite 'PlaybackSyncTests' started at 2026-01-09 19:41:39.060.
+Test Case '-[LoopaTests.PlaybackSyncTests testPausePreservesPosition]' started.
+Test Case '-[LoopaTests.PlaybackSyncTests testPausePreservesPosition]' passed (0.403 seconds).
+Test Case '-[LoopaTests.PlaybackSyncTests testPositionMatchesCurrentPosition]' started.
+Test Case '-[LoopaTests.PlaybackSyncTests testPositionMatchesCurrentPosition]' passed (0.103 seconds).
+Test Case '-[LoopaTests.PlaybackSyncTests testResumeFromPausedPosition]' started.
+Test Case '-[LoopaTests.PlaybackSyncTests testResumeFromPausedPosition]' passed (0.203 seconds).
+Test Case '-[LoopaTests.PlaybackSyncTests testSeekClampsToLoopBounds]' started.
+Test Case '-[LoopaTests.PlaybackSyncTests testSeekClampsToLoopBounds]' passed (0.001 seconds).
+Test Case '-[LoopaTests.PlaybackSyncTests testSeekUpdatesPosition]' started.
+Test Case '-[LoopaTests.PlaybackSyncTests testSeekUpdatesPosition]' passed (0.001 seconds).
+Test Case '-[LoopaTests.PlaybackSyncTests testSynchronizedFractionRange]' started.
+Test Case '-[LoopaTests.PlaybackSyncTests testSynchronizedFractionRange]' passed (0.511 seconds).
+Test Case '-[LoopaTests.PlaybackSyncTests testSynchronizedPositionDuringPlayback]' started.
+Test Case '-[LoopaTests.PlaybackSyncTests testSynchronizedPositionDuringPlayback]' passed (0.104 seconds).
+Test Case '-[LoopaTests.PlaybackSyncTests testSynchronizedPositionWhenNotPlaying]' started.
+Test Case '-[LoopaTests.PlaybackSyncTests testSynchronizedPositionWhenNotPlaying]' passed (0.001 seconds).
+Test Case '-[LoopaTests.PlaybackSyncTests testSynchronizedPositionWhenPaused]' started.
+Test Case '-[LoopaTests.PlaybackSyncTests testSynchronizedPositionWhenPaused]' passed (0.103 seconds).
+Test Case '-[LoopaTests.PlaybackSyncTests testSynchronizedPositionWrapsAtLoopBoundary]' started.
+Test Case '-[LoopaTests.PlaybackSyncTests testSynchronizedPositionWrapsAtLoopBoundary]' passed (1.202 seconds).
+Test Suite 'PlaybackSyncTests' passed at 2026-01-09 19:41:41.703.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 2.632 (2.643) seconds
+Test Suite 'QuantizerTests' started at 2026-01-09 19:41:41.703.
+Test Case '-[LoopaTests.QuantizerTests testQuantizeAtDifferentBPMs]' started.
+Test Case '-[LoopaTests.QuantizerTests testQuantizeAtDifferentBPMs]' passed (0.001 seconds).
+Test Case '-[LoopaTests.QuantizerTests testQuantizeDivisionBeatFractions]' started.
+Test Case '-[LoopaTests.QuantizerTests testQuantizeDivisionBeatFractions]' passed (0.001 seconds).
+Test Case '-[LoopaTests.QuantizerTests testQuantizeEventsOff]' started.
+Test Case '-[LoopaTests.QuantizerTests testQuantizeEventsOff]' passed (0.001 seconds).
+Test Case '-[LoopaTests.QuantizerTests testQuantizeEventsPreservesOtherProperties]' started.
+Test Case '-[LoopaTests.QuantizerTests testQuantizeEventsPreservesOtherProperties]' passed (0.001 seconds).
+Test Case '-[LoopaTests.QuantizerTests testQuantizeEventsQuarter]' started.
+Test Case '-[LoopaTests.QuantizerTests testQuantizeEventsQuarter]' passed (0.001 seconds).
+Test Case '-[LoopaTests.QuantizerTests testQuantizeTimeEighth]' started.
+Test Case '-[LoopaTests.QuantizerTests testQuantizeTimeEighth]' passed (0.001 seconds).
+Test Case '-[LoopaTests.QuantizerTests testQuantizeTimeOff]' started.
+Test Case '-[LoopaTests.QuantizerTests testQuantizeTimeOff]' passed (0.001 seconds).
+Test Case '-[LoopaTests.QuantizerTests testQuantizeTimeQuarter]' started.
+Test Case '-[LoopaTests.QuantizerTests testQuantizeTimeQuarter]' passed (0.001 seconds).
+Test Case '-[LoopaTests.QuantizerTests testQuantizeTimeSixteenth]' started.
+Test Case '-[LoopaTests.QuantizerTests testQuantizeTimeSixteenth]' passed (0.001 seconds).
+Test Case '-[LoopaTests.QuantizerTests testQuantizeWithLoopLength]' started.
+Test Case '-[LoopaTests.QuantizerTests testQuantizeWithLoopLength]' passed (0.002 seconds).
+Test Suite 'QuantizerTests' passed at 2026-01-09 19:41:41.714.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.009 (0.011) seconds
+Test Suite 'SoloMuteTests' started at 2026-01-09 19:41:41.715.
+Test Case '-[LoopaTests.SoloMuteTests testMultipleTracksNoSolo]' started.
+Test Case '-[LoopaTests.SoloMuteTests testMultipleTracksNoSolo]' passed (0.001 seconds).
+Test Case '-[LoopaTests.SoloMuteTests testMultipleTracksWithMultipleSolos]' started.
+Test Case '-[LoopaTests.SoloMuteTests testMultipleTracksWithMultipleSolos]' passed (0.001 seconds).
+Test Case '-[LoopaTests.SoloMuteTests testMultipleTracksWithOneSolo]' started.
+Test Case '-[LoopaTests.SoloMuteTests testMultipleTracksWithOneSolo]' passed (0.001 seconds).
+Test Case '-[LoopaTests.SoloMuteTests testMutedSoloedTrackIsNotAudible]' started.
+Test Case '-[LoopaTests.SoloMuteTests testMutedSoloedTrackIsNotAudible]' passed (0.001 seconds).
+Test Case '-[LoopaTests.SoloMuteTests testMutedTrackIsNotAudible]' started.
+Test Case '-[LoopaTests.SoloMuteTests testMutedTrackIsNotAudible]' passed (0.001 seconds).
+Test Case '-[LoopaTests.SoloMuteTests testNonSoloedTrackIsNotAudibleWhenAnySoloed]' started.
+Test Case '-[LoopaTests.SoloMuteTests testNonSoloedTrackIsNotAudibleWhenAnySoloed]' passed (0.001 seconds).
+Test Case '-[LoopaTests.SoloMuteTests testSoloedTrackIsAudibleWhenAnySoloed]' started.
+Test Case '-[LoopaTests.SoloMuteTests testSoloedTrackIsAudibleWhenAnySoloed]' passed (0.001 seconds).
+Test Case '-[LoopaTests.SoloMuteTests testSoloedVocalTrack]' started.
+Test Case '-[LoopaTests.SoloMuteTests testSoloedVocalTrack]' passed (0.001 seconds).
+Test Case '-[LoopaTests.SoloMuteTests testUnmutedTrackIsAudibleWithNoSolo]' started.
+Test Case '-[LoopaTests.SoloMuteTests testUnmutedTrackIsAudibleWithNoSolo]' passed (0.004 seconds).
+Test Case '-[LoopaTests.SoloMuteTests testVocalTrackAudibility]' started.
+Test Case '-[LoopaTests.SoloMuteTests testVocalTrackAudibility]' passed (0.001 seconds).
+Test Suite 'SoloMuteTests' passed at 2026-01-09 19:41:41.730.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.009 (0.015) seconds
+Test Suite 'TrackFocusViewModelTests' started at 2026-01-09 19:41:41.730.
+Test Case '-[LoopaTests.TrackFocusViewModelTests testAddDrumNoteTriggersPreview]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002114050:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testAddDrumNoteTriggersPreview]' passed (0.044 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testAddNote]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x6000021892c0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+2026-01-09 19:41:41.793735-0500 Loopa[1277:13494096] [AudioConverter]     AudioConverterOOP.cpp:858   Failed to prepare AudioConverterService: -302
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testAddNote]' passed (0.034 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testAddNoteSelectsIt]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002186990:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testAddNoteSelectsIt]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testAddNoteSnapsToGrid]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002188af0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testAddNoteSnapsToGrid]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testAddNoteTriggersPreview]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x60000218cfa0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testAddNoteTriggersPreview]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testAddNoteWithDifferentVelocities]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002188f00:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testAddNoteWithDifferentVelocities]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testBackgroundLockedWithMultiSelectNotes]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002185b30:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testBackgroundLockedWithMultiSelectNotes]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testCanCopyWithSelection]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002185720:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testCanCopyWithSelection]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testCannotPasteWithEmptyClipboard]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002184ff0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testCannotPasteWithEmptyClipboard]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testChordsRemainIndependent]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x60000218d9a0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testChordsRemainIndependent]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testCopyPastePreservesRelativeOffsets]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x60000218d9a0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testCopyPastePreservesRelativeOffsets]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testCopyPasteSingleNote]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002103ed0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testCopyPasteSingleNote]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testCopyPasteWithNonZeroFirstNote]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x6000021886e0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testCopyPasteWithNonZeroFirstNote]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testDeleteNoteRemovesFromTrack]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x60000218d040:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testDeleteNoteRemovesFromTrack]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testDeleteSelectedNoteDeselectsIt]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x60000218d900:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testDeleteSelectedNoteDeselectsIt]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testDeselectAllClearsMultiDragState]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002189590:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testDeselectAllClearsMultiDragState]' passed (0.024 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testDeselectNote]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002185ae0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testDeselectNote]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMoveNoteClampsToBounds]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x60000218a760:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMoveNoteClampsToBounds]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMoveNoteClampsToStart]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x60000218d590:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMoveNoteClampsToStart]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMoveNoteSnapsToGrid]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x6000021001e0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMoveNoteSnapsToGrid]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMoveNoteSnapsToGridEighthNote]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x60000218ff20:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMoveNoteSnapsToGridEighthNote]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMultiDragPreservesRelativePositions]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x60000218a210:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMultiDragPreservesRelativePositions]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMultiDragPreviewPositions]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x6000021849b0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMultiDragPreviewPositions]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMultiDragWithGridSnapping]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002187c50:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testMultiDragWithGridSnapping]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testQuantizeTrack]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002194000:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testQuantizeTrack]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testResizeNoteClampsToBounds]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002188820:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testResizeNoteClampsToBounds]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testResizeNoteMinimumDuration]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002184500:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testResizeNoteMinimumDuration]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testResizeNoteSnapsToGrid]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002194f50:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testResizeNoteSnapsToGrid]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testSelectNote]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002188320:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testSelectNote]' passed (0.023 seconds).
+Test Case '-[LoopaTests.TrackFocusViewModelTests testSetGridStep]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x6000021944b0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.TrackFocusViewModelTests testSetGridStep]' passed (0.023 seconds).
+Test Suite 'TrackFocusViewModelTests' passed at 2026-01-09 19:41:42.459.
+	 Executed 30 tests, with 0 failures (0 unexpected) in 0.725 (0.729) seconds
+Test Suite 'TrackVolumeTests' started at 2026-01-09 19:41:42.459.
+Test Case '-[LoopaTests.TrackVolumeTests testChangingVolumeWhileMuted]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testChangingVolumeWhileMuted]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testDeletingTrackDoesNotAffectRemainingVolumes]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testDeletingTrackDoesNotAffectRemainingVolumes]' passed (0.001 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testMIDIAndVocalVolumeIndependence]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testMIDIAndVocalVolumeIndependence]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testSetMultipleTrackVolumesIndependently]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testSetMultipleTrackVolumesIndependently]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testSetTrackVolumeDoesNotAffectOtherTracks]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testSetTrackVolumeDoesNotAffectOtherTracks]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testSetVolumeForNonexistentTrack]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testSetVolumeForNonexistentTrack]' passed (0.001 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testTrackCustomVolume]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testTrackCustomVolume]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testTrackDefaultVolume]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testTrackDefaultVolume]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testVocalTrackCustomVolume]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testVocalTrackCustomVolume]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testVocalTrackDefaultVolume]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testVocalTrackDefaultVolume]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testVolumeAfterLoadingSession]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testVolumeAfterLoadingSession]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testVolumeAtZeroDoesNotAffectOtherTracks]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testVolumeAtZeroDoesNotAffectOtherTracks]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testVolumeClampingAtMaximum]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testVolumeClampingAtMaximum]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testVolumeClampingAtMinimum]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testVolumeClampingAtMinimum]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testVolumeIsPreservedWhenMuted]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testVolumeIsPreservedWhenMuted]' passed (0.000 seconds).
+Test Case '-[LoopaTests.TrackVolumeTests testVolumeIsPreservedWhenSoloed]' started.
+Test Case '-[LoopaTests.TrackVolumeTests testVolumeIsPreservedWhenSoloed]' passed (0.000 seconds).
+Test Suite 'TrackVolumeTests' passed at 2026-01-09 19:41:42.469.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.006 (0.010) seconds
+Test Suite 'ViewModelTests' started at 2026-01-09 19:41:42.472.
+Test Case '-[LoopaTests.ViewModelTests testDrumMapping]' started.
+Test Case '-[LoopaTests.ViewModelTests testDrumMapping]' passed (0.000 seconds).
+Test Case '-[LoopaTests.ViewModelTests testDrumMappingBoundary]' started.
+Test Case '-[LoopaTests.ViewModelTests testDrumMappingBoundary]' passed (0.000 seconds).
+Test Case '-[LoopaTests.ViewModelTests testLeftChoicesContainDrumKit]' started.
+Test Case '-[LoopaTests.ViewModelTests testLeftChoicesContainDrumKit]' passed (0.000 seconds).
+Test Case '-[LoopaTests.ViewModelTests testPreviewNoteDoesNotCrash]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002188f50:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.ViewModelTests testPreviewNoteDoesNotCrash]' passed (0.020 seconds).
+Test Case '-[LoopaTests.ViewModelTests testPreviewNoteWithDrumTrack]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002188f50:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+Test Case '-[LoopaTests.ViewModelTests testPreviewNoteWithDrumTrack]' passed (0.023 seconds).
+Test Case '-[LoopaTests.ViewModelTests testRightChoicesContainPiano]' started.
+Test Case '-[LoopaTests.ViewModelTests testRightChoicesContainPiano]' passed (0.000 seconds).
+Test Suite 'ViewModelTests' passed at 2026-01-09 19:41:42.518.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.044 (0.045) seconds
+Test Suite 'WorkingSessionTests' started at 2026-01-09 19:41:42.518.
+Test Case '-[LoopaTests.WorkingSessionTests testClearAllClearsWorkingSession]' started.
+✓ Auto-saved working session
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x600002185b30:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+✓ Cleared working session
+Test Case '-[LoopaTests.WorkingSessionTests testClearAllClearsWorkingSession]' passed (0.034 seconds).
+Test Case '-[LoopaTests.WorkingSessionTests testClearWorkingSession]' started.
+✓ Auto-saved working session
+✓ Cleared working session
+Test Case '-[LoopaTests.WorkingSessionTests testClearWorkingSession]' passed (0.001 seconds).
+Test Case '-[LoopaTests.WorkingSessionTests testLoadWorkingSessionReturnsNilWhenEmpty]' started.
+Test Case '-[LoopaTests.WorkingSessionTests testLoadWorkingSessionReturnsNilWhenEmpty]' passed (0.000 seconds).
+Test Case '-[LoopaTests.WorkingSessionTests testSaveAndLoadWorkingSession]' started.
+✓ Auto-saved working session
+✓ Cleared working session
+Test Case '-[LoopaTests.WorkingSessionTests testSaveAndLoadWorkingSession]' passed (0.001 seconds).
+Test Case '-[LoopaTests.WorkingSessionTests testSaveWorkingSessionWithNoTracksClears]' started.
+🔧 Setting up audio graph...
+🔧 Connecting with nil format (auto-negotiated)
+🔧 Sampler 0 attached
+🔧 Sampler 1 attached
+🔧 Sampler 2 attached
+🔧 Sampler 3 attached
+🔧 Sampler 4 attached
+🔧 Sampler 5 attached
+🔧 Sampler 6 attached
+🔧 Sampler 7 attached
+🔧 Sampler 8 attached
+🔧 Sampler 9 attached
+🔧 Sampler 10 attached
+🔧 Sampler 11 attached
+🔧 Sampler 12 attached
+🔧 Sampler 13 attached
+🔧 Sampler 14 attached
+🔧 Sampler 15 attached
+✅ Audio graph initialized with 16 pre-allocated samplers
+✓ Audio session: category=AVAudioSessionCategoryPlayback
+✓ Output route: ["Speaker"]
+✓ Found GM.sf2 at: /Users/tish/Library/Developer/CoreSimulator/Devices/1BF1F283-CE09-4441-B3A9-A2F2478BE45B/data/Containers/Bundle/Application/BA32E49F-8E83-4C2B-B478-846AC5EC5A81/Loopa.app/GM.sf2
+✓ Loaded drum kit, gain=6.0
+✓ Click sampler loaded
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✓ Live sampler loaded with Piano
+✓ Audio engine prepared
+✓ Audio engine started, running: true
+🔊 Output format: <AVAudioFormat 0x6000021940a0:  2 ch,  44100 Hz, Float32, deinterleaved>
+🔊 Output volume: 1.5
+🔊 Live sampler volume: 1.0
+🔊 Live sampler connections: 0 in, 1 out
+✓ Loaded program 0, gain=6.0
+✓ Instrument set to: Piano
+✅ Audio initialized successfully!
+✓ Auto-saved working session
+✓ Cleared working session
+Test Case '-[LoopaTests.WorkingSessionTests testSaveWorkingSessionWithNoTracksClears]' passed (0.020 seconds).
+Test Case '-[LoopaTests.WorkingSessionTests testWorkingSessionPreservesTrackData]' started.
+✓ Auto-saved working session
+✓ Cleared working session
+Test Case '-[LoopaTests.WorkingSessionTests testWorkingSessionPreservesTrackData]' passed (0.001 seconds).
+Test Suite 'WorkingSessionTests' passed at 2026-01-09 19:41:42.576.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.057 (0.058) seconds
+Test Suite 'LoopaTests.xctest' passed at 2026-01-09 19:41:42.576.
+	 Executed 158 tests, with 0 failures (0 unexpected) in 19.418 (19.477) seconds
+Test Suite 'All tests' passed at 2026-01-09 19:41:42.576.
+	 Executed 158 tests, with 0 failures (0 unexpected) in 19.418 (19.477) seconds
+2026-01-09 19:41:42.882 xcodebuild[1228:13493456] [MT] IDETestOperationsObserverDebug: 21.705 elapsed -- Testing started completed.
+2026-01-09 19:41:42.882 xcodebuild[1228:13493456] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-01-09 19:41:42.882 xcodebuild[1228:13493456] [MT] IDETestOperationsObserverDebug: 21.705 sec, +21.705 sec -- end
 
 Test session results, code coverage, and logs:
 	/Users/tish/Documents/white iverson/Tish88/TestResults.xcresult
 
-Failing tests:
-	ScreenshotTests.testScreenshot03_TracksMixer()
-	TransportControlsUITests.testPlayPauseButtonToggles()
-	TransportControlsUITests.testRestartButtonRestartsFromBeginning()
-	TransportRegressionTests.testMultiplePauseResumeCycles()
-	TransportRegressionTests.testQuantizeAlwaysEnabled()
-
-** TEST FAILED **
+** TEST SUCCEEDED **
 
 Testing started

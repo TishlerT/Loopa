@@ -12,6 +12,12 @@ final class SessionStorage {
 		return documents.appendingPathComponent("sessions.json")
 	}
 	
+	/// URL for the auto-saved working session (separate from named sessions)
+	private var workingSessionURL: URL {
+		let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+		return documents.appendingPathComponent("working_session.json")
+	}
+	
 	private init() {}
 	
 	// MARK: - Public API
@@ -63,6 +69,49 @@ final class SessionStorage {
 			sessions[index].name = newName
 			sessions[index].lastModifiedAt = Date()
 			writeSessions(sessions)
+		}
+	}
+	
+	// MARK: - Working Session (Auto-Save)
+	
+	/// Save the current working session for auto-restore
+	func saveWorkingSession(_ session: SavedSession) {
+		do {
+			let data = try JSONEncoder().encode(session)
+			try data.write(to: workingSessionURL)
+			print("✓ Auto-saved working session")
+		} catch {
+			print("❌ Failed to auto-save working session: \(error)")
+		}
+	}
+	
+	/// Load the auto-saved working session (if any)
+	func loadWorkingSession() -> SavedSession? {
+		guard fileManager.fileExists(atPath: workingSessionURL.path) else {
+			return nil
+		}
+		
+		do {
+			let data = try Data(contentsOf: workingSessionURL)
+			let session = try JSONDecoder().decode(SavedSession.self, from: data)
+			return session
+		} catch {
+			print("❌ Failed to load working session: \(error)")
+			return nil
+		}
+	}
+	
+	/// Clear the auto-saved working session
+	func clearWorkingSession() {
+		guard fileManager.fileExists(atPath: workingSessionURL.path) else {
+			return
+		}
+		
+		do {
+			try fileManager.removeItem(at: workingSessionURL)
+			print("✓ Cleared working session")
+		} catch {
+			print("❌ Failed to clear working session: \(error)")
 		}
 	}
 	

@@ -676,6 +676,12 @@ final class LooperViewModel: ObservableObject {
 		audio.stopAllNotes()
 		vocalRecorder.stopAll()
 		preparedTrackIds.removeAll()
+		
+		// Clear working session since user explicitly cleared
+		SessionStorage.shared.clearWorkingSession()
+		currentSessionId = nil
+		currentSessionName = ""
+		
 		HapticManager.shared.warning()
 	}
 	
@@ -926,7 +932,68 @@ final class LooperViewModel: ObservableObject {
 		currentSessionId = session.id
 		currentSessionName = name
 		loadSavedSessions()
+		
+		// Clear working session since user explicitly saved
+		SessionStorage.shared.clearWorkingSession()
+		
 		HapticManager.shared.loopSet()
+	}
+	
+	// MARK: - Auto-Save / Auto-Restore (Working Session)
+	
+	/// Save current state as the working session (for auto-restore on next launch)
+	func saveWorkingSession() {
+		// Only save if there's something to restore
+		guard !tracks.isEmpty else {
+			// Clear any existing working session if user has no tracks
+			SessionStorage.shared.clearWorkingSession()
+			return
+		}
+		
+		let session = SavedSession(
+			id: currentSessionId ?? UUID(),
+			name: currentSessionName.isEmpty ? "Autosave" : currentSessionName,
+			bpm: bpm,
+			barCount: barCount.rawValue,
+			tracks: tracks
+		)
+		
+		SessionStorage.shared.saveWorkingSession(session)
+	}
+	
+	/// Restore the working session from last app use (if any)
+	func restoreWorkingSession() {
+		guard let session = SessionStorage.shared.loadWorkingSession() else {
+			return
+		}
+		
+		// Load session settings
+		bpm = session.bpm
+		if let bc = BarCount(rawValue: session.barCount) {
+			barCount = bc
+			looper.setBarCount(bc)
+		}
+		
+		// Load tracks into looper
+		looper.loadTracks(session.tracks)
+		
+		// Prepare samplers/players for all tracks
+		for track in session.tracks {
+			if track.isVocal {
+				if let filename = track.audioFileName {
+					_ = vocalRecorder.preparePlayer(for: track.id, filename: filename, volume: track.volume)
+				}
+			} else if let instrument = Instrument(rawValue: track.instrumentName) {
+				audio.prepareSampler(for: track.id, instrument: instrument)
+				audio.setTrackVolume(track.id, volume: track.volume, instrument: instrument)
+			}
+		}
+		
+		// Restore session identity (so saving updates the same session)
+		currentSessionId = session.id
+		currentSessionName = session.name == "Autosave" ? "" : session.name
+		
+		print("✓ Restored working session with \(session.tracks.count) tracks")
 	}
 	
 	func loadSession(_ session: SavedSession) {
