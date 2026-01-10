@@ -187,3 +187,4 @@ This appears to be a Maestro limitation with certain SwiftUI button configuratio
 
 **XCUITest is the recommended primary framework** for Loopa testing due to its complete accessibility support, rich output format, and integration with the existing project. Maestro serves as a useful supplementary tool for simple smoke tests where its YAML-based approach makes AI test generation easier, but its incomplete accessibility tree reading limits its utility for comprehensive testing.
 
+

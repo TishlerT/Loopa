@@ -34,9 +34,9 @@
   - Pre-configure audio session during count-in (prevents playback interruption)
 
 ## Test Status
-- Total: 152 tests (unit tests, UI tests excluded due to simulator infrastructure issues)
-- Passing: 152 unit tests
-- Failing: 0 unit test failures
+- Total: 158 unit tests + 20 UI tests
+- Passing: 158 unit tests, 20 UI tests
+- Failing: 0
 
 ## Device Testing
 | Device | Tests | Status |
@@ -73,6 +73,8 @@
 - [x] **Multi-note drag** - In multi-select mode, selecting multiple notes and dragging one now moves all selected notes together with their relative positions preserved. Tapping empty space no longer deselects notes (allows panning). Added 5 new unit tests for multi-drag behavior.
 - [x] **Compact track layout with inline volume slider** - Restructured TrackMixerRow to a single-row layout. M/S/Q/L buttons remain horizontal, and the volume slider is now a horizontal slider inline after the buttons (instead of a separate row below). This reduces vertical space per track, allowing more tracks to be visible simultaneously.
 - [x] **Editor hint in TracksView** - Added dismissible hint ("👆 Tap a track to open the editor") above the tracks list. Uses `@AppStorage` to hide permanently after user opens any track editor.
+- [x] **Auto-save/auto-restore working session** - App now saves current session when going to background and restores it on next launch. Works even if user swipes app away without explicitly saving. Clears auto-save when user saves or clears all. Added 6 unit tests.
+- [x] **Fixed first vocal recording bug** - First vocal recording after app restart now works correctly. The bug was caused by `stopMonitoring()` resetting the audio session to `.playback` mode even when `sessionPreparedForRecording` was true (during count-in). Fixed by adding `&& !sessionPreparedForRecording` check in `stopMonitoring()`.
 
 ## Optional Future Enhancements
 - [ ] Add double-tap to add note in piano roll

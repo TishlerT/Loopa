@@ -3,7 +3,7 @@
 One-paragraph summaries of source files for quick context loading.
 
 ## App Entry/
-- **Tish88App.swift**: Main app entry point using SwiftUI App protocol. Configures landscape-only orientation via AppDelegate adaptor. Creates root LooperViewModel as environment object. Handles incoming .loopa file URLs for session import.
+- **Tish88App.swift**: Main app entry point using SwiftUI App protocol. Configures landscape-only orientation via AppDelegate adaptor. Creates root LooperViewModel as environment object. Handles incoming .loopa file URLs for session import. Uses scenePhase to auto-save working session on background and auto-restore on launch.
 - **ContentView.swift**: [EXCLUDED FROM BUILD] Alternative content view using TishViewModel (legacy). Split-hand keyboard layout with left/right instrument pickers. Excluded to remove Freesound API dependency.
 
 ## Audio/
@@ -27,7 +27,7 @@ One-paragraph summaries of source files for quick context loading.
 ## Models/
 - **Track.swift**: Track model representing a recorded layer. Includes instrumentName, instrumentProgram, notes (MidiNote array), isMuted, isSolo, volume. Has isAudible() method for solo/mute logic. Supports both MIDI and audio (vocal) tracks.
 - **MidiNote.swift**: Beat-based note model with pitch, velocity, startBeat, durationBeats. Includes conversion functions from/to MidiEvent pairs. Used for piano roll display and editing.
-- **SessionStorage.swift**: Manages saved session persistence to disk.
+- **SessionStorage.swift**: Manages saved session persistence to disk. Also handles auto-save/auto-restore via working_session.json separate from named sessions. Methods: `saveWorkingSession()`, `loadWorkingSession()`, `clearWorkingSession()`.
 - **SessionExporter.swift**: Handles exporting and importing .loopa session files. Encodes SavedSession to JSON, presents share sheet, and handles security-scoped URL access for imports.
 - **FreesoundModels.swift**: [EXCLUDED FROM BUILD] Decodable models for Freesound API responses. Excluded to remove Freesound API dependency.
 
@@ -77,6 +77,7 @@ One-paragraph summaries of source files for quick context loading.
 - **MultiTrackLooperTests.swift**: Unit tests for multi-track looper state management.
 - **QuantizerTests.swift**: Unit tests for quantization logic at various grid divisions.
 - **ViewModelTests.swift**: Unit tests for LooperViewModel state and actions.
+- **WorkingSessionTests.swift**: Tests for auto-save/auto-restore working session functionality. Covers save/load round-trip, clear, preserve track data, and LooperViewModel integration (clearAll clears working session, empty tracks clears).
 - **PlaybackSyncTests.swift**: Tests for audio-visual synchronization. Verifies synchronized position during playback, pause/resume continuity, loop boundary wraparound, and seek behavior. Includes EventTimingTests for event dispatch timing validation.
 - **UI/TransportControlsUITests.swift**: XCUITest for transport buttons. Tests button existence, recording flow, play/pause toggle, restart, and quantize.
 - **UI/RegressionTests.swift**: Regression tests for identified bugs.

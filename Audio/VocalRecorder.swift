@@ -320,8 +320,9 @@ final class VocalRecorder: ObservableObject {
 		isMonitoring = false
 		currentLevel = 0
 		
-		// Only reset audio session if not recording
-		if !isRecording {
+		// Only reset audio session if not recording AND not preparing to record
+		// (sessionPreparedForRecording means we've pre-configured for recording during count-in)
+		if !isRecording && !sessionPreparedForRecording {
 			do {
 				let session = AVAudioSession.sharedInstance()
 				try session.setCategory(.playback, mode: .default)

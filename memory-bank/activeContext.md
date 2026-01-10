@@ -4,6 +4,13 @@
 UX improvements and polish for app release.
 
 ## Recent Work (This Session)
+1. **Fixed First Vocal Recording Bug** - Bug fix:
+   - **Issue:** First vocal recording after app restart failed silently. Waveform visual incorrectly responded to metronome during count-in instead of actual voice input.
+   - **Root Cause:** `stopMonitoring()` reset audio session to `.playback` mode even when `sessionPreparedForRecording` was true (set during count-in). Then `startRecording()` skipped session config because it thought session was already prepared.
+   - **Fix:** Added `&& !sessionPreparedForRecording` check in `stopMonitoring()` to preserve the pre-configured session.
+   - All 20 tests pass
+
+## Previous Sessions
 1. **Auto-Save/Auto-Restore Working Session** - New feature:
    - App now automatically saves the current session when going to background
    - On next launch, the session is automatically restored
