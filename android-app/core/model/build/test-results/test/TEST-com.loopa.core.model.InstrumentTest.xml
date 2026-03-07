@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.loopa.core.model.InstrumentTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-03-07T21:18:24" hostname="cursor" time="0.03">
+  <properties/>
+  <testcase name="drum kit identification()" classname="com.loopa.core.model.InstrumentTest" time="0.011"/>
+  <testcase name="program numbers()" classname="com.loopa.core.model.InstrumentTest" time="0.001"/>
+  <testcase name="display names()" classname="com.loopa.core.model.InstrumentTest" time="0.003"/>
+  <testcase name="all bar counts()" classname="com.loopa.core.model.InstrumentTest" time="0.011"/>
+  <testcase name="all instruments have icons()" classname="com.loopa.core.model.InstrumentTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
