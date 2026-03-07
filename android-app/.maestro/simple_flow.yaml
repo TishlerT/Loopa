@@ -1,0 +1,17 @@
+# Adapted from iOS .maestro/simple_flow.yaml
+# DEFERRED_TO_LOCAL: Requires Android emulator + Maestro
+appId: com.loopa.app
+
+---
+- launchApp
+- assertVisible: "L∞PA"
+- assertVisible:
+    id: "recordButton"
+- assertVisible:
+    id: "playPauseButton"
+- assertVisible:
+    id: "restartButton"
+- assertVisible:
+    id: "bpmButton"
+- assertVisible:
+    id: "tracksButton"

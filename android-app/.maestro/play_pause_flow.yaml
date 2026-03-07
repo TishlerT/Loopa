@@ -1,0 +1,14 @@
+# Adapted from iOS .maestro/play_pause_flow.yaml
+# DEFERRED_TO_LOCAL: Requires Android emulator + Maestro
+appId: com.loopa.app
+
+---
+- launchApp
+- assertVisible:
+    id: "playPauseButton"
+- tapOn:
+    id: "playPauseButton"
+- wait:
+    seconds: 1
+- tapOn:
+    id: "playPauseButton"

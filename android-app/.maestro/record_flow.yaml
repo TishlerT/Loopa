@@ -1,0 +1,15 @@
+# Adapted from iOS .maestro/record_flow.yaml
+# DEFERRED_TO_LOCAL: Requires Android emulator + Maestro
+appId: com.loopa.app
+
+---
+- launchApp
+- assertVisible:
+    id: "recordButton"
+- tapOn:
+    id: "recordButton"
+- extendedWaitUntil:
+    visible: "●"
+    timeout: 5000
+- tapOn:
+    id: "recordButton"
