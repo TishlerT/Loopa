@@ -52,11 +52,22 @@
 - Project warnings about duplicate file group membership (cosmetic only)
 
 ## App Store Submission Status
-**Ready for submission** pending external setup:
-1. ~~Privacy policy URL (tishstudios.com/privacy)~~ ✓ Linked in Settings
-2. Support email confirmation
-3. App Store Connect metadata
-4. Apple Developer account verification
+**REJECTED - Resubmission Required**
+
+First submission rejected for:
+1. Guideline 2.3.7 - Price language in metadata (e.g., "FREE")
+2. Guideline 4.3(a) - Design spam (app appeared similar to others)
+
+**Resolution prepared** (Jan 12, 2026):
+- [x] Created `APP_STORE_RESUBMISSION_GUIDE.md` with all copy/paste text
+- [x] Prepared new App Name options (removed price language)
+- [x] Prepared new Subtitle options (feature-focused)
+- [x] Prepared new Keywords (no "free", specific features)
+- [x] Prepared new Description (unique first 3 sentences)
+- [x] Prepared new Promotional Text
+- [x] Prepared Screenshot Caption guidance
+- [x] Prepared detailed App Review Notes explaining uniqueness
+- [ ] **USER ACTION REQUIRED**: Apply changes in App Store Connect and resubmit
 
 ## Final Fixes (Jan 2026)
 - [x] Fixed iPad MIDI editor playhead selection: Notes now have priority over playhead in tap detection, and playhead hit zone is tighter on iPad (20pt vs 30pt on iPhone)

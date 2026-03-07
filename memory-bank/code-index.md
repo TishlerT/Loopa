@@ -86,3 +86,6 @@ One-paragraph summaries of source files for quick context loading.
 ## Scripts
 - **run_tests.sh**: Bash script to run XCUITests via CLI. Outputs colored pass/fail summary and saves results to xcresult bundle.
 - **parse_results.sh**: Parses xcresult bundle to JSON. Supports --summary, --tests, and --failures modes.
+
+## Documentation
+- **APP_STORE_RESUBMISSION_GUIDE.md**: Step-by-step guide for fixing App Store rejection (Guidelines 2.3.7 and 4.3(a)). Contains all copy/paste text for App Name, Subtitle, Keywords, Description, Promotional Text, Screenshot Captions, and App Review Notes. Includes exact navigation paths in App Store Connect.

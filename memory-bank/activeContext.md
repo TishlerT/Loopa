@@ -1,7 +1,7 @@
 # Active Context
 
 ## Current Focus
-UX improvements and polish for app release.
+App Store resubmission after rejection (Guidelines 2.3.7 and 4.3(a)).
 
 ## Recent Work (This Session)
 1. **Fixed iPad MIDI Editor Playhead Selection Bug** - Bug fix:
