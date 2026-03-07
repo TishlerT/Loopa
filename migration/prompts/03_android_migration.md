@@ -50,6 +50,7 @@ If any of these files are missing, output `BLOCKED(reason)` and stop. The iOS ba
 4. **If the same failure repeats twice, STOP.** Re-analyze the root cause before retrying. Do not loop blindly.
 5. **If a required dependency is missing, output `BLOCKED(reason)`.** Do not guess or work around critical missing pieces.
 6. **Update memory-bank after every phase.** Update `activeContext.md` and `progress.md` at minimum. Update `code-index.md` when you create new files.
+7. **Maximize what you deliver.** Your environment has constraints (no emulator, no Maestro), but it can do a great deal: build the full project, run all JVM/Robolectric tests, run lint/detekt/ktlint, produce release bundles, and execute parity comparison scripts. Exhaust every verification you _can_ run before marking anything as deferred. `DEFERRED_TO_LOCAL` is reserved for things that genuinely require a device or emulator — never use it as a shortcut to skip work you could complete on this VM.
 
 ## Environment awareness
 
@@ -664,3 +665,62 @@ python3 migration/scripts/compare_state.py
 python3 migration/scripts/compare_images.py
 python3 migration/scripts/compare_audio.py
 ```
+
+---
+
+## Final deliverable: completion report
+
+When you have finished all phases you can complete (or hit a BLOCKED gate that prevents further progress), produce a single comprehensive report at `migration/reports/COMPLETION_REPORT.md`. This is your primary deliverable to the project owner alongside the code itself.
+
+### Structure
+
+```markdown
+# Android Migration — Completion Report
+
+## Summary
+<2-3 sentence overview: how far the migration got, what state the Android app is in>
+
+## Phases completed
+<For each phase you finished, one paragraph covering:>
+- What was built
+- Test results (exact counts, all passing / any failing)
+- Verification gate results (which commands ran, exit codes)
+- Any notable decisions or deviations from the plan
+
+## Current state of the Android app
+- Does it build? (assembleDebug, assembleRelease, bundleRelease)
+- How many tests pass? (breakdown by module)
+- Lint/detekt/ktlint status?
+- What can a user do with it right now if they install the APK on a device?
+
+## What could not be verified on this VM
+<Exhaustive list of specific items that require a device, emulator, or macOS.
+For each item, state:>
+- Exactly what needs to happen (e.g., "Run `maestro test .maestro/record_flow.yaml` on an Android emulator")
+- What you expect the outcome to be based on the code you wrote
+- Any risks or areas where you are least confident
+
+## What was not attempted and why
+<If any phases were skipped or partially completed, explain the specific blocker.
+Distinguish between:>
+- BLOCKED: a hard dependency was missing (name it)
+- DEFERRED_TO_LOCAL: requires hardware/emulator (list the exact verification)
+- NOT_REACHED: ran out of context or time (state which phase you stopped at)
+
+## Recommended next steps for local verification
+<Ordered checklist of what the project owner should do on macOS with a device/emulator
+to complete verification. Be specific — exact commands, what to look for, pass criteria.>
+
+## Known risks and open questions
+<Anything you encountered that the project owner should be aware of — areas of low
+confidence, potential platform differences, performance unknowns, etc.>
+
+## File inventory
+<List every file you created or modified in android-app/, migration/, and memory-bank/.>
+```
+
+### Rules for this report
+- Be honest. If something is fragile or uncertain, say so. The owner needs accurate information, not optimism.
+- Be specific. "UI tests should pass" is not useful. "The 12 Robolectric Compose tests in `:feature:looper:test` verify transport button existence, tap handling, and instrument switching — all 12 pass on JVM" is useful.
+- Do not inflate the "could not be verified" section with items you could have done. If a unit test could have caught it, you should have written and run that unit test.
+- Commit this report and all final code changes before your session ends.
