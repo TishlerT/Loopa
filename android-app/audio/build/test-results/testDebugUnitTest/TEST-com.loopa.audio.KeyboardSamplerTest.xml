@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.loopa.audio.KeyboardSamplerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-03-07T21:26:38" hostname="cursor" time="0.009">
+  <properties/>
+  <testcase name="load bass program sends correct program number()" classname="com.loopa.audio.KeyboardSamplerTest" time="0.001"/>
+  <testcase name="load piano program sends programChange()" classname="com.loopa.audio.KeyboardSamplerTest" time="0.0"/>
+  <testcase name="noteOn routes to correct channel()" classname="com.loopa.audio.KeyboardSamplerTest" time="0.001"/>
+  <testcase name="noteOff in percussion mode routes to channel 9()" classname="com.loopa.audio.KeyboardSamplerTest" time="0.0"/>
+  <testcase name="noteOn in percussion mode routes to channel 9()" classname="com.loopa.audio.KeyboardSamplerTest" time="0.001"/>
+  <testcase name="all instruments can be loaded()" classname="com.loopa.audio.KeyboardSamplerTest" time="0.0"/>
+  <testcase name="stopAll calls allNotesOff on engine()" classname="com.loopa.audio.KeyboardSamplerTest" time="0.0"/>
+  <testcase name="load drums switches to percussion mode()" classname="com.loopa.audio.KeyboardSamplerTest" time="0.001"/>
+  <testcase name="switching from drums to piano clears percussion mode()" classname="com.loopa.audio.KeyboardSamplerTest" time="0.0"/>
+  <testcase name="noteOff routes to correct channel()" classname="com.loopa.audio.KeyboardSamplerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
