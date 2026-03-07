@@ -35,6 +35,4 @@ dependencies {
     testImplementation(libs.androidx.test.core)
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
+// Storage tests use JUnit 4 + Robolectric (not JUnit 5 Platform)
