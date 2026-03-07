@@ -1,0 +1,690 @@
+package org.gradle.accessors.dm;
+
+import org.gradle.api.NonNullApi;
+import org.gradle.api.artifacts.MinimalExternalModuleDependency;
+import org.gradle.plugin.use.PluginDependency;
+import org.gradle.api.artifacts.ExternalModuleDependencyBundle;
+import org.gradle.api.artifacts.MutableVersionConstraint;
+import org.gradle.api.provider.Provider;
+import org.gradle.api.model.ObjectFactory;
+import org.gradle.api.provider.ProviderFactory;
+import org.gradle.api.internal.catalog.AbstractExternalDependencyFactory;
+import org.gradle.api.internal.catalog.DefaultVersionCatalog;
+import java.util.Map;
+import org.gradle.api.internal.attributes.ImmutableAttributesFactory;
+import org.gradle.api.internal.artifacts.dsl.CapabilityNotationParser;
+import javax.inject.Inject;
+
+/**
+ * A catalog of dependencies accessible via the `libs` extension.
+ */
+@NonNullApi
+public class LibrariesForLibs extends AbstractExternalDependencyFactory {
+
+    private final AbstractExternalDependencyFactory owner = this;
+    private final AndroidxLibraryAccessors laccForAndroidxLibraryAccessors = new AndroidxLibraryAccessors(owner);
+    private final ComposeLibraryAccessors laccForComposeLibraryAccessors = new ComposeLibraryAccessors(owner);
+    private final Junit5LibraryAccessors laccForJunit5LibraryAccessors = new Junit5LibraryAccessors(owner);
+    private final KotlinxLibraryAccessors laccForKotlinxLibraryAccessors = new KotlinxLibraryAccessors(owner);
+    private final VersionAccessors vaccForVersionAccessors = new VersionAccessors(providers, config);
+    private final BundleAccessors baccForBundleAccessors = new BundleAccessors(objects, providers, config, attributesFactory, capabilityNotationParser);
+    private final PluginAccessors paccForPluginAccessors = new PluginAccessors(providers, config);
+
+    @Inject
+    public LibrariesForLibs(DefaultVersionCatalog config, ProviderFactory providers, ObjectFactory objects, ImmutableAttributesFactory attributesFactory, CapabilityNotationParser capabilityNotationParser) {
+        super(config, providers, objects, attributesFactory, capabilityNotationParser);
+    }
+
+        /**
+         * Creates a dependency provider for junit4 (junit:junit)
+     * with version '4.13.2'.
+         * This dependency was declared in catalog libs.versions.toml
+         */
+        public Provider<MinimalExternalModuleDependency> getJunit4() {
+            return create("junit4");
+    }
+
+        /**
+         * Creates a dependency provider for robolectric (org.robolectric:robolectric)
+     * with versionRef 'robolectric'.
+         * This dependency was declared in catalog libs.versions.toml
+         */
+        public Provider<MinimalExternalModuleDependency> getRobolectric() {
+            return create("robolectric");
+    }
+
+    /**
+     * Returns the group of libraries at androidx
+     */
+    public AndroidxLibraryAccessors getAndroidx() {
+        return laccForAndroidxLibraryAccessors;
+    }
+
+    /**
+     * Returns the group of libraries at compose
+     */
+    public ComposeLibraryAccessors getCompose() {
+        return laccForComposeLibraryAccessors;
+    }
+
+    /**
+     * Returns the group of libraries at junit5
+     */
+    public Junit5LibraryAccessors getJunit5() {
+        return laccForJunit5LibraryAccessors;
+    }
+
+    /**
+     * Returns the group of libraries at kotlinx
+     */
+    public KotlinxLibraryAccessors getKotlinx() {
+        return laccForKotlinxLibraryAccessors;
+    }
+
+    /**
+     * Returns the group of versions at versions
+     */
+    public VersionAccessors getVersions() {
+        return vaccForVersionAccessors;
+    }
+
+    /**
+     * Returns the group of bundles at bundles
+     */
+    public BundleAccessors getBundles() {
+        return baccForBundleAccessors;
+    }
+
+    /**
+     * Returns the group of plugins at plugins
+     */
+    public PluginAccessors getPlugins() {
+        return paccForPluginAccessors;
+    }
+
+    public static class AndroidxLibraryAccessors extends SubDependencyFactory {
+        private final AndroidxActivityLibraryAccessors laccForAndroidxActivityLibraryAccessors = new AndroidxActivityLibraryAccessors(owner);
+        private final AndroidxLifecycleLibraryAccessors laccForAndroidxLifecycleLibraryAccessors = new AndroidxLifecycleLibraryAccessors(owner);
+        private final AndroidxTestLibraryAccessors laccForAndroidxTestLibraryAccessors = new AndroidxTestLibraryAccessors(owner);
+
+        public AndroidxLibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+            /**
+             * Creates a dependency provider for core (androidx.core:core-ktx)
+         * with versionRef 'androidx.core'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getCore() {
+                return create("androidx.core");
+        }
+
+        /**
+         * Returns the group of libraries at androidx.activity
+         */
+        public AndroidxActivityLibraryAccessors getActivity() {
+            return laccForAndroidxActivityLibraryAccessors;
+        }
+
+        /**
+         * Returns the group of libraries at androidx.lifecycle
+         */
+        public AndroidxLifecycleLibraryAccessors getLifecycle() {
+            return laccForAndroidxLifecycleLibraryAccessors;
+        }
+
+        /**
+         * Returns the group of libraries at androidx.test
+         */
+        public AndroidxTestLibraryAccessors getTest() {
+            return laccForAndroidxTestLibraryAccessors;
+        }
+
+    }
+
+    public static class AndroidxActivityLibraryAccessors extends SubDependencyFactory {
+
+        public AndroidxActivityLibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+            /**
+             * Creates a dependency provider for compose (androidx.activity:activity-compose)
+         * with versionRef 'androidx.activity'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getCompose() {
+                return create("androidx.activity.compose");
+        }
+
+    }
+
+    public static class AndroidxLifecycleLibraryAccessors extends SubDependencyFactory {
+        private final AndroidxLifecycleViewmodelLibraryAccessors laccForAndroidxLifecycleViewmodelLibraryAccessors = new AndroidxLifecycleViewmodelLibraryAccessors(owner);
+
+        public AndroidxLifecycleLibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+            /**
+             * Creates a dependency provider for runtime (androidx.lifecycle:lifecycle-runtime-ktx)
+         * with versionRef 'androidx.lifecycle'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getRuntime() {
+                return create("androidx.lifecycle.runtime");
+        }
+
+        /**
+         * Returns the group of libraries at androidx.lifecycle.viewmodel
+         */
+        public AndroidxLifecycleViewmodelLibraryAccessors getViewmodel() {
+            return laccForAndroidxLifecycleViewmodelLibraryAccessors;
+        }
+
+    }
+
+    public static class AndroidxLifecycleViewmodelLibraryAccessors extends SubDependencyFactory implements DependencyNotationSupplier {
+
+        public AndroidxLifecycleViewmodelLibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+            /**
+             * Creates a dependency provider for viewmodel (androidx.lifecycle:lifecycle-viewmodel-ktx)
+         * with versionRef 'androidx.lifecycle'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> asProvider() {
+                return create("androidx.lifecycle.viewmodel");
+        }
+
+            /**
+             * Creates a dependency provider for compose (androidx.lifecycle:lifecycle-viewmodel-compose)
+         * with versionRef 'androidx.lifecycle'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getCompose() {
+                return create("androidx.lifecycle.viewmodel.compose");
+        }
+
+    }
+
+    public static class AndroidxTestLibraryAccessors extends SubDependencyFactory {
+
+        public AndroidxTestLibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+            /**
+             * Creates a dependency provider for core (androidx.test:core)
+         * with version '1.5.0'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getCore() {
+                return create("androidx.test.core");
+        }
+
+            /**
+             * Creates a dependency provider for runner (androidx.test:runner)
+         * with version '1.5.2'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getRunner() {
+                return create("androidx.test.runner");
+        }
+
+    }
+
+    public static class ComposeLibraryAccessors extends SubDependencyFactory {
+        private final ComposeUiLibraryAccessors laccForComposeUiLibraryAccessors = new ComposeUiLibraryAccessors(owner);
+
+        public ComposeLibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+            /**
+             * Creates a dependency provider for bom (androidx.compose:compose-bom)
+         * with versionRef 'compose.bom'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getBom() {
+                return create("compose.bom");
+        }
+
+            /**
+             * Creates a dependency provider for foundation (androidx.compose.foundation:foundation)
+         * with no version specified
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getFoundation() {
+                return create("compose.foundation");
+        }
+
+            /**
+             * Creates a dependency provider for material3 (androidx.compose.material3:material3)
+         * with no version specified
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getMaterial3() {
+                return create("compose.material3");
+        }
+
+            /**
+             * Creates a dependency provider for runtime (androidx.compose.runtime:runtime)
+         * with no version specified
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getRuntime() {
+                return create("compose.runtime");
+        }
+
+        /**
+         * Returns the group of libraries at compose.ui
+         */
+        public ComposeUiLibraryAccessors getUi() {
+            return laccForComposeUiLibraryAccessors;
+        }
+
+    }
+
+    public static class ComposeUiLibraryAccessors extends SubDependencyFactory implements DependencyNotationSupplier {
+        private final ComposeUiTestLibraryAccessors laccForComposeUiTestLibraryAccessors = new ComposeUiTestLibraryAccessors(owner);
+        private final ComposeUiToolingLibraryAccessors laccForComposeUiToolingLibraryAccessors = new ComposeUiToolingLibraryAccessors(owner);
+
+        public ComposeUiLibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+            /**
+             * Creates a dependency provider for ui (androidx.compose.ui:ui)
+         * with no version specified
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> asProvider() {
+                return create("compose.ui");
+        }
+
+            /**
+             * Creates a dependency provider for graphics (androidx.compose.ui:ui-graphics)
+         * with no version specified
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getGraphics() {
+                return create("compose.ui.graphics");
+        }
+
+        /**
+         * Returns the group of libraries at compose.ui.test
+         */
+        public ComposeUiTestLibraryAccessors getTest() {
+            return laccForComposeUiTestLibraryAccessors;
+        }
+
+        /**
+         * Returns the group of libraries at compose.ui.tooling
+         */
+        public ComposeUiToolingLibraryAccessors getTooling() {
+            return laccForComposeUiToolingLibraryAccessors;
+        }
+
+    }
+
+    public static class ComposeUiTestLibraryAccessors extends SubDependencyFactory implements DependencyNotationSupplier {
+
+        public ComposeUiTestLibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+            /**
+             * Creates a dependency provider for test (androidx.compose.ui:ui-test-junit4)
+         * with no version specified
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> asProvider() {
+                return create("compose.ui.test");
+        }
+
+            /**
+             * Creates a dependency provider for manifest (androidx.compose.ui:ui-test-manifest)
+         * with no version specified
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getManifest() {
+                return create("compose.ui.test.manifest");
+        }
+
+    }
+
+    public static class ComposeUiToolingLibraryAccessors extends SubDependencyFactory implements DependencyNotationSupplier {
+
+        public ComposeUiToolingLibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+            /**
+             * Creates a dependency provider for tooling (androidx.compose.ui:ui-tooling)
+         * with no version specified
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> asProvider() {
+                return create("compose.ui.tooling");
+        }
+
+            /**
+             * Creates a dependency provider for preview (androidx.compose.ui:ui-tooling-preview)
+         * with no version specified
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getPreview() {
+                return create("compose.ui.tooling.preview");
+        }
+
+    }
+
+    public static class Junit5LibraryAccessors extends SubDependencyFactory {
+
+        public Junit5LibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+            /**
+             * Creates a dependency provider for api (org.junit.jupiter:junit-jupiter-api)
+         * with versionRef 'junit5'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getApi() {
+                return create("junit5.api");
+        }
+
+            /**
+             * Creates a dependency provider for engine (org.junit.jupiter:junit-jupiter-engine)
+         * with versionRef 'junit5'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getEngine() {
+                return create("junit5.engine");
+        }
+
+            /**
+             * Creates a dependency provider for params (org.junit.jupiter:junit-jupiter-params)
+         * with versionRef 'junit5'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getParams() {
+                return create("junit5.params");
+        }
+
+    }
+
+    public static class KotlinxLibraryAccessors extends SubDependencyFactory {
+        private final KotlinxCoroutinesLibraryAccessors laccForKotlinxCoroutinesLibraryAccessors = new KotlinxCoroutinesLibraryAccessors(owner);
+        private final KotlinxSerializationLibraryAccessors laccForKotlinxSerializationLibraryAccessors = new KotlinxSerializationLibraryAccessors(owner);
+
+        public KotlinxLibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+        /**
+         * Returns the group of libraries at kotlinx.coroutines
+         */
+        public KotlinxCoroutinesLibraryAccessors getCoroutines() {
+            return laccForKotlinxCoroutinesLibraryAccessors;
+        }
+
+        /**
+         * Returns the group of libraries at kotlinx.serialization
+         */
+        public KotlinxSerializationLibraryAccessors getSerialization() {
+            return laccForKotlinxSerializationLibraryAccessors;
+        }
+
+    }
+
+    public static class KotlinxCoroutinesLibraryAccessors extends SubDependencyFactory {
+
+        public KotlinxCoroutinesLibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+            /**
+             * Creates a dependency provider for android (org.jetbrains.kotlinx:kotlinx-coroutines-android)
+         * with versionRef 'kotlinx.coroutines'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getAndroid() {
+                return create("kotlinx.coroutines.android");
+        }
+
+            /**
+             * Creates a dependency provider for core (org.jetbrains.kotlinx:kotlinx-coroutines-core)
+         * with versionRef 'kotlinx.coroutines'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getCore() {
+                return create("kotlinx.coroutines.core");
+        }
+
+            /**
+             * Creates a dependency provider for test (org.jetbrains.kotlinx:kotlinx-coroutines-test)
+         * with versionRef 'kotlinx.coroutines'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getTest() {
+                return create("kotlinx.coroutines.test");
+        }
+
+    }
+
+    public static class KotlinxSerializationLibraryAccessors extends SubDependencyFactory {
+
+        public KotlinxSerializationLibraryAccessors(AbstractExternalDependencyFactory owner) { super(owner); }
+
+            /**
+             * Creates a dependency provider for json (org.jetbrains.kotlinx:kotlinx-serialization-json)
+         * with versionRef 'kotlinx.serialization'.
+             * This dependency was declared in catalog libs.versions.toml
+             */
+            public Provider<MinimalExternalModuleDependency> getJson() {
+                return create("kotlinx.serialization.json");
+        }
+
+    }
+
+    public static class VersionAccessors extends VersionFactory  {
+
+        private final AndroidxVersionAccessors vaccForAndroidxVersionAccessors = new AndroidxVersionAccessors(providers, config);
+        private final ComposeVersionAccessors vaccForComposeVersionAccessors = new ComposeVersionAccessors(providers, config);
+        private final KotlinxVersionAccessors vaccForKotlinxVersionAccessors = new KotlinxVersionAccessors(providers, config);
+        public VersionAccessors(ProviderFactory providers, DefaultVersionCatalog config) { super(providers, config); }
+
+            /**
+             * Returns the version associated to this alias: agp (8.2.2)
+             * If the version is a rich version and that its not expressible as a
+             * single version string, then an empty string is returned.
+             * This version was declared in catalog libs.versions.toml
+             */
+            public Provider<String> getAgp() { return getVersion("agp"); }
+
+            /**
+             * Returns the version associated to this alias: junit5 (5.10.1)
+             * If the version is a rich version and that its not expressible as a
+             * single version string, then an empty string is returned.
+             * This version was declared in catalog libs.versions.toml
+             */
+            public Provider<String> getJunit5() { return getVersion("junit5"); }
+
+            /**
+             * Returns the version associated to this alias: kotlin (1.9.22)
+             * If the version is a rich version and that its not expressible as a
+             * single version string, then an empty string is returned.
+             * This version was declared in catalog libs.versions.toml
+             */
+            public Provider<String> getKotlin() { return getVersion("kotlin"); }
+
+            /**
+             * Returns the version associated to this alias: robolectric (4.11.1)
+             * If the version is a rich version and that its not expressible as a
+             * single version string, then an empty string is returned.
+             * This version was declared in catalog libs.versions.toml
+             */
+            public Provider<String> getRobolectric() { return getVersion("robolectric"); }
+
+        /**
+         * Returns the group of versions at versions.androidx
+         */
+        public AndroidxVersionAccessors getAndroidx() {
+            return vaccForAndroidxVersionAccessors;
+        }
+
+        /**
+         * Returns the group of versions at versions.compose
+         */
+        public ComposeVersionAccessors getCompose() {
+            return vaccForComposeVersionAccessors;
+        }
+
+        /**
+         * Returns the group of versions at versions.kotlinx
+         */
+        public KotlinxVersionAccessors getKotlinx() {
+            return vaccForKotlinxVersionAccessors;
+        }
+
+    }
+
+    public static class AndroidxVersionAccessors extends VersionFactory  {
+
+        public AndroidxVersionAccessors(ProviderFactory providers, DefaultVersionCatalog config) { super(providers, config); }
+
+            /**
+             * Returns the version associated to this alias: androidx.activity (1.8.2)
+             * If the version is a rich version and that its not expressible as a
+             * single version string, then an empty string is returned.
+             * This version was declared in catalog libs.versions.toml
+             */
+            public Provider<String> getActivity() { return getVersion("androidx.activity"); }
+
+            /**
+             * Returns the version associated to this alias: androidx.core (1.12.0)
+             * If the version is a rich version and that its not expressible as a
+             * single version string, then an empty string is returned.
+             * This version was declared in catalog libs.versions.toml
+             */
+            public Provider<String> getCore() { return getVersion("androidx.core"); }
+
+            /**
+             * Returns the version associated to this alias: androidx.lifecycle (2.7.0)
+             * If the version is a rich version and that its not expressible as a
+             * single version string, then an empty string is returned.
+             * This version was declared in catalog libs.versions.toml
+             */
+            public Provider<String> getLifecycle() { return getVersion("androidx.lifecycle"); }
+
+    }
+
+    public static class ComposeVersionAccessors extends VersionFactory  {
+
+        public ComposeVersionAccessors(ProviderFactory providers, DefaultVersionCatalog config) { super(providers, config); }
+
+            /**
+             * Returns the version associated to this alias: compose.bom (2024.02.00)
+             * If the version is a rich version and that its not expressible as a
+             * single version string, then an empty string is returned.
+             * This version was declared in catalog libs.versions.toml
+             */
+            public Provider<String> getBom() { return getVersion("compose.bom"); }
+
+            /**
+             * Returns the version associated to this alias: compose.compiler (1.5.8)
+             * If the version is a rich version and that its not expressible as a
+             * single version string, then an empty string is returned.
+             * This version was declared in catalog libs.versions.toml
+             */
+            public Provider<String> getCompiler() { return getVersion("compose.compiler"); }
+
+            /**
+             * Returns the version associated to this alias: compose.testing (1.6.1)
+             * If the version is a rich version and that its not expressible as a
+             * single version string, then an empty string is returned.
+             * This version was declared in catalog libs.versions.toml
+             */
+            public Provider<String> getTesting() { return getVersion("compose.testing"); }
+
+    }
+
+    public static class KotlinxVersionAccessors extends VersionFactory  {
+
+        public KotlinxVersionAccessors(ProviderFactory providers, DefaultVersionCatalog config) { super(providers, config); }
+
+            /**
+             * Returns the version associated to this alias: kotlinx.coroutines (1.7.3)
+             * If the version is a rich version and that its not expressible as a
+             * single version string, then an empty string is returned.
+             * This version was declared in catalog libs.versions.toml
+             */
+            public Provider<String> getCoroutines() { return getVersion("kotlinx.coroutines"); }
+
+            /**
+             * Returns the version associated to this alias: kotlinx.serialization (1.6.2)
+             * If the version is a rich version and that its not expressible as a
+             * single version string, then an empty string is returned.
+             * This version was declared in catalog libs.versions.toml
+             */
+            public Provider<String> getSerialization() { return getVersion("kotlinx.serialization"); }
+
+    }
+
+    public static class BundleAccessors extends BundleFactory {
+
+        public BundleAccessors(ObjectFactory objects, ProviderFactory providers, DefaultVersionCatalog config, ImmutableAttributesFactory attributesFactory, CapabilityNotationParser capabilityNotationParser) { super(objects, providers, config, attributesFactory, capabilityNotationParser); }
+
+    }
+
+    public static class PluginAccessors extends PluginFactory {
+        private final AndroidPluginAccessors paccForAndroidPluginAccessors = new AndroidPluginAccessors(providers, config);
+        private final KotlinPluginAccessors paccForKotlinPluginAccessors = new KotlinPluginAccessors(providers, config);
+
+        public PluginAccessors(ProviderFactory providers, DefaultVersionCatalog config) { super(providers, config); }
+
+        /**
+         * Returns the group of plugins at plugins.android
+         */
+        public AndroidPluginAccessors getAndroid() {
+            return paccForAndroidPluginAccessors;
+        }
+
+        /**
+         * Returns the group of plugins at plugins.kotlin
+         */
+        public KotlinPluginAccessors getKotlin() {
+            return paccForKotlinPluginAccessors;
+        }
+
+    }
+
+    public static class AndroidPluginAccessors extends PluginFactory {
+
+        public AndroidPluginAccessors(ProviderFactory providers, DefaultVersionCatalog config) { super(providers, config); }
+
+            /**
+             * Creates a plugin provider for android.application to the plugin id 'com.android.application'
+             * with versionRef 'agp'.
+             * This plugin was declared in catalog libs.versions.toml
+             */
+            public Provider<PluginDependency> getApplication() { return createPlugin("android.application"); }
+
+            /**
+             * Creates a plugin provider for android.library to the plugin id 'com.android.library'
+             * with versionRef 'agp'.
+             * This plugin was declared in catalog libs.versions.toml
+             */
+            public Provider<PluginDependency> getLibrary() { return createPlugin("android.library"); }
+
+    }
+
+    public static class KotlinPluginAccessors extends PluginFactory {
+
+        public KotlinPluginAccessors(ProviderFactory providers, DefaultVersionCatalog config) { super(providers, config); }
+
+            /**
+             * Creates a plugin provider for kotlin.android to the plugin id 'org.jetbrains.kotlin.android'
+             * with versionRef 'kotlin'.
+             * This plugin was declared in catalog libs.versions.toml
+             */
+            public Provider<PluginDependency> getAndroid() { return createPlugin("kotlin.android"); }
+
+            /**
+             * Creates a plugin provider for kotlin.jvm to the plugin id 'org.jetbrains.kotlin.jvm'
+             * with versionRef 'kotlin'.
+             * This plugin was declared in catalog libs.versions.toml
+             */
+            public Provider<PluginDependency> getJvm() { return createPlugin("kotlin.jvm"); }
+
+            /**
+             * Creates a plugin provider for kotlin.serialization to the plugin id 'org.jetbrains.kotlin.plugin.serialization'
+             * with versionRef 'kotlin'.
+             * This plugin was declared in catalog libs.versions.toml
+             */
+            public Provider<PluginDependency> getSerialization() { return createPlugin("kotlin.serialization"); }
+
+    }
+
+}

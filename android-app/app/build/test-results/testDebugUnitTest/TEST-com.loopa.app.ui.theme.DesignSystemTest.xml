@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.loopa.app.ui.theme.DesignSystemTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-03-07T21:11:17" hostname="cursor" time="0.042">
+  <properties/>
+  <testcase name="tishKeyBlack matches iOS 1A1A1A()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.023"/>
+  <testcase name="tishAccent matches iOS 00E5FF()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="tishElevated matches iOS 242424()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="typography sizes match iOS()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.004"/>
+  <testcase name="tishTextTertiary matches iOS 616161()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="radius values match iOS TishRadius()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="tishRecording matches iOS FF3B3B()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="spacing values match iOS TishSpacing()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="tishBackground matches iOS 0D0D0D()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="tishKeyWhite matches iOS F8F8F8()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.001"/>
+  <testcase name="tishPlaying matches iOS 00FF88()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="inline palette colors match iOS hex values()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="tishAccentSecondary matches iOS FF0080()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.001"/>
+  <testcase name="tishKeyBorder matches iOS 333333()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="tishTextSecondary matches iOS 9E9E9E()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="tishAccentTertiary matches iOS FFB800()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="tishSurface matches iOS 1A1A1A()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.001"/>
+  <testcase name="tishOverdub matches iOS B366FF()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <testcase name="tishTextPrimary matches iOS F5F5F5()" classname="com.loopa.app.ui.theme.DesignSystemTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
