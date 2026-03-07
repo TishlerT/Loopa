@@ -8,7 +8,7 @@ MERGED from [:feature:tracks] /workspace/android-app/feature/tracks/build/interm
 MERGED from [:feature:editor] /workspace/android-app/feature/editor/build/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-7:12
 MERGED from [:feature:looper] /workspace/android-app/feature/looper/build/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-7:12
 MERGED from [:core:storage] /workspace/android-app/core/storage/build/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-7:12
-MERGED from [:audio] /workspace/android-app/audio/build/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-7:12
+MERGED from [:audio] /workspace/android-app/audio/build/intermediates/merged_manifest/release/AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.compose.material3:material3-android:1.2.0] /home/ubuntu/.gradle/caches/transforms-3/f2d6a9e119f83af65d2990d52375d661/transformed/material3-release/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.activity:activity-compose:1.8.2] /home/ubuntu/.gradle/caches/transforms-3/f3899648cf7f4b8ee9db23efe1a4bdc0/transformed/activity-compose-1.8.2/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.animation:animation-core-android:1.6.1] /home/ubuntu/.gradle/caches/transforms-3/87529d33d786417bbb76821559a3f55b/transformed/animation-core-release/AndroidManifest.xml:2:1-7:12
@@ -64,6 +64,8 @@ ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:4:5-71
 		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:4:22-68
 uses-permission#android.permission.VIBRATE
 ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:5:5-66
+MERGED from [:audio] /workspace/android-app/audio/build/intermediates/merged_manifest/release/AndroidManifest.xml:7:5-66
+MERGED from [:audio] /workspace/android-app/audio/build/intermediates/merged_manifest/release/AndroidManifest.xml:7:5-66
 	android:name
 		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:5:22-63
 application

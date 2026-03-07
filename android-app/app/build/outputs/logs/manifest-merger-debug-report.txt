@@ -8,7 +8,7 @@ MERGED from [:feature:tracks] /workspace/android-app/feature/tracks/build/interm
 MERGED from [:feature:editor] /workspace/android-app/feature/editor/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:feature:looper] /workspace/android-app/feature/looper/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:core:storage] /workspace/android-app/core/storage/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
-MERGED from [:audio] /workspace/android-app/audio/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:audio] /workspace/android-app/audio/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.compose.material3:material3-android:1.2.0] /home/ubuntu/.gradle/caches/transforms-3/f2d6a9e119f83af65d2990d52375d661/transformed/material3-release/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.compose.material:material-ripple-android:1.6.1] /home/ubuntu/.gradle/caches/transforms-3/bca07ae3496b905baa3530549c063420/transformed/material-ripple-release/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.material:material-icons-core-android:1.6.1] /home/ubuntu/.gradle/caches/transforms-3/f998e8125bae455c4cb862bcd7469525/transformed/material-icons-core-release/AndroidManifest.xml:2:1-7:12
@@ -68,6 +68,8 @@ ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:4:5-71
 		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:4:22-68
 uses-permission#android.permission.VIBRATE
 ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:5:5-66
+MERGED from [:audio] /workspace/android-app/audio/build/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-66
+MERGED from [:audio] /workspace/android-app/audio/build/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-66
 	android:name
 		ADDED from /workspace/android-app/app/src/main/AndroidManifest.xml:5:22-63
 application

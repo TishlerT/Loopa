@@ -1,9 +1,15 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /workspace/android-app/audio/src/main/AndroidManifest.xml:2:1-13
-INJECTED from /workspace/android-app/audio/src/main/AndroidManifest.xml:2:1-13
+ADDED from /workspace/android-app/audio/src/main/AndroidManifest.xml:2:1-4:12
+INJECTED from /workspace/android-app/audio/src/main/AndroidManifest.xml:2:1-4:12
 	package
 		INJECTED from /workspace/android-app/audio/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /workspace/android-app/audio/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.VIBRATE
+ADDED from /workspace/android-app/audio/src/main/AndroidManifest.xml:3:5-66
+	android:name
+		ADDED from /workspace/android-app/audio/src/main/AndroidManifest.xml:3:22-63
 uses-sdk
 INJECTED from /workspace/android-app/audio/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /workspace/android-app/audio/src/main/AndroidManifest.xml
