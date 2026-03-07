@@ -51,7 +51,7 @@ fun PianoRollCanvasView(
                     if (tappedNote != null) {
                         onNoteTap(tappedNote.id)
                     } else {
-                        onEmptyTap(tappedBeat, tappedPitch.coerceIn(0, 127).toUByte())
+                        onEmptyTap(tappedBeat.toDouble(), tappedPitch.coerceIn(0, 127).toUByte())
                     }
                 }
             }

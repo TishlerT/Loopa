@@ -1,4 +1,4 @@
-#Sat Mar 07 21:48:08 UTC 2026
+#Sat Mar 07 21:57:04 UTC 2026
 path.4=3/classes.dex
 path.3=2/classes.dex
 path.2=11/classes.dex
@@ -8,6 +8,7 @@ renamed.8=classes9.dex
 path.8=13/classes.dex
 path.7=10/classes.dex
 path.6=0/classes.dex
+renamed.12=classes13.dex
 path.5=7/classes.dex
 renamed.11=classes12.dex
 renamed.10=classes11.dex
@@ -18,6 +19,7 @@ base.2=/workspace/android-app/app/build/intermediates/dex/debug/mergeLibDexDebug
 base.1=/workspace/android-app/app/build/intermediates/dex/debug/mergeLibDexDebug/1/classes.dex
 base.0=/workspace/android-app/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 renamed.3=classes4.dex
+path.12=7/classes.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
 path.10=classes2.dex
@@ -33,5 +35,6 @@ renamed.5=classes6.dex
 base.6=/workspace/android-app/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 renamed.4=classes5.dex
 base.5=/workspace/android-app/app/build/intermediates/dex/debug/mergeLibDexDebug/7/classes.dex
+base.12=/workspace/android-app/app/build/intermediates/dex/debug/mergeProjectDexDebug/7/classes.dex
 base.11=/workspace/android-app/app/build/intermediates/dex/debug/mergeLibDexDebug/12/classes.dex
 base.10=/workspace/android-app/app/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
