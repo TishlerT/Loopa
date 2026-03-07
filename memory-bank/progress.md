@@ -13,11 +13,11 @@
 - Root `memory-bank/` initialized for Android migration continuity
 
 ## In progress
-- Android migration Phase 2: Project Scaffolding + Design System
+- None — all 12 phases complete
 
 ## Not started
-- Android migration Phases 3-12
-- Local verification of deferred parity items
+- Local device verification (FluidSynth JNI, audio playback, Maestro, screenshots)
+- Play Store submission (needs signing keystore, screenshots, review)
 
 ## Known issues
 - No pre-existing iOS test failures were present in this baseline run

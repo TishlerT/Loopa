@@ -1,7 +1,7 @@
 # Active Context
 
 ## Current focus
-Android migration Phase 1 (Migration Control Documents) complete. Starting Phase 2 (Project Scaffolding + Design System).
+Android migration complete — all 12 phases executed. 212 tests pass, release bundle ready.
 
 ## Recent decisions
 - The Android port treats the shipped iOS app as the parity oracle, not the legacy/excluded Swift files.
