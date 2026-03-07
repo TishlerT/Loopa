@@ -20,6 +20,28 @@ Read these files to load context before writing any code:
 
 If any of these files are missing, output `BLOCKED(reason)` and stop. The iOS baseline capture agent must run first.
 
+## Critical context from baseline capture
+
+**iOS test state**: 158 unit tests + 20 UI tests, all passing. No pre-existing failures.
+
+**GM.sf2 is ~6MB** (5,994,284 bytes), not the 140MB+ that full General MIDI SoundFonts often are. OOM risk is negligible. Simple asset loading is fine.
+
+**Dormant/legacy files that compile but are NOT on the active runtime path** (per SPEC.md and code-index.md — do NOT port these unless you confirm they are invoked):
+- `ios/Audio/AudioEngine.swift` — older split-keyboard engine tied to excluded `TishViewModel`
+- `ios/Audio/Metronome.swift` — standalone timer from older architecture
+- `ios/Looper/MidiLooper.swift` — legacy single-loop recorder, replaced by `MultiTrackLooper`
+- `ios/Looper/LoopStorage.swift` — legacy `.tishloop` persistence format
+- `ios/UI/Components/KeyboardLayer.swift` — older static key renderer
+- `ios/UI/Components/TouchOverlay.swift` — UIKit bridge for excluded legacy keyboard
+
+**The active runtime path is**: `Tish88App → LooperView → LooperViewModel → MultiTrackLooper / LooperAudioEngine / VocalRecorder`
+
+**Date encoding inconsistency**: `.loopa` export uses ISO-8601 dates (`dateEncodingStrategy: .iso8601`). Local session storage (`sessions.json`, `working_session.json`) uses Foundation's default `JSONEncoder` date strategy (seconds since reference date). The Android port must handle both formats for round-trip compatibility. See `migration/fixtures/session_schema.json` for details.
+
+**Additional inline palette colors**: Beyond the tokens in `DesignSystem.swift`, shipped screens hardcode additional hex values inline. See the "Additional live palette" section in `memory-bank/io-schema.md` for the full list. Port all of them into the Compose theme.
+
+**Screenshot baseline gaps**: Only 6 transport-state screenshots were captured (initial, recording, track_recorded, paused, playing, restarted). No baselines exist for tracks_sheet, editor_piano_roll, editor_drum_grid, or vocal_mode — these will need side-by-side local verification later.
+
 ## Hard rules
 
 1. **`android/` is frozen.** It contains a copy of iOS Swift files. Never modify it. Never treat it as Android code. Never reference it as your port target.
@@ -31,9 +53,14 @@ If any of these files are missing, output `BLOCKED(reason)` and stop. The iOS ba
 
 ## Environment awareness
 
-You are on a **Linux cloud VM**. The environment setup agent has already installed:
-- JDK 17, Android SDK 34, NDK, CMake, build-tools, platform-tools
-- Python 3 with numpy, pillow, scikit-image
+You are on a **Linux cloud VM** (Ubuntu 24.04 LTS, x86_64, Firecracker microVM).
+
+**Installed and verified:**
+- OpenJDK 17.0.18 (`JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64`)
+- Android SDK 34 (`ANDROID_HOME=~/android-sdk`)
+- Build Tools 34.0.0, NDK 26.1.10909125, CMake 3.22.1
+- Python 3.12 with numpy, pillow, scikit-image
+- Swift 6.0.3 + SwiftLint 0.57.1 (can lint/parse iOS code, cannot build or test it)
 
 **What works on this VM:**
 - `./gradlew assembleDebug` — builds the app
@@ -43,12 +70,12 @@ You are on a **Linux cloud VM**. The environment setup agent has already install
 - `./gradlew bundleRelease` — builds release AAB
 - Robolectric tests — JVM-based Android framework simulation (no emulator needed)
 
-**What may NOT work on this VM** (depends on KVM/emulator availability):
-- `./gradlew connectedDebugAndroidTest` — needs running emulator
-- `maestro test` — needs running emulator
-- Screenshot capture on device — needs running emulator
+**What does NOT work on this VM** (confirmed — no KVM on Firecracker):
+- `./gradlew connectedDebugAndroidTest` — no emulator, no KVM
+- `maestro test` — no emulator (Maestro also unavailable on macOS local due to Java 8)
+- Screenshot capture on device — no emulator
 
-Check `~/EMULATOR_STATUS.txt` if it exists. If emulator is unavailable, mark connected/Maestro tests as `DEFERRED_TO_LOCAL` in verification gates. Unit tests and Robolectric tests are your primary verification on this VM.
+All connected/Maestro/screenshot tests are `DEFERRED_TO_LOCAL`. Unit tests and Robolectric are your primary verification.
 
 ## Strategy
 
@@ -213,9 +240,9 @@ android-app/
    - Permissions: `RECORD_AUDIO`, `VIBRATE`
    - Edge-to-edge theme, no action bar
 5. Create minimal `MainActivity.kt` with empty Compose scaffold using the Loopa theme
-6. Copy `ios/GM.sf2` to `app/src/main/assets/GM.sf2` (or `android/GM.sf2` — check which exists)
+6. Copy `ios/GM.sf2` to `app/src/main/assets/GM.sf2` (confirmed: exists in both `ios/GM.sf2` and `android/GM.sf2`, ~6MB, SHA-256: `82475b91a76de15cb28a104707d3247ba932e228bada3f47bba63c6b31aaf7a1`)
 7. Port `ios/UI/Theme/DesignSystem.swift` → Compose theme. Read `memory-bank/io-schema.md` for exact values:
-   - `ui/theme/Color.kt` — all hex colors
+   - `ui/theme/Color.kt` — all hex colors from DesignSystem.swift PLUS the additional inline palette colors documented in io-schema.md (12 extra hex values hardcoded in shipped screens)
    - `ui/theme/Type.kt` — typography (use `google-fonts` for rounded if available, otherwise closest match)
    - `ui/theme/Theme.kt` — MaterialTheme wrapper with Loopa color scheme
    - `ui/theme/Spacing.kt` — TishSpacing values
@@ -249,7 +276,7 @@ cd android-app && ./gradlew lint                 # no errors
    - `MidiEvent.kt` — `data class MidiEvent(...)`
    - `SavedSession.kt` — `data class SavedSession(...)` with kotlinx.serialization annotations
 2. Create `core/looper/Quantizer.kt` — port quantization logic exactly
-3. Create `core/storage/SessionStorage.kt` — JSON serialization via kotlinx.serialization
+3. Create `core/storage/SessionStorage.kt` — JSON serialization via kotlinx.serialization. **Important**: implement dual date encoding — ISO-8601 for `.loopa` import/export and epoch-seconds for local `sessions.json` / `working_session.json`. See `migration/fixtures/session_schema.json` `x-loopa-export` and `x-local-storage` sections.
 4. Port **all** corresponding iOS unit tests (read the iOS test files directly):
    - `ios/Tests/QuantizerTests.swift` → `QuantizerTest.kt`
    - `ios/Tests/MidiNoteTests.swift` → `MidiNoteTest.kt`
@@ -298,9 +325,11 @@ cd android-app && ./gradlew test                  # all tests pass (regression c
    - `MetronomeTest.kt` — timing accuracy within tolerance
    - `AudioExporterTest.kt` — M4A file creation
 
-**Critical note on testing audio on Linux**: FluidSynth JNI and actual audio playback cannot be verified on a headless Linux VM without an emulator. Structure the audio module so that:
+**GM.sf2 is only ~6MB** (5,994,284 bytes), not the 140MB+ that General MIDI SoundFonts often are. This eliminates OOM concerns for asset loading. A simple `context.assets.open("GM.sf2")` into FluidSynth is fine — no streaming, compression, or Play Asset Delivery needed.
+
+**Critical note on testing audio on Linux**: FluidSynth JNI and actual audio playback cannot be verified on this headless Linux VM (no emulator, no KVM). Structure the audio module so that:
 - Pure logic (note routing, timing math, state management) is testable via JVM unit tests
-- Hardware interaction (actual JNI calls, audio output) is behind interfaces that can be mocked in unit tests and tested for real on an emulator/device
+- Hardware interaction (actual JNI calls, audio output) is behind interfaces that can be mocked in unit tests and tested for real on an emulator/device locally
 
 **STOP condition**: If FluidSynth cannot be compiled or loaded on Android (JNI failure, licensing issue, missing native libs), output:
 ```
@@ -325,14 +354,18 @@ cd android-app && ./gradlew test                  # all tests still pass
 
 **Goal**: Port the multi-track MIDI recording and playback engine.
 
-**iOS sources**: `ios/Looper/MidiLooper.swift`, `ios/Looper/MultiTrackLooper.swift`, `ios/Looper/MidiExporter.swift`, `ios/Looper/LoopStorage.swift`
+**Active iOS source**: `ios/Looper/MultiTrackLooper.swift` (the current shipped transport engine)
+
+**Also shipped but not on primary runtime path** (verify before porting — may be dead code):
+- `ios/Looper/MidiLooper.swift` — legacy single-loop recorder. Check if `MultiTrackLooper` delegates to it. If not, skip.
+- `ios/Looper/MidiExporter.swift` — MIDI file export exists but is not surfaced in the current UI. Port it as a lower priority.
+- `ios/Looper/LoopStorage.swift` — legacy `.tishloop` format. Likely not needed for the Android port.
 
 **Steps**:
 1. Create in `core/looper/`:
-   - `MidiLooper.kt` — beat-based MIDI event recording and playback
-   - `MultiTrackLooper.kt` — multi-track orchestration, solo/mute, BPM-synced playback
-   - `MidiExporter.kt` — standard MIDI file export
-   - `LoopStorage.kt` — track persistence
+   - `MultiTrackLooper.kt` — multi-track orchestration, solo/mute, BPM-synced playback (this is the core, port it thoroughly)
+   - `MidiExporter.kt` — standard MIDI file export (port for feature completeness)
+   - Skip `MidiLooper.kt` and `LoopStorage.kt` unless you confirm `MultiTrackLooper` depends on them
 2. Port all tests:
    - `ios/Tests/MidiLooperTests.swift` → `MidiLooperTest.kt`
    - `ios/Tests/MultiTrackLooperTests.swift` → `MultiTrackLooperTest.kt`
@@ -387,7 +420,9 @@ cd android-app && ./gradlew test                    # full regression pass
 
 **Goal**: Build LooperScreen — transport, keyboard, waveform. First visually verifiable screen.
 
-**iOS source**: `ios/UI/Screens/LooperView.swift`, `ios/UI/Components/FullKeyboardView.swift`, `ios/UI/Components/KeyboardLayer.swift`, `ios/UI/Components/KeyboardLayoutEngine.swift`, `ios/UI/Components/VocalWaveformView.swift`, `ios/UI/Components/BPMEditorView.swift`, `ios/UI/Components/TouchOverlay.swift`
+**iOS source**: `ios/UI/Screens/LooperView.swift`, `ios/UI/Components/FullKeyboardView.swift`, `ios/UI/Components/KeyboardLayoutEngine.swift`, `ios/UI/Components/VocalWaveformView.swift`, `ios/UI/Components/BPMEditorView.swift`
+
+**Not active in current runtime** (confirmed by code-index — do NOT port these): `KeyboardLayer.swift` (older static renderer, replaced by `FullKeyboardView`), `TouchOverlay.swift` (UIKit bridge for excluded legacy keyboard path)
 
 **Steps**:
 1. `feature/looper/ui/LooperScreen.kt`:
@@ -397,10 +432,9 @@ cd android-app && ./gradlew test                    # full regression pass
    - Instrument/vocal selector
    - Keyboard or vocal waveform area
 2. UI components in `feature/looper/ui/`:
-   - `FullKeyboardView.kt` — multi-touch via `pointerInput`
-   - `KeyboardLayer.kt` — Compose Canvas rendering
-   - `KeyboardLayoutEngine.kt` — key geometry and hit testing
-   - `VocalWaveformView.kt` — waveform Canvas
+   - `FullKeyboardView.kt` — multi-touch piano + drum-pad surface via `pointerInput` (port from `FullKeyboardView.swift`, the active live input surface)
+   - `KeyboardLayoutEngine.kt` — key geometry and hit testing (port from `KeyboardLayoutEngine.swift`)
+   - `VocalWaveformView.kt` — waveform Canvas (port from `VocalWaveformView.swift`)
    - `TransportControls.kt` — record, play/pause, restart, quantize buttons
    - `BPMEditorView.kt` — BPM editing overlay
 3. Set `Modifier.testTag(...)` matching iOS accessibility identifiers:
@@ -411,7 +445,7 @@ cd android-app && ./gradlew test                    # full regression pass
    - BPM editor open/close
 5. Create Maestro flows in `android-app/.maestro/` adapted from iOS:
    - Copy `ios/.maestro/*.yaml`, change `appId` if needed
-   - These won't run on this VM if no emulator, but they should exist for local verification
+   - These WILL NOT run on this VM (no emulator) or locally (Java 8). They exist for future verification when Maestro becomes available.
 
 **Verification gate**:
 ```bash
@@ -485,8 +519,8 @@ cd android-app && ./gradlew assembleDebug           # builds with all integratio
 3. **Model parity**: Confirm every enum value, constant, and data shape matches io-schema.md.
 
 **What must be DEFERRED_TO_LOCAL**:
-4. **Visual parity**: Capture Android screenshots via Maestro, compare against iOS baselines using `compare_images.py`
-5. **Audio parity**: Export M4A/MIDI from Android, compare against iOS exports using `compare_audio.py`
+4. **Visual parity**: Capture Android screenshots, compare against iOS baselines using `compare_images.py`. Note: only 6 iOS baseline screenshots exist (initial_state, recording_in_progress, track_recorded, paused, playing, restarted). Baselines for tracks_sheet, editor_piano_roll, editor_drum_grid, and vocal_mode were NOT captured. For those 4 states, the local verifier must capture iOS and Android side-by-side.
+5. **Audio parity**: Export M4A/MIDI from Android, compare against iOS exports using `compare_audio.py`. No iOS audio export baselines exist yet — local verifier must capture both.
 
 **Steps**:
 1. Write state comparison tests that serialize ViewModel state and validate against reference
@@ -554,7 +588,7 @@ cd android-app && ./gradlew bundleRelease           # produces valid AAB
 ls -la android-app/app/build/outputs/bundle/release/*.aab  # AAB exists
 cd android-app && ./gradlew lint                    # clean
 ```
-- Check AAB size. If >150MB (likely due to GM.sf2), document the need for Play Asset Delivery or SF3 compression
+- Check AAB size. GM.sf2 is only ~6MB so the bundle should be well under 150MB. If it exceeds 150MB for other reasons, investigate.
 - `PLAY_STORE_SUBMISSION_GUIDE.md` exists
 - `PRIVACY_POLICY.md` exists
 
@@ -574,7 +608,7 @@ cd android-app && ./gradlew lint                    # clean
 | Track focus tests | ~30 | 30+ | JVM |
 | Playback sync tests | ~8 | 8+ | JVM |
 | Compose UI tests | — | 20+ | Robolectric |
-| Maestro E2E flows | 4 | 4+ | DEFERRED_TO_LOCAL |
+| Maestro E2E flows | 4 | 4+ | DEFERRED (no emulator or Maestro anywhere) |
 | **Total** | **178+** | **182+** | |
 
 All "JVM" and "Robolectric" tests run via `./gradlew test` — no emulator required. Maestro flows exist in the repo but require local device/emulator to execute.
@@ -586,12 +620,15 @@ All "JVM" and "Robolectric" tests run via `./gradlew test` — no emulator requi
 | Risk | Likelihood | Impact | Mitigation |
 |------|-----------|--------|------------|
 | FluidSynth AAR not available | Medium | Critical | Compile from source via CMake/NDK. Phase 4 spike catches early. |
-| GM.sf2 (~140MB) causes OOM | Medium | High | Streaming load, SF3 compression, or Play Asset Delivery. |
 | Audio latency too high | Medium | High | Oboe AAudio backend, low buffers. Spike in Phase 4. DEFERRED_TO_LOCAL for measurement. |
 | Multi-touch keyboard laggy | Low | Medium | Fall back to `MotionEvent` in `AndroidView` if `pointerInput` insufficient. |
-| No emulator on cloud VM | High | Medium | Unit tests + Robolectric cover most logic. Connected/Maestro deferred to local. |
+| No emulator on cloud VM | Confirmed | Medium | Unit tests + Robolectric for all logic. Connected/Maestro/screenshots deferred to local. |
+| No Maestro anywhere | Confirmed | Low | Create YAML flows for future use. All E2E execution deferred. |
 | FluidSynth LGPL licensing | Low | High | Dynamic linking only. Document in AGENTS.md. |
+| Dual date encoding formats | Certain | Medium | `.loopa` uses ISO-8601, local storage uses epoch seconds. Android must handle both. |
+| Missing screenshot baselines | Confirmed | Low | 6 of 10 canonical states captured. Remaining 4 need side-by-side local comparison. |
 | Context window exhaustion | Medium | Medium | Phases scoped to single sessions. Memory bank provides continuity. |
+| Porting dormant/legacy code | Medium | Low | SPEC.md + code-index identify 6 legacy files. Verify they're actually invoked before porting. |
 
 ---
 

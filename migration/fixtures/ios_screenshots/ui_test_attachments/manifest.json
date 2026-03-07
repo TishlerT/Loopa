@@ -1,0 +1,227 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "04357416-26DE-4962-8250-AE8402F4BF83.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportControlsUITests testFullRecordPauseResumeFlow]_0_ABB7BB93-5FC7-4662-9941-222120A9D96C.png",
+        "timestamp" : 1772915269.026
+      }
+    ],
+    "testIdentifier" : "TransportControlsUITests/testFullRecordPauseResumeFlow()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportControlsUITests/testFullRecordPauseResumeFlow"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "53E36151-04C0-4362-9575-0D1E51FE64F0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportControlsUITests testPlayPauseButtonToggles]_0_EBB824B9-B22B-4331-802C-352B61801681.png",
+        "timestamp" : 1772915276.312
+      }
+    ],
+    "testIdentifier" : "TransportControlsUITests/testPlayPauseButtonToggles()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportControlsUITests/testPlayPauseButtonToggles"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "4BDE993E-21DF-4AB1-B261-B013AF9E80D3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportControlsUITests testQuantizeButtonCyclesSettings]_0_1528A0CA-6FD5-4F54-9CC6-A42275CDA289.png",
+        "timestamp" : 1772915282.96
+      }
+    ],
+    "testIdentifier" : "TransportControlsUITests/testQuantizeButtonCyclesSettings()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportControlsUITests/testQuantizeButtonCyclesSettings"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "866F982C-09D5-4638-86DC-7663EFDF929F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportControlsUITests testRecordButtonStartsRecording]_0_D72170A8-24D3-4F03-81D5-64329A06AE27.png",
+        "timestamp" : 1772915288.231
+      }
+    ],
+    "testIdentifier" : "TransportControlsUITests/testRecordButtonStartsRecording()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportControlsUITests/testRecordButtonStartsRecording"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "74B6B4E5-7060-45DA-9526-A30B8CD554B4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportControlsUITests testRecordButtonTogglesRecording]_0_5FBC6663-A3FA-4760-8F06-B2D07B7E00DF.png",
+        "timestamp" : 1772915294.305
+      }
+    ],
+    "testIdentifier" : "TransportControlsUITests/testRecordButtonTogglesRecording()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportControlsUITests/testRecordButtonTogglesRecording"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "579557B0-5AB2-4EE0-9B1B-085BB65964AA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportControlsUITests testRestartButtonRestartsFromBeginning]_0_6254B798-1F89-41B7-8EE1-572A5FEAF40A.png",
+        "timestamp" : 1772915305.251
+      }
+    ],
+    "testIdentifier" : "TransportControlsUITests/testRestartButtonRestartsFromBeginning()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportControlsUITests/testRestartButtonRestartsFromBeginning"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "05FDB94D-ECAE-4CF2-A02D-95B253F0EE97.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportControlsUITests testTransportButtonsExist]_0_3A2E6EBB-6A4D-43CB-B8FA-0078ACB6902A.png",
+        "timestamp" : 1772915309.658
+      }
+    ],
+    "testIdentifier" : "TransportControlsUITests/testTransportButtonsExist()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportControlsUITests/testTransportButtonsExist"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "128A1458-C3AC-4949-882B-5DF6FA72F212.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportRegressionTests testButtonsWorkDuringRecording]_0_2B4332CC-5048-41D9-B198-ECCF9F92F834.png",
+        "timestamp" : 1772915318.721
+      }
+    ],
+    "testIdentifier" : "TransportRegressionTests/testButtonsWorkDuringRecording()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportRegressionTests/testButtonsWorkDuringRecording"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "667F4956-321E-49E5-B9B7-FCE098A9CEE1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportRegressionTests testMultiplePauseResumeCycles]_0_099A914E-DBD8-4841-BEE6-52CC6F7011AE.png",
+        "timestamp" : 1772915327.307
+      }
+    ],
+    "testIdentifier" : "TransportRegressionTests/testMultiplePauseResumeCycles()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportRegressionTests/testMultiplePauseResumeCycles"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "024143CB-C09E-4106-8477-5124C70E9102.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportRegressionTests testPauseDoesNotRestart]_0_AA6D102A-28F4-4049-8093-CA6263D96AB5.png",
+        "timestamp" : 1772915335.391
+      }
+    ],
+    "testIdentifier" : "TransportRegressionTests/testPauseDoesNotRestart()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportRegressionTests/testPauseDoesNotRestart"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "ACBF194B-4D85-4B2A-8AB9-BCFA3C559795.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportRegressionTests testPlayPauseEnabledAfterRecording]_0_831E2BB4-AF83-4DA4-A163-F5E3BC69D8C5.png",
+        "timestamp" : 1772915341.192
+      }
+    ],
+    "testIdentifier" : "TransportRegressionTests/testPlayPauseEnabledAfterRecording()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportRegressionTests/testPlayPauseEnabledAfterRecording"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "BE2DD08D-35C9-4D7F-BD25-2B9C186DC1F3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportRegressionTests testQuantizeAlwaysEnabled]_0_A8BCF327-60E2-49DB-AB7E-AFBFD5CC27AE.png",
+        "timestamp" : 1772915347.791
+      }
+    ],
+    "testIdentifier" : "TransportRegressionTests/testQuantizeAlwaysEnabled()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportRegressionTests/testQuantizeAlwaysEnabled"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "29BFC63D-ED99-4E3A-8A66-36FC1D6DF0B7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportRegressionTests testRecordButtonWorksWithZeroTracks]_0_D64D43E4-39A4-41FF-AF2C-6FA66C02FDD5.png",
+        "timestamp" : 1772915352.829
+      }
+    ],
+    "testIdentifier" : "TransportRegressionTests/testRecordButtonWorksWithZeroTracks()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportRegressionTests/testRecordButtonWorksWithZeroTracks"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "48BC83F6-A42A-4263-AE3B-2543B047F27C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportRegressionTests testRestartEnabledAfterRecording]_0_C77AD642-F025-472B-9FA9-31CD1C066EB2.png",
+        "timestamp" : 1772915361.896
+      }
+    ],
+    "testIdentifier" : "TransportRegressionTests/testRestartEnabledAfterRecording()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportRegressionTests/testRestartEnabledAfterRecording"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "exportedFileName" : "ACCB7A40-56D3-4494-A4AC-8EA97CA707F9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "failure_-[TransportRegressionTests testStoppingRecordDoesNotStopMusic]_0_7DE586A9-FD15-41C4-BD3D-72C1A6A71DD0.png",
+        "timestamp" : 1772915367.752
+      }
+    ],
+    "testIdentifier" : "TransportRegressionTests/testStoppingRecordDoesNotStopMusic()",
+    "testIdentifierURL" : "test://com.apple.xcode/Loopa/LoopaUITests/TransportRegressionTests/testStoppingRecordDoesNotStopMusic"
+  }
+]

@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Loopa SavedSession",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "createdAt",
+    "lastModifiedAt",
+    "bpm",
+    "barCount",
+    "tracks"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "name": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 in .loopa export/import"
+    },
+    "lastModifiedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 in .loopa export/import"
+    },
+    "bpm": {
+      "type": "number"
+    },
+    "barCount": {
+      "type": "integer",
+      "enum": [1, 2, 4, 8, 16]
+    },
+    "tracks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Track"
+      }
+    }
+  },
+  "$defs": {
+    "TrackType": {
+      "type": "string",
+      "enum": ["midi", "audio"]
+    },
+    "MidiNote": {
+      "type": "object",
+      "required": [
+        "id",
+        "pitch",
+        "velocity",
+        "startBeat",
+        "durationBeats"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "pitch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 127
+        },
+        "velocity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 127
+        },
+        "startBeat": {
+          "type": "number",
+          "minimum": 0
+        },
+        "durationBeats": {
+          "type": "number",
+          "minimum": 0.0625
+        }
+      }
+    },
+    "Track": {
+      "type": "object",
+      "required": [
+        "id",
+        "trackType",
+        "instrumentName",
+        "instrumentProgram",
+        "isDrumKit",
+        "notes",
+        "recordedAt",
+        "isMuted",
+        "isSolo",
+        "volume",
+        "recordedLengthBeats",
+        "isLooping"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "trackType": {
+          "$ref": "#/$defs/TrackType"
+        },
+        "instrumentName": {
+          "type": "string",
+          "enum": [
+            "Piano",
+            "E-Piano",
+            "Organ",
+            "Guitar",
+            "Strings",
+            "Lead",
+            "Pad",
+            "Drums",
+            "Bass",
+            "Vocals"
+          ]
+        },
+        "instrumentProgram": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 127
+        },
+        "isDrumKit": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MidiNote"
+          }
+        },
+        "audioFileName": {
+          "type": ["string", "null"]
+        },
+        "recordedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "isMuted": {
+          "type": "boolean"
+        },
+        "isSolo": {
+          "type": "boolean"
+        },
+        "volume": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "recordedLengthBeats": {
+          "type": "number",
+          "minimum": 0
+        },
+        "isLooping": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "x-loopa-export": {
+    "fileExtension": ".loopa",
+    "contentType": "com.loopa.session",
+    "jsonEncoder": {
+      "outputFormatting": ["prettyPrinted", "sortedKeys"],
+      "dateEncodingStrategy": "iso8601"
+    },
+    "jsonDecoder": {
+      "dateDecodingStrategy": "iso8601"
+    }
+  },
+  "x-local-storage": {
+    "namedSessionsFile": "Documents/sessions.json",
+    "workingSessionFile": "Documents/working_session.json",
+    "dateEncodingStrategy": "Foundation JSONEncoder default"
+  }
+}

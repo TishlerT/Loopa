@@ -1,0 +1,42 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "1BF1F283-CE09-4441-B3A9-A2F2478BE45B",
+        "deviceName" : "iPhone 16 Pro",
+        "modelName" : "iPhone 16 Pro",
+        "osBuildNumber" : "22G86",
+        "osVersion" : "18.6",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 0,
+      "passedTests" : 20,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Loopa · Built with macOS 15.7.4",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1772915368.325,
+  "passedTests" : 20,
+  "result" : "Passed",
+  "skippedTests" : 0,
+  "startTime" : 1772915205.529,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - Loopa",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 20
+}
