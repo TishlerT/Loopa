@@ -1,0 +1,655 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02AFB0B525F39FD7DFFF54F9 /* MultiTrackLooper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42380F8332BD8AC677F3CCDA /* MultiTrackLooper.swift */; };
+		074135F7C60E1AFC31275B7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58B6364F8149C6693EF201BB /* Assets.xcassets */; };
+		08FE67D94939509DCA35FE45 /* ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8108D2E8C465A16E82D534 /* ViewModelTests.swift */; };
+		090E668E6BC0BAD31F34E523 /* MidiExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0869343C84D2CA37417229 /* MidiExporter.swift */; };
+		0F3A70F66377C7E7F90ED873 /* LooperViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97E1478E247E8690011DB39 /* LooperViewModel.swift */; };
+		20BEFF9B2320B134BDA477F4 /* FreesoundClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAB79E4AEC03669392003A1 /* FreesoundClient.swift */; };
+		253677AF14A036D334F32690 /* SoundRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EB34512AFF9F90D51286C3 /* SoundRow.swift */; };
+		31C8D7D0A0303235E87EB1D2 /* VocalRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80F340299CF64CE598FC68E /* VocalRecorder.swift */; };
+		34F802B74BE47821FAF48D28 /* PreviewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F0997CD3A6A85A029F1291 /* PreviewPlayer.swift */; };
+		42B1CE76EB37DFFEADEFEC94 /* TishViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD3A0A5AEC7F9E6F6E65C61 /* TishViewModel.swift */; };
+		46A0A2847C6FAAF75A6FD97B /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2453F6943DB9D4F59E156AA /* AudioEngine.swift */; };
+		4A934D71E9DDEAAD1D9D9120 /* MidiEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156EDFB3EA845A52CD22738E /* MidiEvent.swift */; };
+		4B2D84E1A7C2D371AFB85827 /* SessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1D73819E77DD7C8EBDFC79 /* SessionStorage.swift */; };
+		4D02ADBD0489DA74234F809B /* GM.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = B5AEE0061CC446BAF2581AB4 /* GM.sf2 */; };
+		56ED669B3C4C61DB5CFEEB0E /* Quantizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D7CDFF3B09C3FA69F612B1 /* Quantizer.swift */; };
+		6062343152D5F8B96681BA9A /* TouchOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB53FE8A0EE4F9D8992E6432 /* TouchOverlay.swift */; };
+		6FED79F386B3E163D66CA8CB /* TransportControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = E879DC6AB9EAE0FFB83B6F81 /* TransportControls.swift */; };
+		710EF393B817F5666395E743 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA13435E0B0B2230D37BBAFC /* KeyboardView.swift */; };
+		7C5C7FF28B825E075FB00705 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530B1D4DE0CC1A621BE5BB14 /* Track.swift */; };
+		7CD35872C1DC3078A9B466DA /* MultiTrackLooperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EDD768C6F0C6368B394443 /* MultiTrackLooperTests.swift */; };
+		7D5928FAF07FD94877E0BB30 /* MidiLooperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B531C7959CCF252AD1F090 /* MidiLooperTests.swift */; };
+		7F8A3E9259A3A30C95027B2A /* Tish88App.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70DA934B2B8F0A70227E117 /* Tish88App.swift */; };
+		8CFEE2014C2C9EDAC1D95FB9 /* KeyboardSamplerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D098212CE61FE23B405AD73D /* KeyboardSamplerTests.swift */; };
+		8FB1300BB8FD93A082994B05 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F9A6C54F7ACD7C943F075D /* ContentView.swift */; };
+		9005746E6B22C639D7F3B0CC /* QuantizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0AC8CB4D8A62DCC42CD9B3 /* QuantizerTests.swift */; };
+		95AFE8FDB27CE55BF6B721BC /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F194A62A31DFB6938D6F406 /* DesignSystem.swift */; };
+		9983677B958113AE85E50279 /* FreesoundModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479269C01AE7A018DA4B9E96 /* FreesoundModels.swift */; };
+		99D46CB2476C23040C5888CF /* LoopStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCEF137DCAE1F356FE1FD4E /* LoopStorage.swift */; };
+		9E5B810E312D1EC6A84BCF6F /* KeyboardLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C30B877FFCF999A053F678C /* KeyboardLayoutEngine.swift */; };
+		ACF14DB3E1C1C0C34E53D387 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208F556C6C528DE85D91402D /* HapticManager.swift */; };
+		B92BD54EB8B11DE3810277EC /* LoopVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C8E5F5E2D6C48F879D09C8 /* LoopVisualization.swift */; };
+		B9985E2190355B1C347EABC8 /* MidiLooper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6451A4BA9D40F358AFDBB5 /* MidiLooper.swift */; };
+		BB9FFE59352A2E811143BBF3 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14816F79AB31A5D086446A05 /* HTTPClient.swift */; };
+		BF7A32FCCC1F7CB8B7F998DF /* LooperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334D5F2A50653D3A852F2D66 /* LooperView.swift */; };
+		C03F3F0133E0B2152A19D787 /* Metronome.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B1CC249846406070A3D27A /* Metronome.swift */; };
+		CABBE39783603F149886F11D /* LooperAudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499BF51F51059CD645B691D5 /* LooperAudioEngine.swift */; };
+		CD4F26CF5C281DF2945775D8 /* FullKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEC88416579D600D0D6389 /* FullKeyboardView.swift */; };
+		DB07371B952BE43F8D6FDE44 /* KeyboardSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866B7DAD9E9AA97CDC294F77 /* KeyboardSampler.swift */; };
+		EE4E14E47215F27D83C5FA28 /* KeyboardLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC3A08F61964BD4F981458A /* KeyboardLayer.swift */; };
+		F2799FFDF1F81CD170D33334 /* SampleBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF4D3DAAB41052FD3AEA14B /* SampleBrowserView.swift */; };
+		FBF5DB41941434A188C8353B /* AudioEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DFE4CDA59BC4C269C5117F /* AudioEngineTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6F1C064A32F9BD3615168B25 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 69D38C5DE5F73C413896E774 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A51A7DE7AA1E49DB9B676063;
+			remoteInfo = Tish88;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		01C8E5F5E2D6C48F879D09C8 /* LoopVisualization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopVisualization.swift; sourceTree = "<group>"; };
+		14816F79AB31A5D086446A05 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		156EDFB3EA845A52CD22738E /* MidiEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiEvent.swift; sourceTree = "<group>"; };
+		1AD3A0A5AEC7F9E6F6E65C61 /* TishViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TishViewModel.swift; sourceTree = "<group>"; };
+		208F556C6C528DE85D91402D /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		2F0869343C84D2CA37417229 /* MidiExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiExporter.swift; sourceTree = "<group>"; };
+		334D5F2A50653D3A852F2D66 /* LooperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperView.swift; sourceTree = "<group>"; };
+		34B531C7959CCF252AD1F090 /* MidiLooperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiLooperTests.swift; sourceTree = "<group>"; };
+		3DF4D3DAAB41052FD3AEA14B /* SampleBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleBrowserView.swift; sourceTree = "<group>"; };
+		42380F8332BD8AC677F3CCDA /* MultiTrackLooper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiTrackLooper.swift; sourceTree = "<group>"; };
+		44EDD768C6F0C6368B394443 /* MultiTrackLooperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiTrackLooperTests.swift; sourceTree = "<group>"; };
+		44F9A6C54F7ACD7C943F075D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		479269C01AE7A018DA4B9E96 /* FreesoundModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreesoundModels.swift; sourceTree = "<group>"; };
+		499BF51F51059CD645B691D5 /* LooperAudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperAudioEngine.swift; sourceTree = "<group>"; };
+		4AA8AD3AA26CB02E25339818 /* Tish88Tests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = Tish88Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		530B1D4DE0CC1A621BE5BB14 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		58AEC88416579D600D0D6389 /* FullKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullKeyboardView.swift; sourceTree = "<group>"; };
+		58B6364F8149C6693EF201BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5B1D73819E77DD7C8EBDFC79 /* SessionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStorage.swift; sourceTree = "<group>"; };
+		5E6451A4BA9D40F358AFDBB5 /* MidiLooper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidiLooper.swift; sourceTree = "<group>"; };
+		7CCEF137DCAE1F356FE1FD4E /* LoopStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopStorage.swift; sourceTree = "<group>"; };
+		7F194A62A31DFB6938D6F406 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		866B7DAD9E9AA97CDC294F77 /* KeyboardSampler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSampler.swift; sourceTree = "<group>"; };
+		8C30B877FFCF999A053F678C /* KeyboardLayoutEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutEngine.swift; sourceTree = "<group>"; };
+		A0B1CC249846406070A3D27A /* Metronome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metronome.swift; sourceTree = "<group>"; };
+		AAC3A08F61964BD4F981458A /* KeyboardLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayer.swift; sourceTree = "<group>"; };
+		B5AEE0061CC446BAF2581AB4 /* GM.sf2 */ = {isa = PBXFileReference; path = GM.sf2; sourceTree = "<group>"; };
+		C97E1478E247E8690011DB39 /* LooperViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperViewModel.swift; sourceTree = "<group>"; };
+		CB53FE8A0EE4F9D8992E6432 /* TouchOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchOverlay.swift; sourceTree = "<group>"; };
+		CFCB692F2B51CEF76A6D2033 /* Tish88.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Tish88.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D098212CE61FE23B405AD73D /* KeyboardSamplerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSamplerTests.swift; sourceTree = "<group>"; };
+		D6DFE4CDA59BC4C269C5117F /* AudioEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngineTests.swift; sourceTree = "<group>"; };
+		D80F340299CF64CE598FC68E /* VocalRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocalRecorder.swift; sourceTree = "<group>"; };
+		DB8108D2E8C465A16E82D534 /* ViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelTests.swift; sourceTree = "<group>"; };
+		E0F0997CD3A6A85A029F1291 /* PreviewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPlayer.swift; sourceTree = "<group>"; };
+		E2453F6943DB9D4F59E156AA /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		E70DA934B2B8F0A70227E117 /* Tish88App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tish88App.swift; sourceTree = "<group>"; };
+		E879DC6AB9EAE0FFB83B6F81 /* TransportControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportControls.swift; sourceTree = "<group>"; };
+		EA13435E0B0B2230D37BBAFC /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
+		EDAB79E4AEC03669392003A1 /* FreesoundClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreesoundClient.swift; sourceTree = "<group>"; };
+		F2EB34512AFF9F90D51286C3 /* SoundRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundRow.swift; sourceTree = "<group>"; };
+		F3D7CDFF3B09C3FA69F612B1 /* Quantizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quantizer.swift; sourceTree = "<group>"; };
+		FC0AC8CB4D8A62DCC42CD9B3 /* QuantizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantizerTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		1FE89FCD2034E4DC7FE34BE1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CFCB692F2B51CEF76A6D2033 /* Tish88.app */,
+				4AA8AD3AA26CB02E25339818 /* Tish88Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20AFE34435DA4EFC0DE5F4C9 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				58AEC88416579D600D0D6389 /* FullKeyboardView.swift */,
+				AAC3A08F61964BD4F981458A /* KeyboardLayer.swift */,
+				8C30B877FFCF999A053F678C /* KeyboardLayoutEngine.swift */,
+				EA13435E0B0B2230D37BBAFC /* KeyboardView.swift */,
+				01C8E5F5E2D6C48F879D09C8 /* LoopVisualization.swift */,
+				F2EB34512AFF9F90D51286C3 /* SoundRow.swift */,
+				CB53FE8A0EE4F9D8992E6432 /* TouchOverlay.swift */,
+				E879DC6AB9EAE0FFB83B6F81 /* TransportControls.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		215E3EDFC4ECF73F17FBF841 /* Looper */ = {
+			isa = PBXGroup;
+			children = (
+				7CCEF137DCAE1F356FE1FD4E /* LoopStorage.swift */,
+				156EDFB3EA845A52CD22738E /* MidiEvent.swift */,
+				2F0869343C84D2CA37417229 /* MidiExporter.swift */,
+				5E6451A4BA9D40F358AFDBB5 /* MidiLooper.swift */,
+				42380F8332BD8AC677F3CCDA /* MultiTrackLooper.swift */,
+				F3D7CDFF3B09C3FA69F612B1 /* Quantizer.swift */,
+			);
+			path = Looper;
+			sourceTree = "<group>";
+		};
+		49BEFDA4BCB5CAE5556A1CB4 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D6DFE4CDA59BC4C269C5117F /* AudioEngineTests.swift */,
+				D098212CE61FE23B405AD73D /* KeyboardSamplerTests.swift */,
+				34B531C7959CCF252AD1F090 /* MidiLooperTests.swift */,
+				44EDD768C6F0C6368B394443 /* MultiTrackLooperTests.swift */,
+				FC0AC8CB4D8A62DCC42CD9B3 /* QuantizerTests.swift */,
+				DB8108D2E8C465A16E82D534 /* ViewModelTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		764D18F71537ABDA3B4D67CD /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				EDAB79E4AEC03669392003A1 /* FreesoundClient.swift */,
+				14816F79AB31A5D086446A05 /* HTTPClient.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		7793988B8ECF5C74DB101C46 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				479269C01AE7A018DA4B9E96 /* FreesoundModels.swift */,
+				5B1D73819E77DD7C8EBDFC79 /* SessionStorage.swift */,
+				530B1D4DE0CC1A621BE5BB14 /* Track.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8B6C1D281E80D31E97A57F7B /* Tish88 */ = {
+			isa = PBXGroup;
+			children = (
+				58B6364F8149C6693EF201BB /* Assets.xcassets */,
+				44F9A6C54F7ACD7C943F075D /* ContentView.swift */,
+				B5AEE0061CC446BAF2581AB4 /* GM.sf2 */,
+				E70DA934B2B8F0A70227E117 /* Tish88App.swift */,
+				FE5CDEA9BFBA4188C505485B /* Audio */,
+				215E3EDFC4ECF73F17FBF841 /* Looper */,
+				7793988B8ECF5C74DB101C46 /* Models */,
+				764D18F71537ABDA3B4D67CD /* Networking */,
+				8CCAE183C2F063202E289EAB /* UI */,
+				C0D56A503F541DEB4BD30819 /* ViewModels */,
+			);
+			name = Tish88;
+			path = .;
+			sourceTree = "<group>";
+		};
+		8CCAE183C2F063202E289EAB /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				20AFE34435DA4EFC0DE5F4C9 /* Components */,
+				FBD845C1CAE898894B78EF30 /* Screens */,
+				C4E920F2D82EE15D04A79E93 /* Theme */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		BD270BB5EC68D501E3859ABF = {
+			isa = PBXGroup;
+			children = (
+				FE5CDEA9BFBA4188C505485B /* Audio */,
+				215E3EDFC4ECF73F17FBF841 /* Looper */,
+				7793988B8ECF5C74DB101C46 /* Models */,
+				764D18F71537ABDA3B4D67CD /* Networking */,
+				49BEFDA4BCB5CAE5556A1CB4 /* Tests */,
+				8B6C1D281E80D31E97A57F7B /* Tish88 */,
+				8CCAE183C2F063202E289EAB /* UI */,
+				C0D56A503F541DEB4BD30819 /* ViewModels */,
+				1FE89FCD2034E4DC7FE34BE1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C0D56A503F541DEB4BD30819 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				C97E1478E247E8690011DB39 /* LooperViewModel.swift */,
+				1AD3A0A5AEC7F9E6F6E65C61 /* TishViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		C4E920F2D82EE15D04A79E93 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				7F194A62A31DFB6938D6F406 /* DesignSystem.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		FBD845C1CAE898894B78EF30 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				334D5F2A50653D3A852F2D66 /* LooperView.swift */,
+				3DF4D3DAAB41052FD3AEA14B /* SampleBrowserView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		FE5CDEA9BFBA4188C505485B /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				E2453F6943DB9D4F59E156AA /* AudioEngine.swift */,
+				208F556C6C528DE85D91402D /* HapticManager.swift */,
+				866B7DAD9E9AA97CDC294F77 /* KeyboardSampler.swift */,
+				499BF51F51059CD645B691D5 /* LooperAudioEngine.swift */,
+				A0B1CC249846406070A3D27A /* Metronome.swift */,
+				E0F0997CD3A6A85A029F1291 /* PreviewPlayer.swift */,
+				D80F340299CF64CE598FC68E /* VocalRecorder.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5F532D429243C052962C3E0B /* Tish88Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA8A68560DE433A9EEB9F82B /* Build configuration list for PBXNativeTarget "Tish88Tests" */;
+			buildPhases = (
+				3787E53C01F6C16AAAFFADCD /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				26D30937C52E857660F1C8E1 /* PBXTargetDependency */,
+			);
+			name = Tish88Tests;
+			packageProductDependencies = (
+			);
+			productName = Tish88Tests;
+			productReference = 4AA8AD3AA26CB02E25339818 /* Tish88Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A51A7DE7AA1E49DB9B676063 /* Tish88 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F13CE72171CB97B3D583BE42 /* Build configuration list for PBXNativeTarget "Tish88" */;
+			buildPhases = (
+				29D4038CF53B68E08E0F020C /* Sources */,
+				E5A71F00D4E410ACD9D35B86 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Tish88;
+			packageProductDependencies = (
+			);
+			productName = Tish88;
+			productReference = CFCB692F2B51CEF76A6D2033 /* Tish88.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		69D38C5DE5F73C413896E774 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					5F532D429243C052962C3E0B = {
+						DevelopmentTeam = K6J7TWJQK7;
+						ProvisioningStyle = Automatic;
+					};
+					A51A7DE7AA1E49DB9B676063 = {
+						DevelopmentTeam = K6J7TWJQK7;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 3960DDA167B08E03A414BB7D /* Build configuration list for PBXProject "Tish88" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = BD270BB5EC68D501E3859ABF;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A51A7DE7AA1E49DB9B676063 /* Tish88 */,
+				5F532D429243C052962C3E0B /* Tish88Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E5A71F00D4E410ACD9D35B86 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				074135F7C60E1AFC31275B7F /* Assets.xcassets in Resources */,
+				4D02ADBD0489DA74234F809B /* GM.sf2 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		29D4038CF53B68E08E0F020C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46A0A2847C6FAAF75A6FD97B /* AudioEngine.swift in Sources */,
+				8FB1300BB8FD93A082994B05 /* ContentView.swift in Sources */,
+				95AFE8FDB27CE55BF6B721BC /* DesignSystem.swift in Sources */,
+				20BEFF9B2320B134BDA477F4 /* FreesoundClient.swift in Sources */,
+				9983677B958113AE85E50279 /* FreesoundModels.swift in Sources */,
+				CD4F26CF5C281DF2945775D8 /* FullKeyboardView.swift in Sources */,
+				BB9FFE59352A2E811143BBF3 /* HTTPClient.swift in Sources */,
+				ACF14DB3E1C1C0C34E53D387 /* HapticManager.swift in Sources */,
+				EE4E14E47215F27D83C5FA28 /* KeyboardLayer.swift in Sources */,
+				9E5B810E312D1EC6A84BCF6F /* KeyboardLayoutEngine.swift in Sources */,
+				DB07371B952BE43F8D6FDE44 /* KeyboardSampler.swift in Sources */,
+				710EF393B817F5666395E743 /* KeyboardView.swift in Sources */,
+				99D46CB2476C23040C5888CF /* LoopStorage.swift in Sources */,
+				B92BD54EB8B11DE3810277EC /* LoopVisualization.swift in Sources */,
+				CABBE39783603F149886F11D /* LooperAudioEngine.swift in Sources */,
+				BF7A32FCCC1F7CB8B7F998DF /* LooperView.swift in Sources */,
+				0F3A70F66377C7E7F90ED873 /* LooperViewModel.swift in Sources */,
+				C03F3F0133E0B2152A19D787 /* Metronome.swift in Sources */,
+				4A934D71E9DDEAAD1D9D9120 /* MidiEvent.swift in Sources */,
+				090E668E6BC0BAD31F34E523 /* MidiExporter.swift in Sources */,
+				B9985E2190355B1C347EABC8 /* MidiLooper.swift in Sources */,
+				02AFB0B525F39FD7DFFF54F9 /* MultiTrackLooper.swift in Sources */,
+				34F802B74BE47821FAF48D28 /* PreviewPlayer.swift in Sources */,
+				56ED669B3C4C61DB5CFEEB0E /* Quantizer.swift in Sources */,
+				F2799FFDF1F81CD170D33334 /* SampleBrowserView.swift in Sources */,
+				4B2D84E1A7C2D371AFB85827 /* SessionStorage.swift in Sources */,
+				253677AF14A036D334F32690 /* SoundRow.swift in Sources */,
+				7F8A3E9259A3A30C95027B2A /* Tish88App.swift in Sources */,
+				42B1CE76EB37DFFEADEFEC94 /* TishViewModel.swift in Sources */,
+				6062343152D5F8B96681BA9A /* TouchOverlay.swift in Sources */,
+				7C5C7FF28B825E075FB00705 /* Track.swift in Sources */,
+				6FED79F386B3E163D66CA8CB /* TransportControls.swift in Sources */,
+				31C8D7D0A0303235E87EB1D2 /* VocalRecorder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3787E53C01F6C16AAAFFADCD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBF5DB41941434A188C8353B /* AudioEngineTests.swift in Sources */,
+				8CFEE2014C2C9EDAC1D95FB9 /* KeyboardSamplerTests.swift in Sources */,
+				7D5928FAF07FD94877E0BB30 /* MidiLooperTests.swift in Sources */,
+				7CD35872C1DC3078A9B466DA /* MultiTrackLooperTests.swift in Sources */,
+				9005746E6B22C639D7F3B0CC /* QuantizerTests.swift in Sources */,
+				08FE67D94939509DCA35FE45 /* ViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		26D30937C52E857660F1C8E1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A51A7DE7AA1E49DB9B676063 /* Tish88 */;
+			targetProxy = 6F1C064A32F9BD3615168B25 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		01D6E704B4143AD807172079 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K6J7TWJQK7;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Tish88;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tish88.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0656A5EA19B8D8630B73C8D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4A16316196EED01CBC34C900 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6587CC0139E28062D90B08FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K6J7TWJQK7;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Tish88;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tish88.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		93492515A989C5EEE1CC9C5A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K6J7TWJQK7;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tish88.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tish88.app/Tish88";
+			};
+			name = Release;
+		};
+		CCE76F61A99219ABE108005E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K6J7TWJQK7;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tish88.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tish88.app/Tish88";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3960DDA167B08E03A414BB7D /* Build configuration list for PBXProject "Tish88" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0656A5EA19B8D8630B73C8D7 /* Debug */,
+				4A16316196EED01CBC34C900 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DA8A68560DE433A9EEB9F82B /* Build configuration list for PBXNativeTarget "Tish88Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCE76F61A99219ABE108005E /* Debug */,
+				93492515A989C5EEE1CC9C5A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F13CE72171CB97B3D583BE42 /* Build configuration list for PBXNativeTarget "Tish88" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6587CC0139E28062D90B08FE /* Debug */,
+				01D6E704B4143AD807172079 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 69D38C5DE5F73C413896E774 /* Project object */;
+}

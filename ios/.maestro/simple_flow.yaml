@@ -1,0 +1,48 @@
+# =============================================================================
+# Maestro Flow: Simple Test (uses visible buttons only)
+# =============================================================================
+# Tests buttons that Maestro can detect in the hierarchy
+# 
+# Run with: maestro test .maestro/simple_flow.yaml
+# =============================================================================
+
+appId: com.loopa.app
+---
+- launchApp:
+    clearState: true
+
+# Wait for app to fully load
+- waitForAnimationToEnd
+
+# Take initial screenshot
+- takeScreenshot: initial_state
+
+# Test quantize button (confirmed visible in hierarchy)
+- assertVisible:
+    id: "quantizeButton"
+- tapOn:
+    id: "quantizeButton"
+- waitForAnimationToEnd
+- takeScreenshot: after_quantize_tap
+
+# Test play/pause button (confirmed visible in hierarchy)
+- assertVisible:
+    id: "playPauseButton"
+- tapOn:
+    id: "playPauseButton"
+- waitForAnimationToEnd
+- takeScreenshot: after_playpause_tap
+
+# Test restart button (confirmed visible in hierarchy)
+- assertVisible:
+    id: "restartButton"
+- tapOn:
+    id: "restartButton"
+- waitForAnimationToEnd
+- takeScreenshot: after_restart_tap
+
+# Final state
+- takeScreenshot: final_state
+
+
+

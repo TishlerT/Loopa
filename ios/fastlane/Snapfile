@@ -1,0 +1,42 @@
+# Snapfile - Fastlane Screenshot Configuration for Loopa
+
+# Devices to capture screenshots on
+devices([
+  "iPhone 16 Pro Max",      # 6.9-inch (required)
+  "iPhone 16 Pro",          # 6.3-inch
+  "iPad Pro 13-inch (M4)"   # 13-inch iPad (required if iPad supported)
+])
+
+# Languages (add more as needed)
+languages([
+  "en-US"
+])
+
+# Scheme to build
+scheme("Loopa")
+
+# Output directory
+output_directory("./fastlane/screenshots")
+
+# Clear previous screenshots
+clear_previous_screenshots(true)
+
+# Stop on first error
+stop_after_first_error(true)
+
+# Launch arguments for screenshot mode
+launch_arguments(["-SCREENSHOT_MODE 1"])
+
+# Override status bar
+override_status_bar(true)
+override_status_bar_arguments("--time 9:41 --batteryState charged --batteryLevel 100 --wifiMode active --cellularMode active")
+
+# Xcode project
+project("Loopa.xcodeproj")
+
+# Test target containing snapshot tests
+test_target_name("LoopaUITests")
+
+# Concurrent simulators (set to 1 if you have limited RAM)
+concurrent_simulators(true)
+

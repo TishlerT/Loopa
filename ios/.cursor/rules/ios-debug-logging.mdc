@@ -1,0 +1,69 @@
+---
+description: iOS Simulator Debug Logging Strategy
+globs: ["**/*.swift"]
+alwaysApply: false
+---
+
+# iOS Simulator Debug Logging
+
+When debugging iOS apps running in the simulator, use **file-based logging** instead of `print()` statements. The `print()` output only appears in Xcode's console, which Cursor cannot access.
+
+## Logging Pattern
+
+Write NDJSON logs directly to a file that Cursor can read:
+
+```swift
+// Compact one-liner for Swift logging
+let logPath = "/Users/tish/Documents/white iverson/Tish88/.cursor/debug.log"
+let line = "{\"hypothesis\":\"H1\",\"location\":\"ClassName:methodName\",\"data\":{\"key\":\(value)},\"timestamp\":\(Date().timeIntervalSince1970 * 1000)}\n"
+if FileManager.default.fileExists(atPath: logPath), let h = FileHandle(forWritingAtPath: logPath) { h.seekToEndOfFile(); h.write(line.data(using: .utf8)!); h.closeFile() } else { try? line.write(toFile: logPath, atomically: false, encoding: .utf8) }
+```
+
+## Setup
+
+1. Create the log directory: `mkdir -p "/path/to/project/.cursor"`
+2. Create empty log file: `touch "/path/to/project/.cursor/debug.log"`
+3. Clear before each test run: `echo "" > "/path/to/project/.cursor/debug.log"`
+
+## Reading Logs
+
+After user reproduces the bug:
+```bash
+# Count by hypothesis
+grep -c "H1" "/path/to/project/.cursor/debug.log"
+
+# View first/last entries
+head -20 "/path/to/project/.cursor/debug.log"
+tail -20 "/path/to/project/.cursor/debug.log"
+
+# Filter by hypothesis
+grep "H1" "/path/to/project/.cursor/debug.log" | head -10
+```
+
+## Best Practices
+
+1. **Tag logs with hypothesis IDs** (H1, H2, etc.) to correlate with debugging hypotheses
+2. **Include location** (file:method) for traceability
+3. **Log before/after** critical operations to see state changes
+4. **Throttle high-frequency logs** in Combine sinks to avoid massive log files
+5. **Wrap in `#region agent log`** comments for easy removal later
+6. **Keep instrumentation during fixes** until user confirms success
+
+## Example: Combine Subscription Logging
+
+```swift
+looperVM.$currentPosition
+    .receive(on: DispatchQueue.main)
+    .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
+    .sink { [weak self] pos in
+        // #region agent log
+        let logPath = "/path/.cursor/debug.log"
+        let line = "{\"h\":\"H1\",\"loc\":\"VM:posSink\",\"pos\":\(pos)}\n"
+        if let h = FileHandle(forWritingAtPath: logPath) { h.seekToEndOfFile(); h.write(line.data(using: .utf8)!); h.closeFile() }
+        // #endregion
+        self?.position = pos
+    }
+    .store(in: &cancellables)
+```
+
+This approach allows Cursor to read runtime logs from the iOS simulator, enabling evidence-based debugging rather than guessing from code alone.

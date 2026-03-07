@@ -1,0 +1,940 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project "/Users/tish/Documents/white iverson/Tish88/Loopa.xcodeproj" -scheme Loopa -destination "platform=iOS Simulator,name=iPhone 16 Pro" -resultBundlePath "/Users/tish/Documents/white iverson/Tish88/TestResults.xcresult" "-only-testing:LoopaUITests"
+
+Writing result bundle at path:
+	/Users/tish/Documents/white iverson/Tish88/TestResults.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:1BF1F283-CE09-4441-B3A9-A2F2478BE45B, OS:18.6, name:iPhone 16 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:1BF1F283-CE09-4441-B3A9-A2F2478BE45B, OS:18.6, name:iPhone 16 Pro }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (3 targets)
+    Target 'LoopaUITests' in project 'Loopa'
+        ➜ Explicit dependency on target 'Loopa' in project 'Loopa'
+    Target 'LoopaTests' in project 'Loopa'
+        ➜ Explicit dependency on target 'Loopa' in project 'Loopa'
+    Target 'Loopa' in project 'Loopa' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/tish/Documents/white iverson/Tish88/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: 91be6172a7089f7717db17f8ebf858ff
+Build description path: /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/XCBuildData/91be6172a7089f7717db17f8ebf858ff.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk /Users/tish/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache
+    cd /Users/tish/Documents/white\ iverson/Tish88/Loopa.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -o /Users/tish/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache
+
+MkDir /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest (in target 'LoopaTests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /bin/mkdir -p /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest
+
+MkDir /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /bin/mkdir -p /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks
+
+MkDir /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /bin/mkdir -p /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns
+
+ProcessProductPackaging "" /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.app-Simulated.xcent (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "CGN6M72G4L.com.loopa.app";
+}
+    
+    builtin-productPackagingUtility -entitlements -format xml -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.app-Simulated.xcent
+
+ProcessProductPackagingDER /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.app-Simulated.xcent /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.app-Simulated.xcent.der (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /usr/bin/derq query -f xml -i /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.app-Simulated.xcent -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.app-Simulated.xcent.der --raw
+
+Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks/XCTestCore.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestCore.framework (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestCore.framework /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks
+
+Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks/libXCTestBundleInject.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestBundleInject.dylib (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestBundleInject.dylib /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks
+
+Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks/libXCTestSwiftSupport.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks
+
+Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks/XCUnit.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCUnit.framework (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCUnit.framework /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks
+
+Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks/XCUIAutomation.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks
+
+Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks/XCTAutomationSupport.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks
+
+Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks/XCTestSupport.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestSupport.framework (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestSupport.framework /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks
+
+Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks/XCTest.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks
+
+Copy /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks/Testing.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/Testing.framework (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/Testing.framework /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks
+
+CompileAssetCatalogVariant thinned /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app /Users/tish/Documents/white\ iverson/Tish88/Assets.xcassets (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Users/tish/Documents/white\ iverson/Tish88/Assets.xcassets --compile /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --filter-for-thinning-device-configuration iPhone17,1 --filter-for-device-os-version 18.6 --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 17.0 --platform iphonesimulator
+/* com.apple.actool.compilation-results */
+/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_generated_info.plist_thinned
+/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_output/thinned/AppIcon60x60@2x.png
+/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_output/thinned/AppIcon76x76@2x~ipad.png
+/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_output/thinned/Assets.car
+
+
+ProcessProductPackaging "" /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/LoopaUITests.xctest-Simulated.xcent (in target 'LoopaUITests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "K6J7TWJQK7.com.loopa.app.uitests.xctrunner";
+    "keychain-access-groups" =     (
+        "K6J7TWJQK7.com.loopa.app.uitests.xctrunner"
+    );
+}
+    
+    builtin-productPackagingUtility -entitlements -format xml -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/LoopaUITests.xctest-Simulated.xcent
+
+Ld /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib normal (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -F/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -filelist /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.LinkFileList -install_name @rpath/Loopa.debug.dylib -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -debug_variant -Xlinker -dependency_info -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa_dependency_info.dat -fobjc-link-runtime -fprofile-instr-generate -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.swiftmodule -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib
+
+ProcessProductPackagingDER /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/LoopaUITests.xctest-Simulated.xcent /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/LoopaUITests.xctest-Simulated.xcent.der (in target 'LoopaUITests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /usr/bin/derq query -f xml -i /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/LoopaUITests.xctest-Simulated.xcent -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/LoopaUITests.xctest-Simulated.xcent.der --raw
+
+ConstructStubExecutorLinkFileList /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-ExecutorLinkFileList-normal-arm64.txt (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    construct-stub-executor-link-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'Loopa' from project 'Loopa')
+
+Ld /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa normal (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -F/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -debug_variant -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa-ExecutorLinkFileList-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.app-Simulated.xcent.der /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa
+
+LinkAssetCatalog /Users/tish/Documents/white\ iverson/Tish88/Assets.xcassets (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-linkAssetCatalog --thinned /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_output/thinned --thinned-dependencies /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_generated_info.plist_unthinned --output /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app --plist-output /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/AppIcon76x76@2x~ipad.png (in target 'Loopa' from project 'Loopa')
+note: Emplaced /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/AppIcon60x60@2x.png (in target 'Loopa' from project 'Loopa')
+note: Emplaced /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Assets.car (in target 'Loopa' from project 'Loopa')
+
+ProcessInfoPlistFile /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Info.plist /Users/tish/Documents/white\ iverson/Tish88/Info.plist (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-infoPlistUtility /Users/tish/Documents/white\ iverson/Tish88/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/assetcatalog_generated_info.plist -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Info.plist
+
+CopySwiftLibs /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/SystemExtensions --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name Loopa --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk --xcode-version 16F6 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.loopa.app --output /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa --dependency-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa_dependency_info.dat --stringsdata-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.SwiftFileList --metadata-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.DependencyMetadataFileList --static-metadata-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Loopa.DependencyStaticMetadataFileList --swift-const-vals-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/Loopa.build/Objects-normal/arm64/Loopa.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-01-10 01:06:04.263 appintentsmetadataprocessor[44416:13964228] Starting appintentsmetadataprocessor export
+2026-01-10 01:06:04.265 appintentsmetadataprocessor[44416:13964228] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+ProcessInfoPlistFile /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/Info.plist /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/empty-LoopaTests.plist (in target 'LoopaTests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-infoPlistUtility /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/empty-LoopaTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform iphonesimulator -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/Info.plist
+
+Ld /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/LoopaTests normal (in target 'LoopaTests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -filelist /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.LinkFileList -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -bundle_loader /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa -Xlinker -object_path_lto -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -debug_variant -Xlinker -dependency_info -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests_dependency_info.dat -fobjc-link-runtime -fprofile-instr-generate -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.swiftmodule -framework XCTest -lXCTestSwiftSupport /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/LoopaTests
+
+CopySwiftLibs /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest (in target 'LoopaTests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/LoopaTests --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/Frameworks --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/PlugIns --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/SystemExtensions --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'LoopaTests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name LoopaTests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk --xcode-version 16F6 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.loopa.app.tests --output /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/LoopaTests --dependency-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests_dependency_info.dat --stringsdata-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.SwiftFileList --metadata-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests.DependencyMetadataFileList --static-metadata-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/Objects-normal/arm64/LoopaTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-01-10 01:06:04.447 appintentsmetadataprocessor[44426:13964254] Starting appintentsmetadataprocessor export
+2026-01-10 01:06:04.448 appintentsmetadataprocessor[44426:13964254] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+AppIntentsSSUTraining (in target 'LoopaTests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/Info.plist --temp-dir-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/ssu --bundle-id com.loopa.app.tests --product-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest --extracted-metadata-path /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest/Metadata.appintents --metadata-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaTests.build/LoopaTests.DependencyMetadataFileList --archive-ssu-assets
+2026-01-10 01:06:04.462 appintentsnltrainingprocessor[44427:13964257] Parsing options for appintentsnltrainingprocessor
+2026-01-10 01:06:04.463 appintentsnltrainingprocessor[44427:13964257] No AppShortcuts found - Skipping.
+
+CodeSign /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest (in target 'LoopaTests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest
+
+RegisterExecutionPolicyException /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest (in target 'LoopaTests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-RegisterExecutionPolicyException /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest
+
+Touch /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest (in target 'LoopaTests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /usr/bin/touch -c /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/PlugIns/LoopaTests.xctest
+
+CodeSign /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/Loopa.debug.dylib
+
+CodeSign /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/__preview.dylib (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/__preview.dylib
+/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app/__preview.dylib: replacing existing signature
+
+CodeSign /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app
+
+Validate /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app (in target 'Loopa' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-validationUtility /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/Loopa.app -infoplist-subpath Info.plist
+
+ProcessInfoPlistFile /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest/Info.plist /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/empty-LoopaUITests.plist (in target 'LoopaUITests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-infoPlistUtility /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/empty-LoopaUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest/Info.plist
+
+Ld /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest/LoopaUITests normal (in target 'LoopaUITests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -filelist /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/Objects-normal/arm64/LoopaUITests.LinkFileList -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/Objects-normal/arm64/LoopaUITests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -debug_variant -Xlinker -dependency_info -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/Objects-normal/arm64/LoopaUITests_dependency_info.dat -fobjc-link-runtime -fprofile-instr-generate -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/Objects-normal/arm64/LoopaUITests.swiftmodule -framework XCTest -lXCTestSwiftSupport -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/LoopaUITests.xctest-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/LoopaUITests.xctest-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest/LoopaUITests
+
+CopySwiftLibs /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest (in target 'LoopaUITests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest/LoopaUITests --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest/Frameworks --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest/PlugIns --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest/SystemExtensions --scan-folder /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'LoopaUITests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name LoopaUITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk --xcode-version 16F6 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.loopa.app.uitests --output /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest/LoopaUITests --dependency-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/Objects-normal/arm64/LoopaUITests_dependency_info.dat --stringsdata-file /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/Objects-normal/arm64/LoopaUITests.SwiftFileList --metadata-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/LoopaUITests.DependencyMetadataFileList --static-metadata-file-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/LoopaUITests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Intermediates.noindex/Loopa.build/Debug-iphonesimulator/LoopaUITests.build/Objects-normal/arm64/LoopaUITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-01-10 01:06:04.746 appintentsmetadataprocessor[44438:13964316] Starting appintentsmetadataprocessor export
+2026-01-10 01:06:04.747 appintentsmetadataprocessor[44438:13964316] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CodeSign /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest (in target 'LoopaUITests' from project 'Loopa')
+    cd /Users/tish/Documents/white\ iverson/Tish88
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/tish/Library/Developer/Xcode/DerivedData/Loopa-epstgyhlsvtzqpgxmfeevoawmhoa/Build/Products/Debug-iphonesimulator/LoopaUITests-Runner.app/PlugIns/LoopaUITests.xctest
+
+2026-01-10 01:06:19.478341-0500 LoopaUITests-Runner[44787:13966715] [Default] Running tests...
+2026-01-10 01:06:19.486975-0500 LoopaUITests-Runner[44787:13966843] [General] Failed to send CA Event for app launch measurements for ca_event_type: 0 event_name: com.apple.app_launch_measurement.FirstFramePresentationMetric
+2026-01-10 01:06:19.529531-0500 LoopaUITests-Runner[44787:13966836] [General] Failed to send CA Event for app launch measurements for ca_event_type: 1 event_name: com.apple.app_launch_measurement.ExtendedLaunchMetrics
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'All tests' started at 2026-01-10 01:06:22.168.
+Test Suite 'LoopaUITests.xctest' started at 2026-01-10 01:06:22.168.
+Test Suite 'ScreenshotTests' started at 2026-01-10 01:06:22.168.
+Test Case '-[LoopaUITests.ScreenshotTests testScreenshot01_MainKeyboard]' started.
+    t =     0.00s Start Test at 2026-01-10 01:06:22.169
+    t =     0.28s Set Up
+    t =     0.28s     Open com.loopa.app
+    t =     0.28s         Launch com.loopa.app
+    t =     1.10s             Interface orientation changed to Landscape Right
+    t =     1.10s             Setting up automation session
+    t =     1.66s             Wait for com.loopa.app to idle
+    t =     3.06s Waiting 5.0s for "recordButton" Button to exist
+    t =     4.09s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     4.09s         Checking existence of `"recordButton" Button`
+    t =     4.14s Tear Down
+Test Case '-[LoopaUITests.ScreenshotTests testScreenshot01_MainKeyboard]' passed (4.366 seconds).
+Test Case '-[LoopaUITests.ScreenshotTests testScreenshot02_Recording]' started.
+    t =     0.00s Start Test at 2026-01-10 01:06:26.535
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:44889
+    t =     0.05s                 Interface orientation changed to Portrait
+    t =     1.29s             Interface orientation changed to Landscape Right
+    t =     1.30s             Setting up automation session
+    t =     1.82s             Wait for com.loopa.app to idle
+    t =     3.08s Waiting 5.0s for "recordButton" Button to exist
+    t =     4.10s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     4.10s         Checking existence of `"recordButton" Button`
+    t =     4.18s Tap "recordButton" Button
+    t =     4.18s     Wait for com.loopa.app to idle
+    t =     4.19s     Find the "recordButton" Button
+    t =     4.21s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.24s     Synthesize event
+    t =     4.65s     Wait for com.loopa.app to idle
+    t =     7.66s Tap "recordButton" Button
+    t =     7.66s     Wait for com.loopa.app to idle
+    t =     7.66s     Find the "recordButton" Button
+    t =     7.68s     Check for interrupting elements affecting "recordButton" Button
+    t =     7.69s     Synthesize event
+    t =     7.98s     Wait for com.loopa.app to idle
+    t =     7.99s Tear Down
+Test Case '-[LoopaUITests.ScreenshotTests testScreenshot02_Recording]' passed (8.205 seconds).
+Test Case '-[LoopaUITests.ScreenshotTests testScreenshot03_TracksMixer]' started.
+    t =     0.00s Start Test at 2026-01-10 01:06:34.740
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:44954
+    t =     0.15s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.28s             Setting up automation session
+    t =     1.73s             Wait for com.loopa.app to idle
+    t =     2.97s Waiting 5.0s for "recordButton" Button to exist
+    t =     4.00s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     4.00s         Checking existence of `"recordButton" Button`
+    t =     4.07s Tap "recordButton" Button
+    t =     4.07s     Wait for com.loopa.app to idle
+    t =     4.07s     Find the "recordButton" Button
+    t =     4.08s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.09s     Synthesize event
+    t =     4.38s     Wait for com.loopa.app to idle
+    t =     7.89s Tap "recordButton" Button
+    t =     7.89s     Wait for com.loopa.app to idle
+    t =     7.89s     Find the "recordButton" Button
+    t =     7.91s     Check for interrupting elements affecting "recordButton" Button
+    t =     7.92s     Synthesize event
+    t =     8.21s     Wait for com.loopa.app to idle
+    t =     8.72s Waiting 2.0s for "tracksButton" Button to exist
+    t =     9.74s     Checking `Expect predicate `existsNoRetry == 1` for object "tracksButton" Button`
+    t =     9.74s         Checking existence of `"tracksButton" Button`
+    t =     9.76s Tap "tracksButton" Button
+    t =     9.76s     Wait for com.loopa.app to idle
+    t =     9.77s     Find the "tracksButton" Button
+    t =     9.78s     Check for interrupting elements affecting "tracksButton" Button
+    t =     9.79s     Synthesize event
+    t =    10.07s     Wait for com.loopa.app to idle
+    t =    10.96s Tear Down
+Test Case '-[LoopaUITests.ScreenshotTests testScreenshot03_TracksMixer]' passed (11.169 seconds).
+Test Case '-[LoopaUITests.ScreenshotTests testScreenshot04_DrumKit]' started.
+    t =     0.00s Start Test at 2026-01-10 01:06:45.911
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:45030
+    t =     0.15s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.29s             Setting up automation session
+    t =     1.73s             Wait for com.loopa.app to idle
+    t =     2.99s Tear Down
+Test Case '-[LoopaUITests.ScreenshotTests testScreenshot04_DrumKit]' passed (3.209 seconds).
+Test Case '-[LoopaUITests.ScreenshotTests testScreenshot05_Settings]' started.
+    t =     0.00s Start Test at 2026-01-10 01:06:49.119
+    t =     0.03s Set Up
+    t =     0.04s     Open com.loopa.app
+    t =     0.04s         Launch com.loopa.app
+    t =     0.04s             Terminate com.loopa.app:45183
+    t =     0.18s                 Interface orientation changed to Portrait
+    t =     1.32s             Interface orientation changed to Landscape Right
+    t =     1.32s             Setting up automation session
+    t =     1.75s             Wait for com.loopa.app to idle
+    t =     2.98s Waiting 2.0s for "ellipsis.circle" Button to exist
+    t =     4.01s     Checking `Expect predicate `existsNoRetry == 1` for object "ellipsis.circle" Button`
+    t =     4.01s         Checking existence of `"ellipsis.circle" Button`
+    t =     4.08s         Capturing element debug description
+    t =     4.98s     Checking `Expect predicate `existsNoRetry == 1` for object "ellipsis.circle" Button`
+    t =     4.98s         Checking existence of `"ellipsis.circle" Button`
+    t =     5.01s         Capturing element debug description
+    t =     5.01s     Checking existence of `"ellipsis.circle" Button`
+    t =     5.03s Collecting debug information to assist test failure triage
+    t =     5.03s     Requesting snapshot of accessibility hierarchy for app with pid 45212
+    t =     5.05s Tear Down
+Test Case '-[LoopaUITests.ScreenshotTests testScreenshot05_Settings]' passed (5.255 seconds).
+Test Suite 'ScreenshotTests' passed at 2026-01-10 01:06:54.374.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 32.204 (32.206) seconds
+Test Suite 'TransportControlsUITests' started at 2026-01-10 01:06:54.375.
+Test Case '-[LoopaUITests.TransportControlsUITests testFullRecordPauseResumeFlow]' started.
+    t =     0.00s Start Test at 2026-01-10 01:06:54.376
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:45212
+    t =     0.15s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.28s             Setting up automation session
+    t =     1.71s             Wait for com.loopa.app to idle
+    t =     2.96s Waiting 5.0s for "recordButton" Button to exist
+    t =     3.99s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     3.99s         Checking existence of `"recordButton" Button`
+    t =     4.02s Tap "recordButton" Button
+    t =     4.02s     Wait for com.loopa.app to idle
+    t =     4.02s     Find the "recordButton" Button
+    t =     4.03s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.04s     Synthesize event
+    t =     4.33s     Wait for com.loopa.app to idle
+    t =     5.14s Tap "recordButton" Button
+    t =     5.14s     Wait for com.loopa.app to idle
+    t =     5.14s     Find the "recordButton" Button
+    t =     5.15s     Check for interrupting elements affecting "recordButton" Button
+    t =     5.16s     Synthesize event
+    t =     5.44s     Wait for com.loopa.app to idle
+    t =     6.96s Checking `Expect predicate `isEnabled == 1` for object "playPauseButton" Button`
+    t =     6.96s     Find the "playPauseButton" Button
+    t =     6.98s Tap "playPauseButton" Button
+    t =     6.98s     Wait for com.loopa.app to idle
+    t =     6.98s     Find the "playPauseButton" Button
+    t =     7.00s     Check for interrupting elements affecting "playPauseButton" Button
+    t =     7.01s     Synthesize event
+    t =     7.29s     Wait for com.loopa.app to idle
+    t =     7.80s Tap "playPauseButton" Button
+    t =     7.80s     Wait for com.loopa.app to idle
+    t =     7.80s     Find the "playPauseButton" Button
+    t =     7.82s     Check for interrupting elements affecting "playPauseButton" Button
+    t =     7.84s     Synthesize event
+    t =     8.13s     Wait for com.loopa.app to idle
+    t =     8.64s Tap "restartButton" Button
+    t =     8.64s     Wait for com.loopa.app to idle
+    t =     8.64s     Find the "restartButton" Button
+    t =     8.66s     Check for interrupting elements affecting "restartButton" Button
+    t =     8.67s     Synthesize event
+    t =     8.95s     Wait for com.loopa.app to idle
+    t =     9.46s Checking existence of `"recordButton" Button`
+    t =     9.48s Checking existence of `"playPauseButton" Button`
+    t =     9.49s Checking existence of `"restartButton" Button`
+    t =     9.50s Tear Down
+    t =     9.60s     Added attachment named 'failure_-[TransportControlsUITests testFullRecordPauseResumeFlow]'
+Test Case '-[LoopaUITests.TransportControlsUITests testFullRecordPauseResumeFlow]' passed (9.818 seconds).
+Test Case '-[LoopaUITests.TransportControlsUITests testPlayPauseButtonToggles]' started.
+    t =     0.00s Start Test at 2026-01-10 01:07:04.194
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:45253
+    t =     0.15s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.28s             Setting up automation session
+    t =     1.73s             Wait for com.loopa.app to idle
+    t =     2.99s Waiting 5.0s for "recordButton" Button to exist
+    t =     4.02s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     4.02s         Checking existence of `"recordButton" Button`
+    t =     4.08s Tap "recordButton" Button
+    t =     4.08s     Wait for com.loopa.app to idle
+    t =     4.09s     Find the "recordButton" Button
+    t =     4.10s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.11s     Synthesize event
+    t =     4.39s     Wait for com.loopa.app to idle
+    t =     4.90s Tap "recordButton" Button
+    t =     4.90s     Wait for com.loopa.app to idle
+    t =     4.90s     Find the "recordButton" Button
+    t =     4.93s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.95s     Synthesize event
+    t =     5.24s     Wait for com.loopa.app to idle
+    t =     5.54s Tap "playPauseButton" Button
+    t =     5.55s     Wait for com.loopa.app to idle
+    t =     5.55s     Find the "playPauseButton" Button
+    t =     5.56s     Check for interrupting elements affecting "playPauseButton" Button
+    t =     5.57s     Synthesize event
+    t =     5.85s     Wait for com.loopa.app to idle
+    t =     6.16s Tap "playPauseButton" Button
+    t =     6.16s     Wait for com.loopa.app to idle
+    t =     6.16s     Find the "playPauseButton" Button
+    t =     6.18s     Check for interrupting elements affecting "playPauseButton" Button
+    t =     6.20s     Synthesize event
+    t =     6.49s     Wait for com.loopa.app to idle
+    t =     6.80s Find the "playPauseButton" Button
+    t =     6.82s Tear Down
+    t =     6.92s     Added attachment named 'failure_-[TransportControlsUITests testPlayPauseButtonToggles]'
+Test Case '-[LoopaUITests.TransportControlsUITests testPlayPauseButtonToggles]' passed (7.124 seconds).
+Test Case '-[LoopaUITests.TransportControlsUITests testQuantizeButtonCyclesSettings]' started.
+    t =     0.00s Start Test at 2026-01-10 01:07:11.318
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:45372
+    t =     0.15s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.29s             Setting up automation session
+    t =     1.71s             Wait for com.loopa.app to idle
+    t =     2.96s Waiting 5.0s for "quantizeButton" Button to exist
+    t =     3.97s     Checking `Expect predicate `existsNoRetry == 1` for object "quantizeButton" Button`
+    t =     3.98s         Checking existence of `"quantizeButton" Button`
+    t =     4.04s Tap "quantizeButton" Button
+    t =     4.04s     Wait for com.loopa.app to idle
+    t =     4.05s     Find the "quantizeButton" Button
+    t =     4.07s     Check for interrupting elements affecting "quantizeButton" Button
+    t =     4.11s     Synthesize event
+    t =     4.41s     Wait for com.loopa.app to idle
+    t =     4.62s Tap "quantizeButton" Button
+    t =     4.62s     Wait for com.loopa.app to idle
+    t =     4.62s     Find the "quantizeButton" Button
+    t =     4.65s     Check for interrupting elements affecting "quantizeButton" Button
+    t =     4.66s     Synthesize event
+    t =     4.95s     Wait for com.loopa.app to idle
+    t =     5.16s Tap "quantizeButton" Button
+    t =     5.16s     Wait for com.loopa.app to idle
+    t =     5.16s     Find the "quantizeButton" Button
+    t =     5.19s     Check for interrupting elements affecting "quantizeButton" Button
+    t =     5.20s     Synthesize event
+    t =     5.49s     Wait for com.loopa.app to idle
+    t =     5.70s Tap "quantizeButton" Button
+    t =     5.70s     Wait for com.loopa.app to idle
+    t =     5.71s     Find the "quantizeButton" Button
+    t =     5.74s     Check for interrupting elements affecting "quantizeButton" Button
+    t =     5.75s     Synthesize event
+    t =     6.04s     Wait for com.loopa.app to idle
+    t =     6.25s Checking existence of `"quantizeButton" Button`
+    t =     6.27s Tear Down
+    t =     6.38s     Added attachment named 'failure_-[TransportControlsUITests testQuantizeButtonCyclesSettings]'
+Test Case '-[LoopaUITests.TransportControlsUITests testQuantizeButtonCyclesSettings]' passed (6.584 seconds).
+Test Case '-[LoopaUITests.TransportControlsUITests testRecordButtonStartsRecording]' started.
+    t =     0.00s Start Test at 2026-01-10 01:07:17.903
+    t =     0.03s Set Up
+    t =     0.03s     Open com.loopa.app
+    t =     0.03s         Launch com.loopa.app
+    t =     0.03s             Terminate com.loopa.app:45446
+    t =     0.17s                 Interface orientation changed to Portrait
+    t =     1.29s             Interface orientation changed to Landscape Right
+    t =     1.30s             Setting up automation session
+    t =     1.72s             Wait for com.loopa.app to idle
+    t =     2.98s Waiting 5.0s for "recordButton" Button to exist
+    t =     4.01s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     4.02s         Checking existence of `"recordButton" Button`
+    t =     4.08s Tap "recordButton" Button
+    t =     4.08s     Wait for com.loopa.app to idle
+    t =     4.09s     Find the "recordButton" Button
+    t =     4.10s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.11s     Synthesize event
+    t =     4.40s     Wait for com.loopa.app to idle
+    t =     4.91s Find the "playPauseButton" Button
+    t =     4.93s Tear Down
+    t =     5.04s     Added attachment named 'failure_-[TransportControlsUITests testRecordButtonStartsRecording]'
+Test Case '-[LoopaUITests.TransportControlsUITests testRecordButtonStartsRecording]' passed (5.261 seconds).
+Test Case '-[LoopaUITests.TransportControlsUITests testRecordButtonTogglesRecording]' started.
+    t =     0.00s Start Test at 2026-01-10 01:07:23.164
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:45521
+    t =     0.15s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.28s             Setting up automation session
+    t =     1.70s             Wait for com.loopa.app to idle
+    t =     2.97s Waiting 5.0s for "recordButton" Button to exist
+    t =     3.99s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     3.99s         Checking existence of `"recordButton" Button`
+    t =     4.05s Tap "recordButton" Button
+    t =     4.05s     Wait for com.loopa.app to idle
+    t =     4.06s     Find the "recordButton" Button
+    t =     4.07s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.08s     Synthesize event
+    t =     4.37s     Wait for com.loopa.app to idle
+    t =     4.88s Tap "recordButton" Button
+    t =     4.88s     Wait for com.loopa.app to idle
+    t =     4.88s     Find the "recordButton" Button
+    t =     4.91s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.92s     Synthesize event
+    t =     5.21s     Wait for com.loopa.app to idle
+    t =     5.71s Find the "playPauseButton" Button
+    t =     5.74s Tear Down
+    t =     5.85s     Added attachment named 'failure_-[TransportControlsUITests testRecordButtonTogglesRecording]'
+Test Case '-[LoopaUITests.TransportControlsUITests testRecordButtonTogglesRecording]' passed (6.056 seconds).
+Test Case '-[LoopaUITests.TransportControlsUITests testRestartButtonRestartsFromBeginning]' started.
+    t =     0.00s Start Test at 2026-01-10 01:07:29.221
+    t =     0.03s Set Up
+    t =     0.03s     Open com.loopa.app
+    t =     0.03s         Launch com.loopa.app
+    t =     0.03s             Terminate com.loopa.app:45591
+    t =     0.16s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.29s             Setting up automation session
+    t =     1.70s             Wait for com.loopa.app to idle
+    t =     2.95s Waiting 5.0s for "recordButton" Button to exist
+    t =     3.97s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     3.97s         Checking existence of `"recordButton" Button`
+    t =     4.03s Tap "recordButton" Button
+    t =     4.03s     Wait for com.loopa.app to idle
+    t =     4.03s     Find the "recordButton" Button
+    t =     4.04s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.05s     Synthesize event
+    t =     4.34s     Wait for com.loopa.app to idle
+    t =     7.85s Tap "recordButton" Button
+    t =     7.85s     Wait for com.loopa.app to idle
+    t =     7.85s     Find the "recordButton" Button
+    t =     7.87s     Check for interrupting elements affecting "recordButton" Button
+    t =     7.89s     Synthesize event
+    t =     8.18s     Wait for com.loopa.app to idle
+    t =     9.71s Checking `Expect predicate `isEnabled == 1` for object "restartButton" Button`
+    t =     9.72s     Find the "restartButton" Button
+    t =     9.74s Tap "restartButton" Button
+    t =     9.74s     Wait for com.loopa.app to idle
+    t =     9.74s     Find the "restartButton" Button
+    t =     9.75s     Check for interrupting elements affecting "restartButton" Button
+    t =     9.76s     Synthesize event
+    t =    10.04s     Wait for com.loopa.app to idle
+    t =    10.55s Checking existence of `"restartButton" Button`
+    t =    10.57s Tear Down
+    t =    10.66s     Added attachment named 'failure_-[TransportControlsUITests testRestartButtonRestartsFromBeginning]'
+Test Case '-[LoopaUITests.TransportControlsUITests testRestartButtonRestartsFromBeginning]' passed (10.888 seconds).
+Test Case '-[LoopaUITests.TransportControlsUITests testTransportButtonsExist]' started.
+    t =     0.00s Start Test at 2026-01-10 01:07:40.109
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:45645
+    t =     0.05s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.28s             Setting up automation session
+    t =     1.74s             Wait for com.loopa.app to idle
+    t =     3.03s Waiting 5.0s for "recordButton" Button to exist
+    t =     4.06s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     4.06s         Checking existence of `"recordButton" Button`
+    t =     4.12s Checking existence of `"playPauseButton" Button`
+    t =     4.13s Checking existence of `"restartButton" Button`
+    t =     4.14s Checking existence of `"quantizeButton" Button`
+    t =     4.15s Tear Down
+    t =     4.26s     Added attachment named 'failure_-[TransportControlsUITests testTransportButtonsExist]'
+Test Case '-[LoopaUITests.TransportControlsUITests testTransportButtonsExist]' passed (4.468 seconds).
+Test Suite 'TransportControlsUITests' passed at 2026-01-10 01:07:44.577.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 50.199 (50.202) seconds
+Test Suite 'TransportRegressionTests' started at 2026-01-10 01:07:44.577.
+Test Case '-[LoopaUITests.TransportRegressionTests testButtonsWorkDuringRecording]' started.
+    t =     0.00s Start Test at 2026-01-10 01:07:44.578
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:45794
+    t =     0.15s                 Interface orientation changed to Portrait
+    t =     1.27s             Interface orientation changed to Landscape Right
+    t =     1.28s             Setting up automation session
+    t =     1.68s             Wait for com.loopa.app to idle
+    t =     2.92s Waiting 5.0s for "recordButton" Button to exist
+    t =     3.94s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     3.94s         Checking existence of `"recordButton" Button`
+    t =     4.01s Tap "recordButton" Button
+    t =     4.01s     Wait for com.loopa.app to idle
+    t =     4.01s     Find the "recordButton" Button
+    t =     4.02s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.03s     Synthesize event
+    t =     4.32s     Wait for com.loopa.app to idle
+    t =     8.34s Checking `Expect predicate `isEnabled == 1` for object "playPauseButton" Button`
+    t =     8.35s     Find the "playPauseButton" Button
+    t =     8.37s Find the "playPauseButton" Button
+    t =     8.39s Find the "restartButton" Button
+    t =     8.40s Tap "recordButton" Button
+    t =     8.40s     Wait for com.loopa.app to idle
+    t =     8.40s     Find the "recordButton" Button
+    t =     8.42s     Check for interrupting elements affecting "recordButton" Button
+    t =     8.45s     Synthesize event
+    t =     8.74s     Wait for com.loopa.app to idle
+    t =     8.74s Tear Down
+    t =     8.83s     Added attachment named 'failure_-[TransportRegressionTests testButtonsWorkDuringRecording]'
+Test Case '-[LoopaUITests.TransportRegressionTests testButtonsWorkDuringRecording]' passed (9.043 seconds).
+Test Case '-[LoopaUITests.TransportRegressionTests testMultiplePauseResumeCycles]' started.
+    t =     0.00s Start Test at 2026-01-10 01:07:53.621
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:45841
+    t =     0.15s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.28s             Setting up automation session
+    t =     1.69s             Wait for com.loopa.app to idle
+    t =     3.06s Waiting 5.0s for "recordButton" Button to exist
+    t =     4.08s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     4.08s         Checking existence of `"recordButton" Button`
+    t =     4.15s Tap "recordButton" Button
+    t =     4.15s     Wait for com.loopa.app to idle
+    t =     4.16s     Find the "recordButton" Button
+    t =     4.18s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.21s     Synthesize event
+    t =     4.50s     Wait for com.loopa.app to idle
+    t =     5.01s Tap "recordButton" Button
+    t =     5.01s     Wait for com.loopa.app to idle
+    t =     5.01s     Find the "recordButton" Button
+    t =     5.04s     Check for interrupting elements affecting "recordButton" Button
+    t =     5.06s     Synthesize event
+    t =     5.34s     Wait for com.loopa.app to idle
+    t =     5.65s Tap "playPauseButton" Button
+    t =     5.65s     Wait for com.loopa.app to idle
+    t =     5.65s     Find the "playPauseButton" Button
+    t =     5.68s     Check for interrupting elements affecting "playPauseButton" Button
+    t =     5.70s     Synthesize event
+    t =     5.98s     Wait for com.loopa.app to idle
+    t =     6.19s Find the "playPauseButton" Button
+    t =     6.20s Tap "playPauseButton" Button
+    t =     6.20s     Wait for com.loopa.app to idle
+    t =     6.21s     Find the "playPauseButton" Button
+    t =     6.22s     Check for interrupting elements affecting "playPauseButton" Button
+    t =     6.24s     Synthesize event
+    t =     6.54s     Wait for com.loopa.app to idle
+    t =     6.79s Find the "playPauseButton" Button
+    t =     6.82s Tap "playPauseButton" Button
+    t =     6.82s     Wait for com.loopa.app to idle
+    t =     6.82s     Find the "playPauseButton" Button
+    t =     6.84s     Check for interrupting elements affecting "playPauseButton" Button
+    t =     6.86s     Synthesize event
+    t =     7.15s     Wait for com.loopa.app to idle
+    t =     7.37s Find the "playPauseButton" Button
+    t =     7.39s Tap "playPauseButton" Button
+    t =     7.39s     Wait for com.loopa.app to idle
+    t =     7.40s     Find the "playPauseButton" Button
+    t =     7.43s     Check for interrupting elements affecting "playPauseButton" Button
+    t =     7.46s     Synthesize event
+    t =     7.75s     Wait for com.loopa.app to idle
+    t =     7.96s Find the "playPauseButton" Button
+    t =     7.99s Tap "playPauseButton" Button
+    t =     7.99s     Wait for com.loopa.app to idle
+    t =     8.00s     Find the "playPauseButton" Button
+    t =     8.01s     Check for interrupting elements affecting "playPauseButton" Button
+    t =     8.04s     Synthesize event
+    t =     8.33s     Wait for com.loopa.app to idle
+    t =     8.54s Find the "playPauseButton" Button
+    t =     8.57s Tear Down
+    t =     8.70s     Added attachment named 'failure_-[TransportRegressionTests testMultiplePauseResumeCycles]'
+Test Case '-[LoopaUITests.TransportRegressionTests testMultiplePauseResumeCycles]' passed (8.915 seconds).
+Test Case '-[LoopaUITests.TransportRegressionTests testPauseDoesNotRestart]' started.
+    t =     0.00s Start Test at 2026-01-10 01:08:02.537
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:45986
+    t =     0.15s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.28s             Setting up automation session
+    t =     1.70s             Wait for com.loopa.app to idle
+    t =     2.96s Waiting 5.0s for "recordButton" Button to exist
+    t =     3.98s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     3.98s         Checking existence of `"recordButton" Button`
+    t =     4.05s Tap "recordButton" Button
+    t =     4.05s     Wait for com.loopa.app to idle
+    t =     4.05s     Find the "recordButton" Button
+    t =     4.06s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.07s     Synthesize event
+    t =     4.36s     Wait for com.loopa.app to idle
+    t =     5.37s Tap "recordButton" Button
+    t =     5.37s     Wait for com.loopa.app to idle
+    t =     5.38s     Find the "recordButton" Button
+    t =     5.40s     Check for interrupting elements affecting "recordButton" Button
+    t =     5.42s     Synthesize event
+    t =     5.71s     Wait for com.loopa.app to idle
+    t =     6.52s Tap "playPauseButton" Button
+    t =     6.52s     Wait for com.loopa.app to idle
+    t =     6.53s     Find the "playPauseButton" Button
+    t =     6.54s     Check for interrupting elements affecting "playPauseButton" Button
+    t =     6.55s     Synthesize event
+    t =     6.84s     Wait for com.loopa.app to idle
+    t =     7.14s Tap "playPauseButton" Button
+    t =     7.14s     Wait for com.loopa.app to idle
+    t =     7.14s     Find the "playPauseButton" Button
+    t =     7.16s     Check for interrupting elements affecting "playPauseButton" Button
+    t =     7.17s     Synthesize event
+    t =     7.46s     Wait for com.loopa.app to idle
+    t =     7.77s Find the "playPauseButton" Button
+    t =     7.79s Tear Down
+    t =     7.88s     Added attachment named 'failure_-[TransportRegressionTests testPauseDoesNotRestart]'
+Test Case '-[LoopaUITests.TransportRegressionTests testPauseDoesNotRestart]' passed (8.096 seconds).
+Test Case '-[LoopaUITests.TransportRegressionTests testPlayPauseEnabledAfterRecording]' started.
+    t =     0.00s Start Test at 2026-01-10 01:08:10.633
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:46099
+    t =     0.15s                 Interface orientation changed to Portrait
+    t =     1.27s             Interface orientation changed to Landscape Right
+    t =     1.27s             Setting up automation session
+    t =     1.70s             Wait for com.loopa.app to idle
+    t =     2.95s Waiting 5.0s for "recordButton" Button to exist
+    t =     3.97s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     3.97s         Checking existence of `"recordButton" Button`
+    t =     4.02s Tap "recordButton" Button
+    t =     4.02s     Wait for com.loopa.app to idle
+    t =     4.02s     Find the "recordButton" Button
+    t =     4.03s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.04s     Synthesize event
+    t =     4.33s     Wait for com.loopa.app to idle
+    t =     4.84s Tap "recordButton" Button
+    t =     4.84s     Wait for com.loopa.app to idle
+    t =     4.84s     Find the "recordButton" Button
+    t =     4.87s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.88s     Synthesize event
+    t =     5.17s     Wait for com.loopa.app to idle
+    t =     5.48s Find the "playPauseButton" Button
+    t =     5.49s Tear Down
+    t =     5.57s     Added attachment named 'failure_-[TransportRegressionTests testPlayPauseEnabledAfterRecording]'
+Test Case '-[LoopaUITests.TransportRegressionTests testPlayPauseEnabledAfterRecording]' passed (5.781 seconds).
+Test Case '-[LoopaUITests.TransportRegressionTests testQuantizeAlwaysEnabled]' started.
+    t =     0.00s Start Test at 2026-01-10 01:08:16.415
+    t =     0.03s Set Up
+    t =     0.03s     Open com.loopa.app
+    t =     0.03s         Launch com.loopa.app
+    t =     0.03s             Terminate com.loopa.app:46182
+    t =     0.16s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.28s             Setting up automation session
+    t =     1.71s             Wait for com.loopa.app to idle
+    t =     2.97s Waiting 5.0s for "quantizeButton" Button to exist
+    t =     4.00s     Checking `Expect predicate `existsNoRetry == 1` for object "quantizeButton" Button`
+    t =     4.00s         Checking existence of `"quantizeButton" Button`
+    t =     4.07s Find the "quantizeButton" Button
+    t =     4.08s Tap "quantizeButton" Button
+    t =     4.08s     Wait for com.loopa.app to idle
+    t =     4.08s     Find the "quantizeButton" Button
+    t =     4.09s     Check for interrupting elements affecting "quantizeButton" Button
+    t =     4.10s     Synthesize event
+    t =     4.38s     Wait for com.loopa.app to idle
+    t =     4.49s Tap "quantizeButton" Button
+    t =     4.49s     Wait for com.loopa.app to idle
+    t =     4.49s     Find the "quantizeButton" Button
+    t =     4.51s     Check for interrupting elements affecting "quantizeButton" Button
+    t =     4.53s     Synthesize event
+    t =     4.83s     Wait for com.loopa.app to idle
+    t =     4.94s Tap "quantizeButton" Button
+    t =     4.94s     Wait for com.loopa.app to idle
+    t =     4.95s     Find the "quantizeButton" Button
+    t =     4.97s     Check for interrupting elements affecting "quantizeButton" Button
+    t =     4.99s     Synthesize event
+    t =     5.28s     Wait for com.loopa.app to idle
+    t =     5.40s Tap "quantizeButton" Button
+    t =     5.40s     Wait for com.loopa.app to idle
+    t =     5.40s     Find the "quantizeButton" Button
+    t =     5.43s     Check for interrupting elements affecting "quantizeButton" Button
+    t =     5.45s     Synthesize event
+    t =     5.73s     Wait for com.loopa.app to idle
+    t =     5.84s Tap "quantizeButton" Button
+    t =     5.84s     Wait for com.loopa.app to idle
+    t =     5.85s     Find the "quantizeButton" Button
+    t =     5.87s     Check for interrupting elements affecting "quantizeButton" Button
+    t =     5.89s     Synthesize event
+    t =     6.18s     Wait for com.loopa.app to idle
+    t =     6.29s Find the "quantizeButton" Button
+    t =     6.31s Tear Down
+    t =     6.42s     Added attachment named 'failure_-[TransportRegressionTests testQuantizeAlwaysEnabled]'
+Test Case '-[LoopaUITests.TransportRegressionTests testQuantizeAlwaysEnabled]' passed (6.649 seconds).
+Test Case '-[LoopaUITests.TransportRegressionTests testRecordButtonWorksWithZeroTracks]' started.
+    t =     0.00s Start Test at 2026-01-10 01:08:23.064
+    t =     0.03s Set Up
+    t =     0.03s     Open com.loopa.app
+    t =     0.03s         Launch com.loopa.app
+    t =     0.03s             Terminate com.loopa.app:46232
+    t =     0.17s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.28s             Setting up automation session
+    t =     1.72s             Wait for com.loopa.app to idle
+    t =     2.97s Waiting 5.0s for "recordButton" Button to exist
+    t =     4.01s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     4.01s         Checking existence of `"recordButton" Button`
+    t =     4.08s Find the "recordButton" Button
+    t =     4.09s Tap "recordButton" Button
+    t =     4.09s     Wait for com.loopa.app to idle
+    t =     4.09s     Find the "recordButton" Button
+    t =     4.10s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.11s     Synthesize event
+    t =     4.39s     Wait for com.loopa.app to idle
+    t =     4.70s Checking existence of `"recordButton" Button`
+    t =     4.72s Tear Down
+    t =     4.83s     Added attachment named 'failure_-[TransportRegressionTests testRecordButtonWorksWithZeroTracks]'
+Test Case '-[LoopaUITests.TransportRegressionTests testRecordButtonWorksWithZeroTracks]' passed (5.041 seconds).
+Test Case '-[LoopaUITests.TransportRegressionTests testRestartEnabledAfterRecording]' started.
+    t =     0.00s Start Test at 2026-01-10 01:08:28.105
+    t =     0.03s Set Up
+    t =     0.03s     Open com.loopa.app
+    t =     0.03s         Launch com.loopa.app
+    t =     0.03s             Terminate com.loopa.app:46300
+    t =     0.16s                 Interface orientation changed to Portrait
+    t =     1.27s             Interface orientation changed to Landscape Right
+    t =     1.27s             Setting up automation session
+    t =     1.70s             Wait for com.loopa.app to idle
+    t =     2.94s Waiting 5.0s for "recordButton" Button to exist
+    t =     3.95s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     3.96s         Checking existence of `"recordButton" Button`
+    t =     4.02s Tap "recordButton" Button
+    t =     4.02s     Wait for com.loopa.app to idle
+    t =     4.02s     Find the "recordButton" Button
+    t =     4.03s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.04s     Synthesize event
+    t =     4.33s     Wait for com.loopa.app to idle
+    t =     7.34s Tap "recordButton" Button
+    t =     7.34s     Wait for com.loopa.app to idle
+    t =     7.35s     Find the "recordButton" Button
+    t =     7.36s     Check for interrupting elements affecting "recordButton" Button
+    t =     7.38s     Synthesize event
+    t =     7.66s     Wait for com.loopa.app to idle
+    t =     8.69s Checking `Expect predicate `isEnabled == 1` for object "restartButton" Button`
+    t =     8.69s     Find the "restartButton" Button
+    t =     8.71s Find the "restartButton" Button
+    t =     8.72s Tear Down
+    t =     8.81s     Added attachment named 'failure_-[TransportRegressionTests testRestartEnabledAfterRecording]'
+Test Case '-[LoopaUITests.TransportRegressionTests testRestartEnabledAfterRecording]' passed (9.019 seconds).
+Test Case '-[LoopaUITests.TransportRegressionTests testStoppingRecordDoesNotStopMusic]' started.
+    t =     0.00s Start Test at 2026-01-10 01:08:37.124
+    t =     0.02s Set Up
+    t =     0.02s     Open com.loopa.app
+    t =     0.02s         Launch com.loopa.app
+    t =     0.02s             Terminate com.loopa.app:46335
+    t =     0.15s                 Interface orientation changed to Portrait
+    t =     1.28s             Interface orientation changed to Landscape Right
+    t =     1.28s             Setting up automation session
+    t =     1.69s             Wait for com.loopa.app to idle
+    t =     2.93s Waiting 5.0s for "recordButton" Button to exist
+    t =     3.95s     Checking `Expect predicate `existsNoRetry == 1` for object "recordButton" Button`
+    t =     3.95s         Checking existence of `"recordButton" Button`
+    t =     4.02s Tap "recordButton" Button
+    t =     4.02s     Wait for com.loopa.app to idle
+    t =     4.03s     Find the "recordButton" Button
+    t =     4.04s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.05s     Synthesize event
+    t =     4.34s     Wait for com.loopa.app to idle
+    t =     4.84s Tap "recordButton" Button
+    t =     4.84s     Wait for com.loopa.app to idle
+    t =     4.85s     Find the "recordButton" Button
+    t =     4.87s     Check for interrupting elements affecting "recordButton" Button
+    t =     4.89s     Synthesize event
+    t =     5.17s     Wait for com.loopa.app to idle
+    t =     5.48s Find the "playPauseButton" Button
+    t =     5.52s Tear Down
+    t =     5.64s     Added attachment named 'failure_-[TransportRegressionTests testStoppingRecordDoesNotStopMusic]'
+Test Case '-[LoopaUITests.TransportRegressionTests testStoppingRecordDoesNotStopMusic]' passed (5.850 seconds).
+Test Suite 'TransportRegressionTests' passed at 2026-01-10 01:08:42.974.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 58.394 (58.397) seconds
+Test Suite 'LoopaUITests.xctest' passed at 2026-01-10 01:08:42.976.
+	 Executed 20 tests, with 0 failures (0 unexpected) in 140.797 (140.808) seconds
+Test Suite 'All tests' passed at 2026-01-10 01:08:42.977.
+	 Executed 20 tests, with 0 failures (0 unexpected) in 140.797 (140.809) seconds
+2026-01-10 01:08:43.369 xcodebuild[44095:13962879] [MT] IDETestOperationsObserverDebug: 158.603 elapsed -- Testing started completed.
+2026-01-10 01:08:43.369 xcodebuild[44095:13962879] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-01-10 01:08:43.369 xcodebuild[44095:13962879] [MT] IDETestOperationsObserverDebug: 158.603 sec, +158.603 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/tish/Documents/white iverson/Tish88/TestResults.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

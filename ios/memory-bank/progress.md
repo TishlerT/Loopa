@@ -1,0 +1,94 @@
+# Progress Log
+
+## Completed
+- [x] Core looper functionality (record, play, pause, restart)
+- [x] Multi-track support
+- [x] Quantization system (time-based and beat-based)
+- [x] Vocal recording
+- [x] Metronome and count-in
+- [x] BPM control with editor sheet
+- [x] Instrument selection
+- [x] Session save/load
+- [x] XCUITest framework setup
+- [x] CLI test runner scripts
+- [x] Screenshot capture on failure
+- [x] JSON result parsing for AI debugging
+- [x] **Tracks Mixer + Track Focus MIDI Editor (Phase 1 & 2)**
+  - Beat-based MidiNote model (replaces time-based events for editing)
+  - Solo/mute audibility logic
+  - TracksView with M/S/Q buttons, volume slider, instrument picker
+  - BPMEditorView with steppers and numeric input
+  - TrackFocusView with full-screen piano roll editor
+  - PianoRollCanvasView with Canvas-based rendering
+  - Note selection, drag-to-move, handle-to-resize, long-press-to-delete
+  - Grid snapping and loop bounds clamping
+- [x] **App Store Submission Preparation**
+  - Fixed ScreenshotTests to work without Fastlane
+  - Fixed BarCountTests assertion
+  - Excluded unused ContentView/Freesound code from build
+  - Verified tests pass on iPhone 16e, iPhone 16 Pro Max, iPad Pro 13-inch
+  - Verified screenshot capture on all devices
+- [x] **Audio-Visual Sync & Vocal Recording Fixes**
+  - Fixed visual lag at loop boundaries (DisplayLink-based UI updates)
+  - Fixed audio glitch during vocal recording (stale `isPlaying` state causing double-start)
+  - Pre-configure audio session during count-in (prevents playback interruption)
+
+## Test Status
+- Total: 158 unit tests + 20 UI tests
+- Passing: 158 unit tests, 20 UI tests
+- Failing: 0
+
+## Device Testing
+| Device | Tests | Status |
+|--------|-------|--------|
+| iPhone 16 Pro | 20 | ✓ Pass |
+| iPhone 16e | 20 | ✓ Pass |
+| iPhone 16 Pro Max | 20 | ✓ Pass |
+| iPad Pro 13-inch (M4) | 20 | ✓ Pass |
+
+## Known Issues
+- Restart button tests require 3+ second wait due to count-in timing
+- Maestro framework cannot detect `recordButton` (works with other buttons)
+- Project warnings about duplicate file group membership (cosmetic only)
+
+## App Store Submission Status
+**REJECTED - Resubmission Required**
+
+First submission rejected for:
+1. Guideline 2.3.7 - Price language in metadata (e.g., "FREE")
+2. Guideline 4.3(a) - Design spam (app appeared similar to others)
+
+**Resolution prepared** (Jan 12, 2026):
+- [x] Created `APP_STORE_RESUBMISSION_GUIDE.md` with all copy/paste text
+- [x] Prepared new App Name options (removed price language)
+- [x] Prepared new Subtitle options (feature-focused)
+- [x] Prepared new Keywords (no "free", specific features)
+- [x] Prepared new Description (unique first 3 sentences)
+- [x] Prepared new Promotional Text
+- [x] Prepared Screenshot Caption guidance
+- [x] Prepared detailed App Review Notes explaining uniqueness
+- [ ] **USER ACTION REQUIRED**: Apply changes in App Store Connect and resubmit
+
+## Final Fixes (Jan 2026)
+- [x] Fixed iPad MIDI editor playhead selection: Notes now have priority over playhead in tap detection, and playhead hit zone is tighter on iPad (20pt vs 30pt on iPhone)
+- [x] Fixed audio export: MIDI notes now render correctly in offline mode (sample-accurate triggering)
+- [x] Share Beat now exports playable M4A audio instead of .loopa project files
+- [x] Privacy Policy now links to tishstudios.com/privacy instead of showing in-app view
+- [x] Deleted PrivacyPolicyView.swift (no longer needed)
+- [x] **Fixed volume slider real-time feedback** - Volume changes now heard instantly while dragging slider (was only updating on release)
+- [x] **Added TrackVolumeTests** - 18 new unit tests verifying track volume independence
+- [x] **Fixed multi-bar recording bug** - Recording a longer track after a shorter one no longer "crams" notes into first bar(s). Fixed `addLiveEvent()` and `stopRecording()` to use recording loop length instead of global loop length.
+- [x] **Fixed piano roll note disappearing bug** - Notes no longer disappear when dragged to pitch row boundaries. Changed `handleDragChanged()` to use absolute Y-position with `floor()` for reliable pitch snapping. Also added protection against long-press deletion during drag and for already-selected notes.
+- [x] **Verified copy/paste relative offset preservation** - Added 5 unit tests confirming that copied notes preserve their relative timing offsets when pasted. The leftmost note becomes the reference point (offset 0), and all other notes maintain their offsets from it. Implementation was already correct.
+- [x] **Fixed test build issues** - Fixed ScreenshotTests (added Fastlane stub functions) and TrackVolumeTests (Float vs Double type mismatch).
+- [x] **Note preview on add** - Adding notes in piano roll or drum grid now plays the sound immediately. Added `previewNote()` to LooperViewModel with auto-stop after ~150ms. Works for all instruments including drums.
+- [x] **Multi-note drag** - In multi-select mode, selecting multiple notes and dragging one now moves all selected notes together with their relative positions preserved. Tapping empty space no longer deselects notes (allows panning). Added 5 new unit tests for multi-drag behavior.
+- [x] **Compact track layout with inline volume slider** - Restructured TrackMixerRow to a single-row layout. M/S/Q/L buttons remain horizontal, and the volume slider is now a horizontal slider inline after the buttons (instead of a separate row below). This reduces vertical space per track, allowing more tracks to be visible simultaneously.
+- [x] **Editor hint in TracksView** - Added dismissible hint ("👆 Tap a track to open the editor") above the tracks list. Uses `@AppStorage` to hide permanently after user opens any track editor.
+- [x] **Auto-save/auto-restore working session** - App now saves current session when going to background and restores it on next launch. Works even if user swipes app away without explicitly saving. Clears auto-save when user saves or clears all. Added 6 unit tests.
+- [x] **Fixed first vocal recording bug** - First vocal recording after app restart now works correctly. The bug was caused by `stopMonitoring()` resetting the audio session to `.playback` mode even when `sessionPreparedForRecording` was true (during count-in). Fixed by adding `&& !sessionPreparedForRecording` check in `stopMonitoring()`.
+
+## Optional Future Enhancements
+- [ ] Add double-tap to add note in piano roll
+- [ ] Add playhead visualization in piano roll
+- [ ] Consider iPad split view for Tracks/TrackFocus
