@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.loopa.core.looper.QuantizerTest" tests="22" skipped="0" failures="0" errors="0" timestamp="2026-03-07T21:31:05" hostname="cursor" time="0.017">
+  <properties/>
+  <testcase name="quantize events quarter()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="quantize MidiNote()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="quantize with loop length()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="quantize time sixteenth()" classname="com.loopa.core.looper.QuantizerTest" time="0.001"/>
+  <testcase name="division beat fractions()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="snap to grid sixteenth note()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="quantize time quarter()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="drum notes visible in step sequencer grid()" classname="com.loopa.core.looper.QuantizerTest" time="0.006"/>
+  <testcase name="static clamp()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="quantize events off()" classname="com.loopa.core.looper.QuantizerTest" time="0.001"/>
+  <testcase name="quantize at different BPMs()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="static snap()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="quantize notes array()" classname="com.loopa.core.looper.QuantizerTest" time="0.001"/>
+  <testcase name="quantize time eighth()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="quantize beat with loop bounds()" classname="com.loopa.core.looper.QuantizerTest" time="0.001"/>
+  <testcase name="quantize events preserves other properties()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="quantize duration minimum()" classname="com.loopa.core.looper.QuantizerTest" time="0.001"/>
+  <testcase name="quantize off does not modify()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="static clamp duration()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="quantize time off()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="snap to grid quarter note()" classname="com.loopa.core.looper.QuantizerTest" time="0.0"/>
+  <testcase name="drum notes quantized to sixteenth notes()" classname="com.loopa.core.looper.QuantizerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

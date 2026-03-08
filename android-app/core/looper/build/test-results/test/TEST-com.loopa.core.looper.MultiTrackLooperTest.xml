@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.loopa.core.looper.MultiTrackLooperTest" tests="26" skipped="0" failures="0" errors="0" timestamp="2026-03-07T21:31:05" hostname="cursor" time="0.035">
+  <properties/>
+  <testcase name="resume playback()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.014"/>
+  <testcase name="set track instrument()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.001"/>
+  <testcase name="stop clears paused state()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="stop recording creates track()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.002"/>
+  <testcase name="initial state()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="pause does nothing when not playing()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="set track volume does not affect other tracks()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.001"/>
+  <testcase name="quantize track()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.002"/>
+  <testcase name="start recording()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="empty recording does not create track()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="seek clamps to loop bounds()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.001"/>
+  <testcase name="toggle mute()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="pause playback()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="loop length calculation()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.001"/>
+  <testcase name="volume clamping()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="clear all tracks()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="stop playback()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="set bar count()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.001"/>
+  <testcase name="seek updates position()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="synchronized position when not playing()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="resume starts playback when not paused()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="undo last track()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.001"/>
+  <testcase name="delete specific track()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.001"/>
+  <testcase name="loop length with different BPM()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.001"/>
+  <testcase name="start playback()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <testcase name="multiple tracks()" classname="com.loopa.core.looper.MultiTrackLooperTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

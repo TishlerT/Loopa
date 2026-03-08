@@ -1,18 +1,18 @@
 # Active Context
 
 ## Current focus
-iOS baseline capture completed locally on macOS. The repo now contains the reference docs, test summaries, screenshot baselines, SoundFont checksum, and schema fixtures the Android migration should consume.
+Android migration complete — all 12 phases executed. 212 tests pass, release bundle ready.
 
 ## Recent decisions
-- The Android port should treat the shipped iOS app as the parity oracle, not the legacy/excluded Swift files.
+- The Android port treats the shipped iOS app as the parity oracle, not the legacy/excluded Swift files.
 - The current live iOS runtime path is `Tish88App -> LooperView -> LooperViewModel -> MultiTrackLooper / LooperAudioEngine / VocalRecorder`.
-- Android implementation is expected to live in `android-app/`.
-- The existing `android/` directory is a frozen iOS mirror/reference area and should not be treated as the working Android app.
+- Android implementation lives in `android-app/`.
+- The existing `android/` directory is a frozen iOS mirror/reference area — never modified.
 - Planned Android audio stack is `FluidSynth + Oboe`, with parity judged against the shipped iOS SoundFont-driven behavior.
-- Screenshot baseline for this run was sourced from exported `xcresult` attachments because the checked-in Maestro setup was not runnable in the local environment.
-- Visual parity should follow the shipped dark/neon Loopa UI rather than default platform styling.
+- Visual parity follows the shipped dark/neon Loopa UI rather than default platform styling.
+- Phase 1 created: `AGENTS.md`, `migration/PARITY_MATRIX.md`, `migration/VERIFY.md`, `migration/AGENT_RUN_PROMPT.md`, and three parity comparison scripts (`compare_state.py`, `compare_images.py`, `compare_audio.py`).
 
 ## Blockers
-- Local Maestro execution is blocked by Java: the installed runtime is `1.8`, while Maestro requires Java 17+.
-- The checked-in `ios/Loopa.xcodeproj` required regeneration from `ios/project.yml` before build; the stale project attempted to package `.git/hooks` resources.
-- This baseline run captured six canonical transport screenshots, but did not capture `tracks_sheet`, `editor_piano_roll`, `editor_drum_grid`, or `vocal_mode` screenshots.
+- No emulator available on cloud VM (Firecracker, no KVM) — connected/Maestro tests are `DEFERRED_TO_LOCAL`.
+- Maestro not available on either cloud or local macOS.
+- 4 of 10 canonical iOS screenshots are missing (tracks_sheet, editor_piano_roll, editor_drum_grid, vocal_mode).

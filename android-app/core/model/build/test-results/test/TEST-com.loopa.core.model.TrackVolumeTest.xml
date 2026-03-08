@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.loopa.core.model.TrackVolumeTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-03-07T22:04:05" hostname="cursor" time="0.003">
+  <properties/>
+  <testcase name="track custom volume()" classname="com.loopa.core.model.TrackVolumeTest" time="0.0"/>
+  <testcase name="volume is preserved when soloed()" classname="com.loopa.core.model.TrackVolumeTest" time="0.0"/>
+  <testcase name="vocal track custom volume()" classname="com.loopa.core.model.TrackVolumeTest" time="0.0"/>
+  <testcase name="volume after loading session()" classname="com.loopa.core.model.TrackVolumeTest" time="0.001"/>
+  <testcase name="track default volume is 0_8()" classname="com.loopa.core.model.TrackVolumeTest" time="0.0"/>
+  <testcase name="volume is preserved when muted()" classname="com.loopa.core.model.TrackVolumeTest" time="0.0"/>
+  <testcase name="vocal track default volume()" classname="com.loopa.core.model.TrackVolumeTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

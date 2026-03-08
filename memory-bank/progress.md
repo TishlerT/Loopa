@@ -13,12 +13,11 @@
 - Root `memory-bank/` initialized for Android migration continuity
 
 ## In progress
-- Android migration has not started in this local session
+- None — all 12 phases complete
 
 ## Not started
-- Android migration prompt execution (`migration/prompts/03_android_migration.md`)
-- Android project scaffolding and implementation phases
-- Local verification of deferred parity items such as mixer/editor/vocal screenshots on Android
+- Local device verification (FluidSynth JNI, audio playback, Maestro, screenshots)
+- Play Store submission (needs signing keystore, screenshots, review)
 
 ## Known issues
 - No pre-existing iOS test failures were present in this baseline run

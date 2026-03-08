@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.loopa.audio.LooperAudioEngineTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-03-07T21:26:38" hostname="cursor" time="0.007">
+  <properties/>
+  <testcase name="prepare track assigns sampler()" classname="com.loopa.audio.LooperAudioEngineTest" time="0.002"/>
+  <testcase name="set live instrument changes program()" classname="com.loopa.audio.LooperAudioEngineTest" time="0.0"/>
+  <testcase name="prepare track assigns different channels()" classname="com.loopa.audio.LooperAudioEngineTest" time="0.001"/>
+  <testcase name="sampler for track returns correct sampler()" classname="com.loopa.audio.LooperAudioEngineTest" time="0.0"/>
+  <testcase name="sampler for unknown track returns null()" classname="com.loopa.audio.LooperAudioEngineTest" time="0.0"/>
+  <testcase name="vocal track returns null sampler()" classname="com.loopa.audio.LooperAudioEngineTest" time="0.0"/>
+  <testcase name="stopAll calls engine allNotesOff()" classname="com.loopa.audio.LooperAudioEngineTest" time="0.0"/>
+  <testcase name="engine starts successfully()" classname="com.loopa.audio.LooperAudioEngineTest" time="0.0"/>
+  <testcase name="release stops engine()" classname="com.loopa.audio.LooperAudioEngineTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

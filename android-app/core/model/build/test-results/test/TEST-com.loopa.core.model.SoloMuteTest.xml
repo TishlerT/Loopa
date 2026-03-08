@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.loopa.core.model.SoloMuteTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-03-07T22:04:05" hostname="cursor" time="0.006">
+  <properties/>
+  <testcase name="soloed track is audible when any soloed()" classname="com.loopa.core.model.SoloMuteTest" time="0.0"/>
+  <testcase name="non-soloed track is not audible when any soloed()" classname="com.loopa.core.model.SoloMuteTest" time="0.0"/>
+  <testcase name="multiple tracks with one solo()" classname="com.loopa.core.model.SoloMuteTest" time="0.0"/>
+  <testcase name="unmuted track is audible with no solo()" classname="com.loopa.core.model.SoloMuteTest" time="0.001"/>
+  <testcase name="vocal track audibility()" classname="com.loopa.core.model.SoloMuteTest" time="0.001"/>
+  <testcase name="muted soloed track is not audible()" classname="com.loopa.core.model.SoloMuteTest" time="0.001"/>
+  <testcase name="muted track is not audible()" classname="com.loopa.core.model.SoloMuteTest" time="0.0"/>
+  <testcase name="multiple tracks no solo()" classname="com.loopa.core.model.SoloMuteTest" time="0.001"/>
+  <testcase name="multiple tracks with multiple solos()" classname="com.loopa.core.model.SoloMuteTest" time="0.0"/>
+  <testcase name="soloed vocal track()" classname="com.loopa.core.model.SoloMuteTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

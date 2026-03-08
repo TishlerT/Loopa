@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.loopa.audio.MetronomeTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-03-07T21:26:38" hostname="cursor" time="0.003">
+  <properties/>
+  <testcase name="beat interval at 180 BPM is 333ms()" classname="com.loopa.audio.MetronomeTest" time="0.0"/>
+  <testcase name="beat interval at 60 BPM is 1000ms()" classname="com.loopa.audio.MetronomeTest" time="0.0"/>
+  <testcase name="beat interval at 100 BPM is 600ms()" classname="com.loopa.audio.MetronomeTest" time="0.0"/>
+  <testcase name="not running initially()" classname="com.loopa.audio.MetronomeTest" time="0.0"/>
+  <testcase name="changing BPM updates interval()" classname="com.loopa.audio.MetronomeTest" time="0.0"/>
+  <testcase name="default BPM is 100()" classname="com.loopa.audio.MetronomeTest" time="0.0"/>
+  <testcase name="beat interval at 120 BPM is 500ms()" classname="com.loopa.audio.MetronomeTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

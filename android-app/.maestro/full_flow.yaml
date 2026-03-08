@@ -1,0 +1,33 @@
+# Adapted from iOS .maestro/full_flow.yaml
+# DEFERRED_TO_LOCAL: Requires Android emulator + Maestro
+appId: com.loopa.app
+
+---
+- launchApp
+- assertVisible: "L∞PA"
+
+# Record a track
+- tapOn:
+    id: "recordButton"
+- wait:
+    seconds: 3
+- tapOn:
+    id: "recordButton"
+
+# Open tracks
+- tapOn:
+    id: "tracksButton"
+- wait:
+    seconds: 1
+
+# Play/Pause
+- tapOn:
+    id: "playPauseButton"
+- wait:
+    seconds: 2
+- tapOn:
+    id: "playPauseButton"
+
+# Restart
+- tapOn:
+    id: "restartButton"

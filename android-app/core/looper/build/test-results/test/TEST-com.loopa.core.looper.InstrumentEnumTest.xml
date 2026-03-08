@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.loopa.core.looper.InstrumentEnumTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-03-07T21:31:05" hostname="cursor" time="0.004">
+  <properties/>
+  <testcase name="drum kit identification()" classname="com.loopa.core.looper.InstrumentEnumTest" time="0.002"/>
+  <testcase name="program numbers()" classname="com.loopa.core.looper.InstrumentEnumTest" time="0.001"/>
+  <testcase name="all instruments have icons()" classname="com.loopa.core.looper.InstrumentEnumTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
