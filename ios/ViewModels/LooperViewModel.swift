@@ -130,7 +130,16 @@ final class LooperViewModel: ObservableObject {
 	@Published var isRecordingVocals = false
 	@Published var showMicPermissionAlert = false
 	@Published var isVocalMode = false
-	private var currentVocalFilename: String?
+	/// A take owns its musical period, even if the controls change before it finishes.
+	private struct VocalRecordingSession {
+		let filename: String
+		let lengthBeats: Double
+		let bpm: Double
+		let startElapsed: TimeInterval
+		var duration: TimeInterval { lengthBeats * 60.0 / bpm }
+	}
+	private var vocalRecordingSession: VocalRecordingSession?
+	private var vocalRecordingRequestID: UUID?
 	
 	/// Whether the headphone recommendation has been shown this session
 	private var hasShownHeadphoneRecommendation = false
@@ -340,7 +349,7 @@ final class LooperViewModel: ObservableObject {
 				
 				// Auto-stop vocal recording when allotted bars are complete
 				if self.isRecordingVocals {
-					self.checkVocalRecordingAutoStop(currentPosition: pos)
+					self.checkVocalRecordingAutoStop()
 				}
 			}
 			.store(in: &cancellables)
@@ -402,6 +411,7 @@ final class LooperViewModel: ObservableObject {
 	func selectInstrument(_ instrument: Instrument) {
 		// Prevent changing instruments while recording to avoid mixing instruments on one track
 		guard !isRecording else { return }
+		invalidatePendingVocalRecordingStart()
 		
 		currentInstrument = instrument
 		isVocalMode = false // Exit vocal mode when selecting an instrument
@@ -429,12 +439,14 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func startRecording() {
+		invalidatePendingVocalRecordingStart()
 		looper.setBarCount(barCount)
 		looper.startRecording(instrument: currentInstrument)
 		HapticManager.shared.recordingStarted()
 	}
 	
 	func stopRecording() {
+		invalidatePendingVocalRecordingStart()
 		looper.stopRecording()
 		HapticManager.shared.loopSet()
 	}
@@ -445,6 +457,7 @@ final class LooperViewModel: ObservableObject {
 	/// - If recording: stop recording and pause playback
 	/// - If counting in: cancel the count-in
 	func toggleRecordingWithResume() {
+		invalidatePendingVocalRecordingStart()
 		if isRecording {
 			// Stop recording and pause playback
 			looper.stopRecording()
@@ -519,11 +532,16 @@ final class LooperViewModel: ObservableObject {
 		countInTimer = nil
 		isCountingIn = false
 		countInBeat = 0
+		invalidatePendingVocalRecordingStart()
 		HapticManager.shared.selectionChanged()
 	}
 	
 	/// Toggle vocal recording with smart resume behavior
 	func toggleVocalRecordingWithResume() {
+		if vocalRecordingRequestID != nil {
+			invalidatePendingVocalRecordingStart()
+			return
+		}
 		if isRecordingVocals {
 			stopVocalRecording()
 		} else if isCountingIn {
@@ -601,6 +619,7 @@ final class LooperViewModel: ObservableObject {
 	/// Simple play/pause toggle - pauses preserving position, or resumes from where paused
 	/// If recording, also stops the recording
 	func togglePlayPause() {
+		invalidatePendingVocalRecordingStart()
 		if isPlaying {
 			// If recording, stop recording first
 			if isRecording {
@@ -633,12 +652,14 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func togglePlayback() {
+		invalidatePendingVocalRecordingStart()
 		looper.togglePlayback()
 		isPaused = false
 		HapticManager.shared.selectionChanged()
 	}
 	
 	func pausePlayback() {
+		invalidatePendingVocalRecordingStart()
 		if isPlaying {
 			looper.pausePlayback()
 			audio.stopAllNotes()
@@ -649,6 +670,7 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func restartPlayback() {
+		invalidatePendingVocalRecordingStart()
 		// Remember if we were paused
 		let wasPaused = isPaused
 		
@@ -674,6 +696,7 @@ final class LooperViewModel: ObservableObject {
 	func seekToPosition(_ position: Double) {
 		// Ignore during recording or count-in
 		guard !isRecording && !isRecordingVocals && !isCountingIn else { return }
+		invalidatePendingVocalRecordingStart()
 		
 		looper.seekTo(position: position)
 		
@@ -688,6 +711,7 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func resumePlayback() {
+		invalidatePendingVocalRecordingStart()
 		// Resume from paused state
 		if isPaused {
 			looper.resumePlayback()
@@ -697,6 +721,7 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func stopPlayback() {
+		invalidatePendingVocalRecordingStart()
 		looper.stopPlayback()
 		audio.stopAllNotes()
 		vocalRecorder.stopAll()
@@ -705,6 +730,7 @@ final class LooperViewModel: ObservableObject {
 	
 	@discardableResult
 	func clearAll() -> Bool {
+		invalidatePendingVocalRecordingStart()
 		persistenceError = nil
 		guard case .success = storage.clearWorkingSession() else {
 			persistenceError = "Couldn't clear this beat's recovery copy. Your current work is still here. Try again."
@@ -717,6 +743,7 @@ final class LooperViewModel: ObservableObject {
 
 	/// Reset live state only after the caller has completed any required persistence.
 	private func resetCurrentSession() {
+		invalidatePendingVocalRecordingStart()
 		looper.clearAllTracks()
 		audio.clearAllTrackSamplers()
 		audio.stopAllNotes()
@@ -842,9 +869,6 @@ final class LooperViewModel: ObservableObject {
 	/// Volume multiplier during vocal recording (75% to reduce mic bleed while staying audible)
 	private let vocalRecordingVolumeMultiplier: Float = 0.75
 	
-	/// Looper elapsed time when vocal recording started (for auto-stop calculation)
-	private var vocalRecordingStartElapsed: Double = 0
-	
 	func startVocalRecording() {
 		proceedWithVocalRecording()
 	}
@@ -858,24 +882,56 @@ final class LooperViewModel: ObservableObject {
 	
 	/// Proceeds with actual vocal recording (after recommendation or on subsequent recordings)
 	private func proceedWithVocalRecording() {
+		guard !isRecordingVocals, vocalRecordingRequestID == nil else { return }
 		// If permission already granted, start immediately (no async delay)
 		if vocalRecorder.hasPermission {
-			beginVocalRecordingImmediately()
+			beginVocalRecording(startRecording: vocalRecorder.startRecording)
 		} else {
-			// Need to request permission asynchronously
-			Task {
-				let granted = await vocalRecorder.requestPermission()
-				if granted {
-					beginVocalRecordingImmediately()
-				} else {
-					showMicPermissionAlert = true
-				}
+			requestVocalRecordingPermission(requestPermission: vocalRecorder.requestPermission,
+										 startRecording: vocalRecorder.startRecording)
+		}
+	}
+
+	/// Explicit transport/session actions supersede a permission request even before a take exists.
+	/// This only invalidates pending work; an active take keeps its existing stop/finish behavior.
+	private func invalidatePendingVocalRecordingStart() {
+		vocalRecordingRequestID = nil
+	}
+
+	/// Permission and recorder operations are injectable so this lifecycle needs no microphone in tests.
+	@discardableResult
+	func requestVocalRecordingPermission(
+		requestPermission: @escaping () async -> Bool,
+		startRecording: @escaping () -> String?
+	) -> Task<Void, Never>? {
+		guard !isRecordingVocals, vocalRecordingRequestID == nil else { return nil }
+		let requestID = UUID()
+		vocalRecordingRequestID = requestID
+		return Task { [weak self] in
+			let granted = await requestPermission()
+			guard let self, self.vocalRecordingRequestID == requestID else { return }
+			self.vocalRecordingRequestID = nil
+			if granted {
+				self.beginVocalRecording(startRecording: startRecording)
+			} else {
+				self.showMicPermissionAlert = true
 			}
 		}
 	}
 	
-	/// Actually starts vocal recording - called synchronously when permission is already granted
-	private func beginVocalRecordingImmediately() {
+	/// Capture the selected phrase when the recorder starts, not when the eventual stop arrives.
+	@discardableResult
+	func beginVocalRecording(startRecording: () -> String?) -> Bool {
+		guard !isRecordingVocals else { return false }
+		vocalRecordingSession = nil
+		let lengthBeats = Double(barCount.rawValue * 4)
+		let recordingBPM = bpm
+		let duration = lengthBeats * 60.0 / recordingBPM
+		guard recordingBPM.isFinite, recordingBPM > 0, duration.isFinite, duration > 0 else {
+			audioError = "Choose a valid tempo before recording vocals."
+			return false
+		}
+
 		// Reduce volume of other tracks to prevent mic bleed (happens immediately)
 		normalMasterVolume = audio.masterVolume
 		audio.masterVolume = normalMasterVolume * vocalRecordingVolumeMultiplier
@@ -889,18 +945,33 @@ final class LooperViewModel: ObservableObject {
 		}
 		
 		// Track looper's elapsed time when recording started (synced with playback)
-		vocalRecordingStartElapsed = looper.playbackElapsedTime
+		let startElapsed = looper.playbackElapsedTime
 		
 		// Start recording
-		if let filename = vocalRecorder.startRecording() {
-			currentVocalFilename = filename
-			isRecordingVocals = true
-			HapticManager.shared.recordingStarted()
+		guard let filename = startRecording(), !filename.isEmpty else {
+			audio.masterVolume = normalMasterVolume
+			audioError = "Couldn't start vocal recording. Try again."
+			return false
 		}
+		vocalRecordingSession = VocalRecordingSession(filename: filename, lengthBeats: lengthBeats,
+													 bpm: recordingBPM, startElapsed: startElapsed)
+		isRecordingVocals = true
+		HapticManager.shared.recordingStarted()
+		return true
 	}
 	
 	func stopVocalRecording() {
-		guard isRecordingVocals else { return }
+		finishVocalRecording(stopRecording: vocalRecorder.stopRecording)
+	}
+
+	func finishVocalRecording(stopRecording: () -> Bool) {
+		// A delayed permission result must not start a take after the user stopped it.
+		invalidatePendingVocalRecordingStart()
+		guard isRecordingVocals, let session = vocalRecordingSession else { return }
+		defer {
+			isRecordingVocals = false
+			vocalRecordingSession = nil
+		}
 		
 		// Restore normal volume
 		audio.masterVolume = normalMasterVolume
@@ -909,33 +980,35 @@ final class LooperViewModel: ObservableObject {
 		looper.pausePlayback()
 		isPaused = true
 		
-		if vocalRecorder.stopRecording(), let filename = currentVocalFilename {
-			// Create audio track
-			let track = Track(audioFileName: filename)
+		if stopRecording() {
+			// Like MIDI recording, a manual early stop keeps the selected bar period.
+			// Export pads a short file with silence; existing player/file timing is unchanged.
+			let track = Track(audioFileName: session.filename, recordedLengthBeats: session.lengthBeats)
 			looper.addAudioTrack(track)
 			
 			// Prepare player for this track
-			_ = vocalRecorder.preparePlayer(for: track.id, filename: filename, volume: track.volume)
+			_ = vocalRecorder.preparePlayer(for: track.id, filename: session.filename, volume: track.volume)
 			
 			HapticManager.shared.loopSet()
 		}
 		
-		isRecordingVocals = false
-		currentVocalFilename = nil
 	}
 	
 	/// Check if vocal recording should auto-stop based on allotted bars
-	private func checkVocalRecordingAutoStop(currentPosition: Double) {
-		let secondsPerBeat = 60.0 / bpm
-		let recordingLengthBeats = Double(barCount.rawValue * 4)
-		let maxRecordingDuration = recordingLengthBeats * secondsPerBeat
-		
+	private func checkVocalRecordingAutoStop() {
+		guard let session = vocalRecordingSession else { return }
 		// Use looper's elapsed time (synced with playback) to avoid timing drift
-		let recordingElapsed = looper.playbackElapsedTime - vocalRecordingStartElapsed
+		checkVocalRecordingAutoStop(recordingElapsed: looper.playbackElapsedTime - session.startElapsed,
+								   stopRecording: vocalRecorder.stopRecording)
+	}
+
+	func checkVocalRecordingAutoStop(recordingElapsed: TimeInterval, stopRecording: () -> Bool) {
+		guard isRecordingVocals, let session = vocalRecordingSession,
+			  recordingElapsed.isFinite, recordingElapsed >= 0 else { return }
 		
 		// Auto-stop if we've exceeded the allotted recording time
-		if recordingElapsed >= maxRecordingDuration {
-			stopVocalRecording()
+		if recordingElapsed >= session.duration {
+			finishVocalRecording(stopRecording: stopRecording)
 			// Reset to beginning after completing full recording
 			// (prevents small offset from tick timing)
 			looper.seekTo(position: 0)
@@ -943,6 +1016,10 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func toggleVocalRecording() {
+		if vocalRecordingRequestID != nil {
+			invalidatePendingVocalRecordingStart()
+			return
+		}
 		if isRecordingVocals {
 			stopVocalRecording()
 		} else {
@@ -1047,6 +1124,7 @@ final class LooperViewModel: ObservableObject {
 	/// Restore the working session from last app use (if any)
 	@discardableResult
 	func restoreWorkingSession() -> Bool {
+		invalidatePendingVocalRecordingStart()
 		persistenceError = nil
 		switch storage.readWorkingSessionResult() {
 		case .failure:
@@ -1063,6 +1141,7 @@ final class LooperViewModel: ObservableObject {
 
 	/// Apply a session without changing its recovery file.
 	private func applySession(_ session: SavedSession) {
+		invalidatePendingVocalRecordingStart()
 		stopPlayback()
 		resetCurrentSession()
 		// Load session settings
@@ -1094,6 +1173,7 @@ final class LooperViewModel: ObservableObject {
 	
 	@discardableResult
 	func loadSession(_ session: SavedSession) -> Bool {
+		invalidatePendingVocalRecordingStart()
 		persistenceError = nil
 		guard case .success = storage.clearWorkingSession() else {
 			persistenceError = "Couldn't clear the previous recovery copy. Your current beat is still open. Try again."
@@ -1162,6 +1242,7 @@ final class LooperViewModel: ObservableObject {
 	/// Load an imported session (from .loopa file)
 	@discardableResult
 	func loadImportedSession(_ session: SavedSession) -> Bool {
+		invalidatePendingVocalRecordingStart()
 		persistenceError = nil
 		// Save the imported session first
 		guard case .success = storage.saveSession(session) else {
