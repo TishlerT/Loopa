@@ -13,6 +13,13 @@ struct LooperView: View {
 	/// New session confirmation alert
 	@State private var showNewSessionAlert = false
 	@State private var shouldClearAfterSave = false
+	@State private var assistant: MusicAssistantController?
+	private struct AssistantPresentation: Identifiable {
+		let controller: MusicAssistantController
+		var id: ObjectIdentifier { ObjectIdentifier(controller) }
+	}
+	@State private var assistantPresentation: AssistantPresentation?
+	@State private var assistantPairingError = false
 	
 	// MARK: - iPad Detection & Sizing
 	
@@ -199,6 +206,15 @@ struct LooperView: View {
 			}
 		}
 		.preferredColorScheme(.dark)
+		.sheet(item: $assistantPresentation, onDismiss: { assistant?.dismiss() }) { presentation in
+			MusicAssistantPanel(controller: presentation.controller, viewModel: vm)
+				.presentationDetents([.large])
+		}
+		.alert("Local assistant", isPresented: $assistantPairingError) {
+			Button("OK", role: .cancel) { }
+		} message: {
+			Text("Pair with the local Mac assistant again. Your music is unchanged.")
+		}
 		.onAppear {
 			tracksVM = TracksViewModel(looperVM: vm)
 		}
@@ -316,6 +332,16 @@ struct LooperView: View {
 	}
 	
 	// MARK: - Right-edge Tracks Button
+	private func openAssistant() {
+		// Renew only the connection; keep the same controller and its session-local Undo.
+		if assistant == nil { assistant = MusicAssistantController(viewModel: vm) }
+		do {
+			if let assistant, assistant.canAcceptPairing, let pairing = try LocalAssistantPairing.consume() {
+				assistant.pair(pairing)
+			}
+			if let assistant { assistantPresentation = AssistantPresentation(controller: assistant) }
+		} catch { assistantPairingError = true }
+	}
 	
 	private func tracksButton(geo: GeometryProxy) -> some View {
 		// On iPad, position centered vertically (aligned with transport controls in middle)
@@ -517,6 +543,12 @@ struct LooperView: View {
 			
 			// Save/Load/Share menu
 			Menu {
+				Button { openAssistant() } label: {
+					Label("Music Assistant", systemImage: "sparkles")
+				}
+				.disabled(vm.isRecording || vm.isRecordingVocals || vm.isCountingIn || vm.isExporting)
+				.accessibilityIdentifier("openMusicAssistantButton")
+				Divider()
 				Button {
 					if vm.tracks.isEmpty {
 						// A new empty project must also release the previous saved ID.

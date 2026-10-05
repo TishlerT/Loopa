@@ -1,6 +1,6 @@
 # IO Schema
 
-Updated API additions below describe the iOS source as of 2026-10-05. Pending session-revision/UI integration is not implied.
+Updated 2026-10-05. Local assistant contracts below include the pending controller/UI repair and personal launcher; documenting an API does not establish combined iOS acceptance or real-account eligibility. See the code index for source and verification boundaries.
 
 ## `LooperViewModel` published interface
 
@@ -300,7 +300,7 @@ Updated API additions below describe the iOS source as of 2026-10-05. Pending se
 - Missing/duplicate IDs, wrong track kinds, invalid values, stale before-values, edge-crossing selected notes, changed protected content and no-op musical changes throw typed `MusicEditError`. A failure returns no partial state.
 - `inverse.apply(to:) throws -> [Track]` checks expected affected fields and restores exact original note IDs/order and gain in reverse operation order. Newer unrelated fields survive. A changed note array conservatively prevents that note inverse; it does not rebase edits.
 
-This foundation is not request authorization. The future session owner must enforce instance/revision freshness, duplicate/cancel handling, persistence and playback transitions. The validator rejects a positive duration if its computed end is not greater than its start, and rejects signed-zero-only net gain changes while preserving exact original gain bits in an inverse.
+This foundation is not request authorization. MusicProposalSession supplies request/scope/revision and duplicate/cancel checks; MusicAssistantController supplies preview, explicit acceptance and persistence transitions. The validator rejects a positive duration if its computed end is not greater than its start, and rejects signed-zero-only net gain changes while preserving exact original gain bits in an inverse.
 
 ## Checked AAC encoding boundary
 
@@ -317,3 +317,69 @@ The existing public full-render export remains asynchronous and optional-URL bas
 - `MusicalCommitError` distinguishes stale, busy and invalid typed edits. Apply/undo require stopped or paused transport and reject recording, playing or synchronous publication/operation reentry. Existing transport and no-op setters do not create musical edits.
 
 This is a model commit, not a durable or audible user action. Persistence, sampler updates, already-enqueued audio callbacks, pending-response cancellation, duplicate request handling and manual editor stale-note checks remain adapter responsibilities. Legacy whole-track note writeback preserves current mixer metadata but does not independently detect stale notes. The background timer remains in place; this change does not certify every legacy UI publication as main-thread isolated.
+
+
+## Local text-gain assistant authority
+
+The current personal pilot proposes one finite absolute gain in `0...1` for one existing selected track. Broader pure MIDI-edit support above does not grant the model MIDI authority. Input consists of user text (at most 2,048 UTF-8 bytes), chosen visible model, project tempo/loop length and selected-track ID, kind/instrument, gain, mute/solo, length and audibility. No recordings, file paths, note arrays or other tracks' content are sent.
+
+`MusicProposalSession.beginRequest(scope:)` captures a request UUID and coherent `MusicalSnapshot`. `receive(_:for:)` validates into a separate candidate; `candidate(for:)`, `keep(requestID:)` and `undo(requestID:)` recheck authority. Keep is a stopped-transport model commit followed by the controller's save. At most 50 receipts are retained in memory; saved music does not serialize Undo history.
+
+### iOS controller and preview
+
+`MusicAssistantController` publishes one `State`: phase (`idle`, `discovering`, `requesting`, `ready`, `preparing`, `kept`, `undone`), connection/sharing, models/selection, track selection, prompt/message, preview state, `canUndo` and save state (`notNeeded`, `saved`, `unsaved`). MainActor entry points are `discover()`, `requestGain()`, `preparePreview()`, `playOriginal()`, `playChange()`, `pausePreview()`, `keep()`, `undo()`, `retrySave()` and lifecycle invalidation methods.
+
+- Request IDs, controller epochs and canonical session/revision tokens fence late results and manual changes. Text/model/track changes discard active proposal authority. Initial track selection without a request preserves discovery/pairing messages.
+- The repair exposes `canAcceptPairing: Bool`, `pair(_ pairing: LocalMusicAssistant.Pairing) -> Bool` and the test seam `replaceClient(_:) -> Bool`. Pairing renews only the client: old requests/audio stop, connection/catalog clear, and project, prompt and session-local Undo remain. It returns false while mutating or while music is unsaved. Check `canAcceptPairing` **before** consuming the one-use file; retain the same controller across panel presentations.
+- `Host.begin() async throws -> AudioLease` must pause/drain canonical audio before rendering. The lease exposes `isStopped()` and `end()`; controller cleanup calls `MusicPreview.stop()` before `end()`, then `Host.cancelPending()`. `LooperViewModel.beginMusicPreviewAudio()`, `musicPreviewAudioIsStopped(for:)`, `cancelMusicPreviewAudioPreparation()` and `endMusicPreviewAudio(_:)` implement that token boundary. `canonicalAudioControlsEnabled` reflects the reservation. Release does not resume playback automatically.
+- `MusicPreview.prepare(requestID:)` renders a separate Original/Change pair, capped at 30 seconds. `play(_:)` is explicit, `pause()` retains prepared media and `stop()` invalidates callbacks and deletes owned temporary media. The panel enables Keep only with prepared comparison audio; the controller still independently checks the canonical token on Keep.
+- Keep/Undo invoke `Host.save() -> Bool` after changing music. Failure retains in-memory music and recovery state, exposes Retry saving, and blocks new requests/discovery/re-pairing. Retry refuses a replaced session; a reentrant edit during a reported save prevents a false saved state. Undo may restore an unsaved Keep and then save the original.
+- Dismiss/background/interruption stop requests and comparison audio. Unsaved state survives those calls. UI must call `dismiss()` before dropping the controller; deallocation alone is not an audio-lease cleanup contract. The repaired panel presents Undo whenever `canUndo` is true, independently of message visibility, and blocks dismissal while unsaved.
+
+### Private simulator pairing
+
+`LocalAssistantPairing.consume() throws -> LocalMusicAssistant.Pairing?` reads only the simulator app's `Documents/loopa-assistant-pair.json`; missing file returns nil, invalid input throws a fixed safe error, and the physical-device default returns nil without reading Documents. The internal `consume(directory:now:beforeUnlink:)` seam is for disposable fixtures.
+
+| JSON key | Required value |
+|----------|----------------|
+| `version` | Numeric `1`, not Bool |
+| `endpoint` | Exactly `http://127.0.0.1:<port>/`, port `1024...65535` |
+| `capability` | 32 random bytes encoded as canonical unpadded base64url, 43 ASCII characters |
+| `expires_at` | Integer Unix milliseconds, positive remaining lifetime at load of at most 900 seconds |
+
+These are the only keys; duplicate keys are rejected. The file is at most 2,048 bytes, owned by the current user, regular, singly linked, mode `0600`, with no extended ACL. Symlinks, unsafe directories, broad access, malformed/truncated data and expired pairings fail closed. The loader pins directory/file descriptors and verifies identity/metadata before unlinking; the trusted launcher must serialize publication and consumption because POSIX does not offer conditional unlink by inode. Only the in-memory capability is retained; OAuth tokens never enter the pairing file.
+
+`LocalMusicAssistant.Pairing` maps these fields to `endpoint: URL`, `capability: String`, `expiresAt: Date`. The client returns typed status/models or `[MusicEdit]`, allows one active request, uses a maximum 45-second deadline and 262,144-byte response, and rechecks pairing/generation after awaits. Redirects, cookies, cached credentials, proxies and response caching are disabled. `cancel()` invalidates locally immediately and sends best-effort remote cancellation without refunding usage.
+
+### Paired loopback HTTP contract
+
+Every route requires the local capability as `Authorization: Bearer <capability>`, the exact loopback Host and a live pairing. OAuth credentials are never accepted or returned here. Browser Origin/cookie/fetch headers, duplicate headers, queries and unsupported routes fail closed. One normal operation is active at a time; a matching cancellation route can interrupt it.
+
+| Route | Request / successful JSON |
+|-------|---------------------------|
+| `GET /v1/status` | `{version:1,status,sharing}`; status is `connected`, `disconnected`, `connecting`, `reconnect_required` or `usage_unavailable` |
+| `GET /v1/models` | `{version:1,models:[{slug,display_name}]}`; only visible models |
+| `POST /v1/proposals` | Body `{request_id,user_text,model,project}`; result `{version:1,request_id,proposal:{operations:[{kind:"gain",track_id,value}]}}` |
+| `DELETE /v1/proposals/<request UUID>` | `{version:1,cancelled:Bool}`; never refunds a request |
+
+The project object is exactly `{version:1,request_id,tempo_bpm,loop_beats,track,capabilities:["gain"]}`; `track` has exactly `{id,kind,instrument,volume,muted,solo,length_beats,audible}`. Bounds include tempo `(0,1000]`, loop beats `(0,64]`, track length `(0,1024]`, finite gain `0...1`, request body 16,384 bytes, headers 8,192 bytes and reply 262,144 bytes. Repeated request IDs are denied; the server retains at most 256 IDs per pairing lifetime. Errors use bounded `{version:1,error,message}` with fixed safe text, never upstream bodies.
+
+### Mac identity, storage and plan usage
+
+`createSIWCGrant({repository,hostId,...}).start({profileId?,signal?,port?})` returns a cancellable grant handle with `authorizationUrl`, `redirectUri` and `completion`. It enforces OAuth state/nonce/PKCE and an exact `127.0.0.1` callback, persists the registered client before exchange, and verifies the RS256 ID token using bounded official-origin discovery/JWKS. An identity grant alone does not authorize inference: provider access requires both `resource.invoke` and `chatgpt.tokens.use.direct` plus a fresh active credential with enough remaining lifetime. Tokens are delivered only to the protected repository; refresh is not implemented.
+
+`createCredentialRepository({helperPath})` exposes `initialize`, `getRegistration`, `savePendingRegistration`, `activateVerified`, `getActiveSession`, `reserveRequest`, `disconnect` and `reconcile`. The whole stored envelope is `{version:1,payload:{hostId,registrations,sessions,requests}}`, with at most four registrations/sessions and **one durable Responses-request reservation**. Activation follows a confirmed verified-record write and signal/epoch checks. Restart/reconcile keeps persisted sessions inactive. Disconnect, reconnect, cancellation and failed inference never reset/refund the reservation. Busy operations fail without a queue; uncertain writes deactivate and latch reconciliation rather than assuming rollback.
+
+The native helper has fixed service `Loopa ChatGPT Local`, account `state-v1`, nonsynchronizable storage and noninteractive access to one captured macOS default Keychain. It accepts one compact JSON line plus EOF over private child pipes or anonymous Unix socketpairs: `{op:"read"}`, `{op:"replace",record}` or `{op:"delete"}`. Success is `{ok:true,record}` for read and `{ok:true}` otherwise; failure is a fixed `{ok:false,error}`. Limits are 65,536 stored-record bytes, 66,560 input bytes and 65,664 output bytes. The trusted launcher must own the process lock and serialize read/modify/write; whole-blob update is atomic, but the sequence is not compare-and-swap. Killing the helper is not rollback. Tokens travel through pipes, never arguments, logs or simulator files.
+
+### Provider, stream and runtime
+
+`createMusicProvider({getActiveSession,reserveRequest,readProposal,...})` exposes `listModels({signal})`, `proposeGain({requestId,userText,project,model,signal})` and `cancel()`. It uses only `https://api.openai.com/v1/models` and `/v1/responses`, preserves the visible catalog, requires explicit model choice and writes the durable reservation before POST. A response request uses `store:false`, `stream:true` and one strict namespace function, `loopa_music.propose_gain({track_id,gain})`; it does not send unsupported `max_output_tokens` or `temperature` controls. No automatic retry, token refresh, alternate model, arbitrary URL/file/shell tools, tool-result loop or paid API fallback is present.
+
+`readMusicProposal(body,{signal,expectedTrackId,...})` returns only `{operations:[{kind:"gain",track_id,value}]}` after a completed-status terminal response and clean EOF. It validates UTF-8, JSON, selected UUID/range and response/item/output-index/call correlation; reconciles redundant final representations; tolerates bounded reasoning/text; and rejects unsupported calls, refusals, failed/incomplete progress, conflicts, truncation or unexpected trailing terminal data. Caps: 262,144 wire bytes, 32,768 event bytes, 4,096 argument bytes, 256 events, one function, 15-second idle and 45-second total duration. Failure yields no proposal and never executes an edit.
+
+`startLocalAssistant({helperPath,pairingFile,...})` obtains a private process lock before protected-store initialization, composes the default modules and exclusively writes the mode-0600 pairing. It returns only `{status,connect,stop,pairingExpiresAt}`. `connect({profileId?})` fences previous-account work before a fresh grant and returns safe status/sharing only. `stop()` cancels grant/provider work, waits for bounded cleanup, removes owned pairing/lock state and retains the lock on uncertain credential activity. Pairing lasts at most 900 seconds; expiring credentials require reconnect, not implicit refresh.
+
+The pending launcher command is `node mac-bridge/local-pilot.mjs --helper <absolute executable> --pairing-file <absolute path to Documents/loopa-assistant-pair.json>`. It accepts only those two flags, starts the runtime and interactive connection, and requires sharing. Startup is bounded to 15 seconds, connect to 180 seconds, lifetime to 900 seconds and cleanup to 15 seconds. SIGINT/SIGTERM trigger cleanup. Fixed `LOOPA_PILOT_*` messages contain no secret/authorization URL. Exit codes: `0` lifetime expiry, `2` invalid arguments, `3` start/connect/sharing failure, `4` deadline, `5` uncertain cleanup, `130` SIGINT, `143` SIGTERM; cleanup uncertainty takes precedence. It does not remove retained locks or reset the allowance.
+
+Bridge composition has passed synthetic offline checks, including restart without automatic activation or allowance reset. Real account sign-in/usage consent, one real permitted request, listening quality and the final combined iOS UI/save/reopen/export journey remain separate verification. This local personal contract makes no public/commercial eligibility claim; audio input remains deferred.

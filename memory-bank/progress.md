@@ -13,10 +13,14 @@ Updated 2026-10-05. Completed entries require exact source, independent review, 
 - `42a85cbc`: offline vocal inclusion, resampling, stereo content, period padding/trimming and mixed vocal/MIDI output; 303 full tests, 17 focused checks and 17 post-integration checks. Independent decoding verified synthetic vocal presence, near-half amplitude at half gain and silence at zero. This does not prove live/export parity or musical quality.
 - `f41b792e`: scoped assistant payload decoding, stale-safe model proposal/Keep/Undo lifecycle and captured vocal lengths with production permission cancellation; 381 full tests and 29 post-integration checks. The first candidate passed 368 tests but source review rejected a delayed-permission bug; that candidate was never integrated.
 
+- `0b8460ae`: isolated Original/Change rendering and playback with shared export reservations; 416 full tests and 27 post-integration comparison checks.
+- `6fe4ad51`: exclusive host audio/transport cutover and strict paired local HTTP client; 474 full tests and 450 post-integration unit checks. No actual ChatGPT request or live listening judgment is established by these checks.
+
 ## Implemented separately, not complete product features
 
-- Original/Change preview rendering/player controls and shared export reservation are under verification. They require host transport cutover and visible UI integration.
-- Initial Mac ChatGPT sign-in grant component passed 70 offline synthetic tests and independent review. A reproduced browser-launch hang was repaired. Protected credential storage, refresh, bounded proposal streaming, local pairing and real-account testing remain separate work.
+- The assembled local Mac bridge passes 410 Node and 61 native tests plus a synthetic default-runtime round trip. Credentials use private native IPC and Keychain; OAuth, provider streaming, local pairing and cancellation components have independent review. No real sign-in or model request has occurred.
+- The bounded local launcher adds 45 tests, but its independent review and actual account use remain pending. Its one-request persistent pilot allowance cannot be replenished by restarting or reconnecting.
+- The visible gain-only assistant, controller and simulator pairing loader are implemented in a separate candidate. Review caught hidden Undo and pair-renewal defects. Repaired source typechecks, but full iOS tests and independent combined approval are still pending. Two failed Xcode candidates were retained and never integrated.
 - Design, musical command, export and sound provenance audits are retained. Suggestions are not proof of implementation or rights.
 
 ## Completion still required
