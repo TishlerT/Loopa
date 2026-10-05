@@ -238,15 +238,8 @@ final class AudioExporter {
         outputBuffer.frameLength = totalFrames
         engine.stop()
         
-        // Write to M4A file
-        let fileName = sanitizeFileName(sessionName) + ".m4a"
-        let outputURL = fileManager.temporaryDirectory.appendingPathComponent(fileName)
-        
-        // Remove existing file
-        try? fileManager.removeItem(at: outputURL)
-        
         do {
-            try await writeM4A(buffer: outputBuffer, to: outputURL)
+            let outputURL = try encodePCMToM4A(outputBuffer, sessionName: sessionName)
             print("✓ Exported audio to: \(outputURL.path)")
             
             await MainActor.run {
@@ -323,123 +316,124 @@ final class AudioExporter {
     
     // MARK: - M4A Writing
     
-    private func writeM4A(buffer: AVAudioPCMBuffer, to url: URL) async throws {
-        // Create asset writer
-        let assetWriter = try AVAssetWriter(outputURL: url, fileType: .m4a)
-        
-        // Audio settings for AAC
-        let audioSettings: [String: Any] = [
+    /// Encodes the rendered PCM into one independently owned, verified shareable file.
+    /// The writer override is a narrow failure-injection seam; normal calls always use AAC.
+    func encodePCMToM4A(
+        _ buffer: AVAudioPCMBuffer,
+        sessionName: String,
+        directory: URL? = nil,
+        writer: ((AVAudioPCMBuffer, URL) throws -> Void)? = nil
+    ) throws -> URL {
+        guard buffer.frameLength > 0,
+              buffer.frameLength <= buffer.frameCapacity,
+              buffer.format.commonFormat == .pcmFormatFloat32,
+              !buffer.format.isInterleaved,
+              (1...2).contains(buffer.format.channelCount),
+              buffer.format.sampleRate.isFinite, buffer.format.sampleRate > 0,
+              let channels = buffer.floatChannelData else {
+            throw ExportError.invalidFormat
+        }
+        // Reject invalid data anywhere in the render, including its last frame.
+        for channel in 0..<Int(buffer.format.channelCount) {
+            for frame in 0..<Int(buffer.frameLength) where !channels[channel][frame].isFinite {
+                throw ExportError.invalidFormat
+            }
+        }
+
+        let parent = directory ?? fileManager.temporaryDirectory
+        guard parent.isFileURL else { throw ExportError.writeFailed }
+        let attempt = parent.appendingPathComponent("LoopaExport-\(UUID().uuidString)", isDirectory: true)
+        // Creation must succeed before this call owns anything it may remove.
+        try fileManager.createDirectory(at: attempt, withIntermediateDirectories: false)
+        var complete = false
+        defer {
+            if !complete { try? fileManager.removeItem(at: attempt) }
+        }
+        let output = attempt.appendingPathComponent(sanitizeFileName(sessionName) + ".m4a")
+
+        // AVAudioFile converts every channel from its processing format to AAC. Letting
+        // the file leave this autorelease pool finalizes it on iOS 17 too; close() is iOS 18+.
+        try autoreleasepool {
+            if let writer = writer {
+                try writer(buffer, output)
+            } else {
+                try writeAAC(buffer, to: output)
+            }
+        }
+        try verifyAAC(at: output, expectedFormat: buffer.format, expectedFrames: buffer.frameLength)
+        complete = true
+        return output
+    }
+
+    private func writeAAC(_ buffer: AVAudioPCMBuffer, to url: URL) throws {
+        let settings: [String: Any] = [
             AVFormatIDKey: kAudioFormatMPEG4AAC,
             AVSampleRateKey: buffer.format.sampleRate,
             AVNumberOfChannelsKey: buffer.format.channelCount,
-            AVEncoderBitRateKey: 128000
+            AVEncoderBitRateKey: 128_000
         ]
-        
-        let audioInput = AVAssetWriterInput(
-            mediaType: .audio,
-            outputSettings: audioSettings,
-            sourceFormatHint: buffer.format.formatDescription
-        )
-        audioInput.expectsMediaDataInRealTime = false
-        
-        assetWriter.add(audioInput)
-        
-        guard assetWriter.startWriting() else {
-            throw assetWriter.error ?? ExportError.writeFailed
+        let file = try atAACStage("create writer") {
+            try AVAudioFile(forWriting: url, settings: settings,
+                            commonFormat: buffer.format.commonFormat,
+                            interleaved: buffer.format.isInterleaved)
         }
-        
-        assetWriter.startSession(atSourceTime: .zero)
-        
-        // Convert PCM buffer to CMSampleBuffer and write
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            audioInput.requestMediaDataWhenReady(on: DispatchQueue(label: "audio.export")) {
-                guard let sampleBuffer = self.createSampleBuffer(from: buffer) else {
-                    audioInput.markAsFinished()
-                    assetWriter.finishWriting {
-                        if let error = assetWriter.error {
-                            continuation.resume(throwing: error)
-                        } else {
-                            continuation.resume()
-                        }
-                    }
-                    return
-                }
-                
-                if audioInput.isReadyForMoreMediaData {
-                    audioInput.append(sampleBuffer)
-                }
-                
-                audioInput.markAsFinished()
-                assetWriter.finishWriting {
-                    if let error = assetWriter.error {
-                        continuation.resume(throwing: error)
-                    } else {
-                        continuation.resume()
-                    }
+        try atAACStage("write \(buffer.frameLength) PCM frames") { try file.write(from: buffer) }
+    }
+
+    private func verifyAAC(at url: URL, expectedFormat: AVAudioFormat, expectedFrames: AVAudioFrameCount) throws {
+        let file = try atAACStage("open encoded file") {
+            try AVAudioFile(forReading: url, commonFormat: .pcmFormatFloat32, interleaved: false)
+        }
+        guard file.fileFormat.streamDescription.pointee.mFormatID == kAudioFormatMPEG4AAC,
+              file.processingFormat.sampleRate == expectedFormat.sampleRate,
+              file.processingFormat.channelCount == expectedFormat.channelCount,
+              let decoded = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: 4096) else {
+            throw ExportError.incompleteOutput
+        }
+        // AAC encodes 1024-frame packets. Permit at most one packet of decoder-visible
+        // end padding; do not accept missing source frames or an arbitrarily short file.
+        let expected = Int64(expectedFrames)
+        let maximum = expected + 1024
+        let declaredFrames = file.length
+        guard declaredFrames >= expected, declaredFrames <= maximum else {
+            throw ExportError.incompleteOutput
+        }
+        var frames: Int64 = 0
+        // AVAudioFile can return false without an NSError at EOF, which Swift imports
+        // as nilError. Stop at the declared end, but verify every frame was really read.
+        while frames < declaredFrames {
+            let requested = AVAudioFrameCount(min(Int64(decoded.frameCapacity), declaredFrames - frames))
+            try atAACStage("decode at frame \(file.framePosition), length \(declaredFrames), decoded \(frames)") {
+                try file.read(into: decoded, frameCount: requested)
+            }
+            guard decoded.frameLength > 0, decoded.frameLength <= requested else {
+                throw ExportError.incompleteOutput
+            }
+            frames += Int64(decoded.frameLength)
+            guard file.framePosition == frames, let channels = decoded.floatChannelData else {
+                throw ExportError.incompleteOutput
+            }
+            for channel in 0..<Int(decoded.format.channelCount) {
+                for frame in 0..<Int(decoded.frameLength) where !channels[channel][frame].isFinite {
+                    throw ExportError.incompleteOutput
                 }
             }
         }
+        guard frames == declaredFrames, frames >= expected else { throw ExportError.incompleteOutput }
     }
-    
-    private func createSampleBuffer(from buffer: AVAudioPCMBuffer) -> CMSampleBuffer? {
-        let formatDescription = buffer.format.formatDescription
-        
-        var sampleBuffer: CMSampleBuffer?
-        
-        var timing = CMSampleTimingInfo(
-            duration: CMTime(value: 1, timescale: CMTimeScale(buffer.format.sampleRate)),
-            presentationTimeStamp: .zero,
-            decodeTimeStamp: .invalid
-        )
-        
-        let frameCount = buffer.frameLength
-        
-        guard let audioBufferList = buffer.audioBufferList.pointee.mBuffers.mData else {
-            return nil
-        }
-        
-        var blockBuffer: CMBlockBuffer?
-        let dataSize = Int(buffer.frameLength) * Int(buffer.format.streamDescription.pointee.mBytesPerFrame)
-        
-        CMBlockBufferCreateWithMemoryBlock(
-            allocator: kCFAllocatorDefault,
-            memoryBlock: nil,
-            blockLength: dataSize,
-            blockAllocator: kCFAllocatorDefault,
-            customBlockSource: nil,
-            offsetToData: 0,
-            dataLength: dataSize,
-            flags: 0,
-            blockBufferOut: &blockBuffer
-        )
-        
-        guard let block = blockBuffer else { return nil }
-        
-        CMBlockBufferReplaceDataBytes(
-            with: audioBufferList,
-            blockBuffer: block,
-            offsetIntoDestination: 0,
-            dataLength: dataSize
-        )
-        
-        CMSampleBufferCreate(
-            allocator: kCFAllocatorDefault,
-            dataBuffer: block,
-            dataReady: true,
-            makeDataReadyCallback: nil,
-            refcon: nil,
-            formatDescription: formatDescription,
-            sampleCount: CMItemCount(frameCount),
-            sampleTimingEntryCount: 1,
-            sampleTimingArray: &timing,
-            sampleSizeEntryCount: 0,
-            sampleSizeArray: nil,
-            sampleBufferOut: &sampleBuffer
-        )
-        
-        return sampleBuffer
+
+    /// Preserve the stage when AVAudioFile supplies an otherwise context-free error.
+    private func atAACStage<T>(_ stage: String, _ operation: () throws -> T) throws -> T {
+        do { return try operation() }
+        catch { throw AACOperationError(stage: stage, underlying: error) }
     }
-    
+
+    private struct AACOperationError: Error, CustomStringConvertible {
+        let stage: String
+        let underlying: Error
+        var description: String { "AAC \(stage) failed: \(String(reflecting: underlying))" }
+    }
+
     // MARK: - Helpers
     
     private func sanitizeFileName(_ name: String) -> String {
@@ -451,6 +445,7 @@ final class AudioExporter {
     enum ExportError: Error {
         case invalidFormat
         case writeFailed
+        case incompleteOutput
         case noTracks
     }
 }
