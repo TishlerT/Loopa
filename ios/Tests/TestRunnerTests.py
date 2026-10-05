@@ -25,7 +25,8 @@ PASSING_SUMMARY = {
     "expectedFailures": 0,
     "testFailures": [],
     # These repeated field names caused the old grep-based parser to misread counts.
-    "devicesAndConfigurations": [{"passedTests": 2, "failedTests": 0, "skippedTests": 0}],
+    "devicesAndConfigurations": [{"passedTests": 2, "failedTests": 0, "skippedTests": 0,
+                                  "expectedFailures": 0}],
 }
 
 
@@ -185,6 +186,63 @@ sys.exit(int(os.environ.get('STUB_PARSE_EXIT', '0')))
         for summary in ("", "not JSON", "[]", "null", '{"passedTests": 2, "passedTests": 2}'):
             with self.subTest(summary=summary):
                 self.assert_rejected(self.run_runner(summary=summary))
+
+    def test_nonfinite_json_tokens_are_rejected_outside_counters(self):
+        for field, value in (("startTime", float("nan")), ("finishTime", float("inf")),
+                             ("finishTime", float("-inf"))):
+            with self.subTest(field=field, value=value):
+                self.assert_rejected(self.run_runner(summary=dict(PASSING_SUMMARY, **{field: value})))
+        summary = dict(PASSING_SUMMARY, statistics=[{"unrelatedMetric": float("nan")}])
+        self.assert_rejected(self.run_runner(summary=summary))
+
+    def test_device_outcomes_cannot_contradict_passing_summary(self):
+        record = PASSING_SUMMARY["devicesAndConfigurations"][0]
+        for changes in ({"failedTests": 1}, {"skippedTests": 1}, {"expectedFailures": 1},
+                        {"result": "Failed"}, {"result": "Error"}, {"result": "Skipped"},
+                        {"testFailures": [{"failureText": "device failure"}]}):
+            with self.subTest(changes=changes):
+                summary = dict(PASSING_SUMMARY, devicesAndConfigurations=[dict(record, **changes)])
+                self.assert_rejected(self.run_runner(summary=summary))
+
+    def test_device_counters_must_be_valid_and_consistent(self):
+        record = PASSING_SUMMARY["devicesAndConfigurations"][0]
+        for changes in ({"passedTests": 1}, {"passedTests": 3}, {"failedTests": -1},
+                        {"skippedTests": "0"}, {"expectedFailures": False},
+                        {"passedTests": None}, {"totalTestCount": 3}, {"testFailures": "invalid"}):
+            with self.subTest(changes=changes):
+                summary = dict(PASSING_SUMMARY, devicesAndConfigurations=[dict(record, **changes)])
+                self.assert_rejected(self.run_runner(summary=summary))
+        missing = record.copy()
+        del missing["skippedTests"]
+        for records in (None, {}, [], [None], [missing]):
+            with self.subTest(records=records):
+                self.assert_rejected(self.run_runner(summary=dict(PASSING_SUMMARY,
+                                                                  devicesAndConfigurations=records)))
+
+    def test_repeated_per_configuration_counts_are_not_added_to_summary_counts(self):
+        record = PASSING_SUMMARY["devicesAndConfigurations"][0]
+        summary = dict(PASSING_SUMMARY, devicesAndConfigurations=[record.copy(), record.copy()])
+        result = self.run_runner(summary=summary)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_partitioned_configuration_counts_and_every_configuration_are_checked(self):
+        record = dict(PASSING_SUMMARY["devicesAndConfigurations"][0], passedTests=1)
+        summary = dict(PASSING_SUMMARY, devicesAndConfigurations=[record.copy(), record.copy()])
+        result = self.run_runner(summary=summary)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        for changes in ({"failedTests": 1}, {"passedTests": 0}):
+            with self.subTest(changes=changes):
+                summary = dict(PASSING_SUMMARY,
+                               devicesAndConfigurations=[record.copy(), dict(record, **changes)])
+                self.assert_rejected(self.run_runner(summary=summary))
+
+    def test_unrelated_metadata_result_fields_are_not_test_outcomes(self):
+        record = dict(PASSING_SUMMARY["devicesAndConfigurations"][0],
+                      testPlanConfiguration={"result": "unrelated metadata"})
+        summary = dict(PASSING_SUMMARY, devicesAndConfigurations=[record],
+                       statistics=[{"result": "not a test status"}])
+        result = self.run_runner(summary=summary)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def test_missing_invalid_negative_and_boolean_counts_fail(self):
         for value in (None, "2", -1, True, 1.5):

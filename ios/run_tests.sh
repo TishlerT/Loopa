@@ -106,7 +106,7 @@ else
     printf 'No result bundle produced: %s\n' "$RESULT_BUNDLE" >"$PARSER_LOG"
 fi
 
-# Parse only the actual top-level summary counters, not repeated per-device fields.
+# Parse top-level counters and separately validate per-device/configuration outcomes.
 # Keep the raw tool output even when it is malformed or the tool exits nonzero.
 python3 - "$SUMMARY_FILE" "$VERIFICATION_FILE" "$BUILD_EXIT" "$LOG_EXIT" "$SUMMARY_EXIT" "$EXPECTED_TESTS" <<'PY'
 import json
@@ -137,9 +137,50 @@ def unique_keys(pairs):
         result[key] = value
     return result
 
+def reject_constant(token):
+    raise ValueError(f"invalid JSON numeric constant: {token}")
+
+def validate_configurations(summary):
+    if "devicesAndConfigurations" not in summary:
+        return
+    configurations = summary["devicesAndConfigurations"]
+    if not isinstance(configurations, list) or not configurations:
+        raise ValueError("devicesAndConfigurations must be a nonempty array")
+    per_configuration_passes = []
+    for index, configuration in enumerate(configurations):
+        label = f"devicesAndConfigurations[{index}]"
+        if not isinstance(configuration, dict):
+            raise ValueError(f"{label} must be an object")
+        for key in ("passedTests", "failedTests", "skippedTests", "expectedFailures"):
+            value = configuration.get(key)
+            if type(value) is not int or value < 0:
+                raise ValueError(f"{label}.{key} must be a nonnegative integer")
+            if key != "passedTests" and value:
+                errors.append(f"{label}.{key} is nonzero")
+        per_configuration_passes.append(configuration["passedTests"])
+        if "totalTestCount" in configuration:
+            total = configuration["totalTestCount"]
+            if type(total) is not int or total < 0:
+                raise ValueError(f"{label}.totalTestCount must be a nonnegative integer")
+            if total != sum(configuration[key] for key in ("passedTests", "failedTests", "skippedTests", "expectedFailures")):
+                errors.append(f"{label} counters do not add up to totalTestCount")
+        # Outcome fields apply to the configuration record, not arbitrary metadata
+        # such as device details, testPlanConfiguration or statistics dictionaries.
+        if "result" in configuration and configuration["result"] != "Passed":
+            errors.append(f"{label}.result is not 'Passed'")
+        if "testFailures" in configuration:
+            failures = configuration["testFailures"]
+            if not isinstance(failures, list) or failures:
+                errors.append(f"{label}.testFailures must be an empty array")
+    # Configurations may cover overlapping sets of tests. Do not add their
+    # counters to the summary or require every configuration to run every test.
+    # These bounds also require exact agreement for a single configuration.
+    if not max(per_configuration_passes) <= counts["passedTests"] <= sum(per_configuration_passes):
+        errors.append("configuration passedTests counts contradict summary passedTests")
+
 try:
     with open(summary_path) as stream:
-        summary = json.load(stream, object_pairs_hook=unique_keys)
+        summary = json.load(stream, object_pairs_hook=unique_keys, parse_constant=reject_constant)
     if not isinstance(summary, dict):
         raise ValueError("summary must be a JSON object")
     for key in ("totalTestCount", "passedTests", "failedTests", "skippedTests", "expectedFailures"):
@@ -166,6 +207,7 @@ try:
         errors.append("test counts do not add up to totalTestCount")
     if expected and counts["totalTestCount"] != int(expected):
         errors.append(f"expected {expected} tests, found {counts['totalTestCount']}")
+    validate_configurations(summary)
 except (OSError, ValueError) as error:
     errors.append(f"cannot validate summary: {error}")
 
