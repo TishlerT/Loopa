@@ -350,4 +350,42 @@ final class MusicEditTests: XCTestCase {
         XCTAssertEqual(try bytes(newer), snapshot)
     }
 
+
+    func testPositiveDurationRequiresRepresentableEndAfterStart() throws {
+        let start: Double = 562_949_953_421_312 // 2^49, where adjacent Doubles are 0.125 apart.
+        XCTAssertEqual(start + 0.0625, start, "The fixture must exercise rounding to a zero-width interval")
+        var t = track()
+        t.recordedLengthBeats = start + 16
+        let collapsed = MusicNoteInput(id: UUID(), pitch: 42, velocity: 90,
+                                       startBeat: start, durationBeats: 0.0625)
+        rejects([region(t, before: [], after: [collapsed], start: start, end: start + 16)],
+                tracks: [t], .invalidNote)
+
+        // The adjacent representable duration remains valid; do not invent a timeline cap.
+        let representable = MusicNoteInput(id: UUID(), pitch: 42, velocity: 90,
+                                           startBeat: start, durationBeats: 0.125)
+        let result = try MusicEdit.apply([region(t, before: [], after: [representable],
+                                                start: start, end: start + 16)], to: [t])
+        XCTAssertEqual(result.tracks[0].notes.map { MusicNoteInput($0) }, [representable])
+        XCTAssertGreaterThan(result.tracks[0].notes[0].endBeat, start)
+        XCTAssertEqual(try bytes(result.inverse.apply(to: result.tracks)), try bytes([t]))
+    }
+
+    func testSignedZeroOnlyNetGainBatchRejects() throws {
+        for original in [Float.zero, -Float.zero] {
+            var t = track()
+            t.volume = original
+            let oppositeZero = -original
+            XCTAssertEqual(original, oppositeZero)
+            XCTAssertNotEqual(original.bitPattern, oppositeZero.bitPattern)
+            rejects([.gain(trackID: t.id, before: original, after: 0.5),
+                     .gain(trackID: t.id, before: 0.5, after: oppositeZero)], tracks: [t], .noChange)
+            XCTAssertEqual(t.volume.bitPattern, original.bitPattern)
+
+            // A real gain change still retains the exact original zero in its inverse.
+            let result = try MusicEdit.apply([.gain(trackID: t.id, before: original, after: 0.5)], to: [t])
+            XCTAssertEqual(try result.inverse.apply(to: result.tracks)[0].volume.bitPattern, original.bitPattern)
+        }
+    }
+
 }

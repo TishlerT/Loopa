@@ -89,8 +89,9 @@ final class AudioExporter {
         // Create samplers for each track
         var samplers: [AVAudioUnitSampler] = []
         var validTracks: [Track] = []
+        let anyTrackSoloed = tracks.contains { $0.isSolo }
         
-        for track in tracks where !track.isVocal && !track.notes.isEmpty && !track.isMuted {
+        for track in tracks where !track.isVocal && !track.notes.isEmpty && track.isAudible(anyTrackSoloed: anyTrackSoloed) {
             let sampler = AVAudioUnitSampler()
             engine.attach(sampler)
             engine.connect(sampler, to: mainMixer, format: nil)
@@ -103,11 +104,15 @@ final class AudioExporter {
                     bankMSB: UInt8(track.isDrumKit ? 0x78 : 0x79),
                     bankLSB: 0
                 )
-                sampler.masterGain = Float(track.volume)
+                // The sampler's gain is in decibels. The downstream mixer input's
+                // volume is the linear 0...1 fader, including exact silence at zero.
+                sampler.overallGain = 0
+                sampler.volume = track.volume
                 samplers.append(sampler)
                 validTracks.append(track)
             } catch {
-                print("⚠️ Failed to load instrument for track \(track.instrumentName): \(error)")
+                print("❌ Failed to load selected instrument for track \(track.instrumentName): \(error)")
+                return nil
             }
         }
         

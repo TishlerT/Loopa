@@ -1,11 +1,13 @@
 # Code Index
 
+Source inventory updated 2026-10-05 for the iOS campaign. Entries describe code responsibilities, not distribution or runtime acceptance.
+
 ## App shell
 - `ios/Tish88App.swift`: App entry point for the shipped iOS build. It locks the app to landscape, creates the shared `LooperViewModel`, restores the working session on launch, auto-saves when the scene goes inactive or backgrounds, and imports incoming `.loopa` files into the active session.
 
 ## Audio
 - `ios/Audio/AudioEngine.swift`: Older split-keyboard audio engine built around left/right samplers, click playback, reverb, and SoundFont loading. It still compiles, but it appears tied to the excluded `TishViewModel` path rather than the current `LooperViewModel` runtime.
-- `ios/Audio/AudioExporter.swift`: Offline export pipeline that renders non-vocal, unmuted MIDI tracks into an `.m4a` file using manual `AVAudioEngine` rendering, then presents the iOS share sheet for the finished audio file.
+- `ios/Audio/AudioExporter.swift`: Offline MIDI renderer and share-sheet adapter, with a separate checked PCM-to-AAC writer. The writer owns a unique attempt directory, converts every channel through AVAudioFile, decodes the complete result with bounded reads, and rejects incomplete/nonfinite output. The full renderer uses existing mute/solo audibility rules, a linear sampler mixer-input fader and whole-export failure on a selected instrument load error. Vocal inclusion, sample-accurate event timing and live/export gain parity remain incomplete.
 - `ios/Audio/HapticManager.swift`: Shared haptics service used for key presses, selection changes, warnings, success states, recording transitions, and other feedback across the app.
 - `ios/Audio/KeyboardSampler.swift`: Thin SoundFont sampler wrapper around `AVAudioUnitSampler`. It loads melodic programs or the percussion bank, tracks current program/percussion state, and exposes note-on, note-off, and stop-all helpers.
 - `ios/Audio/LooperAudioEngine.swift`: The active audio engine for the shipped looper. It manages the live input sampler, click sampler, a pool of playback samplers for tracks, SoundFont loading, per-track prep, and audio-session startup/recovery.
@@ -17,17 +19,19 @@
 - `ios/Looper/MidiEvent.swift`: Core second-based MIDI event model used by recording, playback, export, and note conversion logic. It stores note number, velocity, note-on/off state, side metadata, and derived identity.
 - `ios/Looper/MidiExporter.swift`: Standard MIDI file exporter that converts `MidiEvent` arrays into a type-0 `.mid` file with tempo metadata and proper delta times. It is compiled but not surfaced in the current main-screen UI.
 - `ios/Looper/MidiLooper.swift`: Older single-loop MIDI recorder/player with overdub layers, undo, timer-driven dispatch, quantization, and wrap-around behavior. It appears to be legacy relative to `MultiTrackLooper`.
-- `ios/Looper/MultiTrackLooper.swift`: Current core transport engine behind the shipped app. It owns tracks, recording/playback state, bar-based timing, mute/solo/loop behavior, seek/restart, note scheduling, and callback hooks into the audio layer.
+- `ios/Looper/MultiTrackLooper.swift`: Current core transport engine behind the shipped app. It owns tracks, recording/playback state, bar-based timing, mute/solo/loop behavior, seek/restart, note scheduling, and callback hooks into the audio layer. It now also owns session/revision tokens, a coherent musical snapshot, and stopped-transport compare-and-commit/inverse methods. A recursive lock coordinates mutations and background ticks; proposal access is rejected during synchronous publication. This model boundary does not persist edits or update audio samplers.
 - `ios/Looper/Quantizer.swift`: Shared quantization utility for snapping raw event times and beat-based `MidiNote` values to quarter/eighth/sixteenth/thirty-second grids, including wrap/clamp helpers.
 
 ## Models
 - `ios/Models/MidiNote.swift`: Beat-based editable note model used by the piano roll and drum grid. It also contains conversions between paired `MidiEvent` data and higher-level note objects.
 - `ios/Models/SessionExporter.swift`: `.loopa` import/export service. It writes shareable session JSON, validates importable URLs, handles security-scoped access, renames imported sessions to avoid collisions, and can present a share sheet for exported session files.
-- `ios/Models/SessionStorage.swift`: JSON-backed persistence for named sessions and the separate auto-saved working session. It handles load/save/delete/rename plus the restore lifecycle used by the app shell and main view model.
+- `ios/Models/SessionStorage.swift`: JSON-backed named-session and working-recovery storage with explicit Result outcomes, injected file operations for fault tests, atomic writes and protection of corrupt/unreadable existing files. Missing files and valid empty JSON libraries are empty-state successes; corrupt or unreadable files remain errors. Legacy convenience reads remain for compatibility.
 - `ios/Models/Track.swift`: Main domain-model file for `Track`, `SavedSession`, `BarCount`, and `Instrument`. It defines mute/solo audibility rules and the persisted shape of sessions and tracks.
 
+- `ios/Models/MusicEdit.swift`: Pure, bounded absolute-gain and MIDI-region edits. Validates raw note input before construction, preserves unrelated/protected content, and returns an opaque inverse that checks affected values before restoring exact prior values. It has no session owner, persistence, transport, UI or provider integration.
+
 ## ViewModels
-- `ios/ViewModels/LooperViewModel.swift`: Main application coordinator for the shipped app. It bridges `LooperView` to `LooperAudioEngine`, `MultiTrackLooper`, and `VocalRecorder`, owns count-in/transport/session/export/vocal-mode state, synchronizes UI to transport timing, and coordinates save/load, mixer, editor, and export flows.
+- `ios/ViewModels/LooperViewModel.swift`: Main application coordinator for the shipped app. It bridges `LooperView` to `LooperAudioEngine`, `MultiTrackLooper`, and `VocalRecorder`, owns count-in/transport/session/export/vocal-mode state, synchronizes UI to transport timing, and coordinates save/load, mixer, editor, and export flows. Persistence methods return Bool and expose readable failure state; named saves update identity only after durable success, failed New/Load operations preserve the current project, and recoverable Save UI retains entered text for retry. Removing a vocal track retains shared recording files for saved projects; reference-aware orphan cleanup remains outstanding.
 - `ios/ViewModels/TrackFocusViewModel.swift`: Stateful editor view model for a single non-vocal track. It manages selection, multi-select, copy/paste, undo, drag/resize, add/delete modes, zoom, quantize flow, and syncing note edits back into the shared looper state.
 - `ios/ViewModels/TracksViewModel.swift`: Lightweight mixer-screen adapter around `LooperViewModel`. It forwards track/playback state and owns the transient UI state for per-track quantize/instrument sheets plus editor navigation.
 
@@ -51,3 +55,11 @@
 
 ## Theme
 - `ios/UI/Theme/DesignSystem.swift`: Shared design foundation with the dark neon palette, hex color initializer, typography/spacing/radius tokens, glow/elevation helpers, and reusable button styles. The shipped screens use these tokens selectively and also hardcode additional live palette values inline.
+
+## Verification and regression coverage
+- `ios/run_tests.sh`: Unique per-run artifacts, explicit destinations and test counts, and fail-closed JSON verification. A zero-test Xcode success is rejected. `ios/parse_results.sh` remains a legacy reporting helper with a fixed default bundle and raw/fallback output; it is not the acceptance gate.
+- `ios/Tests/AudioEngineTests.swift`: Existing audio tests plus eight AAC writer tests and six actual renderer mix tests. The strict decoder checks the whole stereo file, independent tones, relative gain and temporal regions; negative controls include silence, missing/duplicated channels, wrong gain, short output and missing suffix. The renderer tests separately check mute/solo selection, linear faders and instrument-load failure. Neither group establishes vocal, timing or live/export parity.
+- `ios/Tests/MusicEditTests.swift`: Thirty-seven pure operation/inverse tests covering bounds, scope, protected content, identity, stale before-values, atomic batches and exact restoration. Session-level concurrency and audible UI actions require separate tests.
+- `ios/Tests/SessionStorageSafetyTests.swift`: Missing versus corrupt/unreadable storage, preserved bytes, atomic mutation outcomes and injected failures.
+- `ios/Tests/UI/RegressionTests.swift`: Includes Save failure, retry, cancellation and swipe-dismissal journeys using real recording interactions and the disposable debug storage fixture. Retained screenshots still need visual inspection.
+- `ios/Tests/MultiTrackLooperTests.swift`: Existing transport tests plus 24 revision/commit tests covering mutation routes, session replacement, snapshots, stale/invalid edits, inverse ordering, concurrent same-token commits and synchronous publication reentry. Runtime validation remains a separate acceptance gate.

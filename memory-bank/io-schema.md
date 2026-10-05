@@ -1,5 +1,7 @@
 # IO Schema
 
+Updated API additions below describe the iOS source as of 2026-10-05. Pending session-revision/UI integration is not implied.
+
 ## `LooperViewModel` published interface
 
 | Property | Type | Default |
@@ -9,6 +11,7 @@
 | `bpm` | `Double` | `100` |
 | `isMetronomeOn` | `Bool` | `false` |
 | `audioError` | `String?` | `nil` |
+| `persistenceError` | `String?` | `nil` |
 | `quantizeDivision` | `QuantizeDivision` | `.off` |
 | `isPaused` | `Bool` | `false` |
 | `isCountingIn` | `Bool` | `false` |
@@ -275,3 +278,42 @@
 | `tishCaption` | `system 12 regular default` |
 | `tishMono` | `system 16 medium monospaced` |
 | `tishMonoLarge` | `system 24 bold monospaced` |
+
+## Explicit persistence outcomes
+
+`SessionStorageError` records operation (`read`, `decode`, `encode`, `write`, `remove`), file URL and underlying error. Present user-facing messages through the view model; do not expose local paths in product UI.
+
+- `readSessionsResult() -> Result<[SavedSession], SessionStorageError>` returns an empty list for an absent library or a successfully decoded empty array; read/decode errors remain failures.
+- `readWorkingSessionResult() -> Result<SavedSession?, SessionStorageError>` returns successful nil only for an absent recovery file.
+- `saveSession`, `deleteSession`, `renameSession`, `saveWorkingSession` and `clearWorkingSession` return `Result<Void, SessionStorageError>`. Mutations do not treat a failed read as an empty file. Successful writes use atomic replacement.
+- Compatibility `loadSessions` / `loadWorkingSession` convenience reads still exist; new recovery and mutation flows must use Result APIs.
+- `LooperViewModel.saveCurrentSession(name:)`, `saveWorkingSession()`, `restoreWorkingSession()`, `loadSession(_:)`, `deleteSession(_:)` and `loadImportedSession(_:)` return Bool. False leaves a readable `persistenceError`; a successful named save may still return true with a nonfatal recovery-cleanup/list-refresh warning because its saved data is durable. Import may save the imported library entry but return false if clearing the previous recovery copy prevents switching the live project.
+
+## Pure reversible musical operations
+
+`MusicEdit.apply(_:to:protectedTrackIDs:protectedNoteIDs:) throws -> MusicEditResult` takes a copied `[Track]` snapshot and returns candidate `tracks` plus a `MusicEditInverse`. It does not publish, play or save them.
+
+- `.gain(trackID:before:after:)` accepts finite absolute linear gains in 0...1 and requires the existing affected value to match `before`. It never implicitly unmutes a track.
+- `.midiRegion(trackID:startBeat:endBeat:selection:before:after:)` scopes a half-open beat interval to explicit pitches or existing note IDs. Pitch selection can insert locally assigned new IDs; ID selection can change/delete its existing notes, including repitching, but cannot insert an unrelated ID.
+- `MusicNoteInput` holds UUID, Int pitch/velocity and Double beat/duration values. They are checked before UInt8 conversion and before the clamping MidiNote initializer.
+- Limits: 16 operations per batch, 512 notes per selected region, 4096 notes per track, and 16 beats per region. The caller must bound the complete session/import payload.
+- Missing/duplicate IDs, wrong track kinds, invalid values, stale before-values, edge-crossing selected notes, changed protected content and no-op musical changes throw typed `MusicEditError`. A failure returns no partial state.
+- `inverse.apply(to:) throws -> [Track]` checks expected affected fields and restores exact original note IDs/order and gain in reverse operation order. Newer unrelated fields survive. A changed note array conservatively prevents that note inverse; it does not rebase edits.
+
+This foundation is not request authorization. The future session owner must enforce instance/revision freshness, duplicate/cancel handling, persistence and playback transitions. The validator rejects a positive duration if its computed end is not greater than its start, and rejects signed-zero-only net gain changes while preserving exact original gain bits in an inverse.
+
+## Checked AAC encoding boundary
+
+`AudioExporter.encodePCMToM4A(_:sessionName:directory:writer:) throws -> URL` writes an owned UUID attempt directory and verifies the resulting AAC container, format, channels, complete decoded length and finite samples. Verification reads only remaining declared frames and requires forward progress; decoded length must cover input with at most 1024 padding frames. Failure removes only that attempt, preserving previous exports and unrelated files. The injectable writer is an internal deterministic fault-test seam.
+
+The existing public full-render export remains asynchronous and optional-URL based. Checked encoding alone does not prove vocals, mute/solo selection, relative mix levels or sample-accurate event scheduling in that renderer.
+
+## Authoritative model revision boundary
+
+- `MusicalToken` contains a session UUID and UInt64 revision. Session replacement gets a fresh identity; undo creates a later revision rather than rewinding it.
+- `musicSnapshot() throws -> MusicalSnapshot` returns one coherent token/tracks/BPM/bar-count bundle. Legacy Combine streams remain display updates; callers must not combine a published willSet value with a separately read token.
+- `applyMusicEdits(_:expectedToken:protectedTrackIDs:protectedNoteIDs:) throws -> MusicalEditCommit` compares the captured token, validates the complete typed batch, publishes tracks once and returns the new token/inverse.
+- `applyMusicInverse(_:expectedToken:) throws -> MusicalToken` restores a validated inverse and advances the authoritative revision.
+- `MusicalCommitError` distinguishes stale, busy and invalid typed edits. Apply/undo require stopped or paused transport and reject recording, playing or synchronous publication/operation reentry. Existing transport and no-op setters do not create musical edits.
+
+This is a model commit, not a durable or audible user action. Persistence, sampler updates, already-enqueued audio callbacks, pending-response cancellation, duplicate request handling and manual editor stale-note checks remain adapter responsibilities. Legacy whole-track note writeback preserves current mixer metadata but does not independently detect stale notes. The background timer remains in place; this change does not certify every legacy UI publication as main-thread isolated.

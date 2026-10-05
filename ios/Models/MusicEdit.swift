@@ -23,10 +23,11 @@ struct MusicNoteInput: Equatable {
     }
 
     fileprivate func validatedNote() throws -> MidiNote {
+        let endBeat = startBeat + durationBeats
         guard (0...127).contains(pitch), (1...127).contains(velocity),
               startBeat.isFinite, startBeat >= 0,
               durationBeats.isFinite, durationBeats >= 0.0625,
-              (startBeat + durationBeats).isFinite else {
+              endBeat.isFinite, endBeat > startBeat else {
             throw MusicEditError.invalidNote
         }
         return MidiNote(id: id, pitch: UInt8(pitch), velocity: UInt8(velocity),
@@ -148,7 +149,8 @@ enum MusicEdit {
             }
         }
         guard zip(tracks, candidate).contains(where: { original, updated in
-            original.volume.bitPattern != updated.volume.bitPattern || musicalValues(original.notes) != musicalValues(updated.notes)
+            (original.volume.bitPattern != updated.volume.bitPattern && original.volume != updated.volume)
+                || musicalValues(original.notes) != musicalValues(updated.notes)
         }) else { throw MusicEditError.noChange }
         return MusicEditResult(tracks: candidate, inverse: MusicEditInverse(steps: Array(inverse.reversed())))
     }

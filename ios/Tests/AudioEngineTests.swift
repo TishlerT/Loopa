@@ -212,7 +212,7 @@ final class AudioExporterWritingTests: XCTestCase {
         let decoded = try decode(url)
         XCTAssertTrue(matchesFixture(decoded), "Decoded AAC must retain both tones, routing, duration and 2:1 level ratio")
         XCTAssertLessThanOrEqual(abs(decoded.channels[0].count - Int(fixtureFrames)), 1024)
-        let aac = XCTAttachment(contentsOfFile: url)
+        let aac = XCTAttachment(data: try Data(contentsOf: url), uniformTypeIdentifier: "public.mpeg-4-audio")
         aac.name = "actual-export.m4a"
         aac.lifetime = .keepAlways
         add(aac)
@@ -301,5 +301,164 @@ final class AudioExporterWritingTests: XCTestCase {
         invalid.floatChannelData![1][Int(fixtureFrames) - 1] = .nan
         XCTAssertThrowsError(try AudioExporter.shared.encodePCMToM4A(invalid, sessionName: "NaN", directory: directory))
         XCTAssertTrue(try FileManager.default.contentsOfDirectory(atPath: directory.path).isEmpty)
+    }
+}
+
+
+/// Exercises the production SoundFont renderer and decodes the actual AAC it returns.
+final class AudioExporterMixTests: XCTestCase {
+    private var ownedOutputs: [URL] = []
+    private let rate = 44_100.0
+    private let frames = 88_200 // Four beats at 120 BPM.
+
+    override func tearDownWithError() throws {
+        for output in ownedOutputs {
+            // Every returned export owns its distinct UUID directory, never Documents.
+            try FileManager.default.removeItem(at: output.deletingLastPathComponent())
+        }
+        ownedOutputs = []
+    }
+
+    private func track(pitch: UInt8 = 69, volume: Float = 1,
+                       muted: Bool = false, solo: Bool = false) -> Track {
+        Track(instrumentName: "Fixture Flute", instrumentProgram: 73, isDrumKit: false,
+              notes: [MidiNote(pitch: pitch, velocity: 90, startBeat: 0, durationBeats: 4)],
+              isMuted: muted, isSolo: solo, volume: volume, recordedLengthBeats: 4,
+              isLooping: false)
+    }
+
+    private func export(_ tracks: [Track], name: String) async throws -> URL? {
+        let soundFont = try XCTUnwrap(Bundle.main.url(forResource: "GM", withExtension: "sf2"),
+                                     "The real bundled SoundFont is required; missing audio cannot pass.")
+        let url = await AudioExporter.shared.exportToM4A(
+            tracks: tracks, bpm: 120, loopLengthBeats: 4,
+            sessionName: name, soundFontURL: soundFont)
+        if let url {
+            ownedOutputs.append(url)
+            let attachment = XCTAttachment(data: try Data(contentsOf: url), uniformTypeIdentifier: "public.mpeg-4-audio")
+            attachment.name = name + ".m4a"
+            attachment.lifetime = .keepAlways
+            add(attachment)
+        }
+        return url
+    }
+
+    private func render(_ tracks: [Track], name: String) async throws -> [[Float]] {
+        let optionalURL = try await export(tracks, name: name)
+        let url = try XCTUnwrap(optionalURL, "Every selected instrument must load and render successfully")
+        let file = try AVAudioFile(forReading: url, commonFormat: .pcmFormatFloat32, interleaved: false)
+        XCTAssertEqual(file.fileFormat.streamDescription.pointee.mFormatID, kAudioFormatMPEG4AAC)
+        XCTAssertEqual(file.processingFormat.sampleRate, rate)
+        XCTAssertEqual(file.processingFormat.channelCount, 2)
+        guard file.processingFormat.channelCount == 2 else { throw DecodeFailure.incomplete }
+        let buffer = try XCTUnwrap(AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: 4096))
+        var channels = [[Float](), [Float]()]
+        while file.framePosition < file.length {
+            let request = AVAudioFrameCount(min(Int64(buffer.frameCapacity), file.length - file.framePosition))
+            try file.read(into: buffer, frameCount: request)
+            guard buffer.frameLength > 0, buffer.frameLength <= request else { throw DecodeFailure.incomplete }
+            let data = try XCTUnwrap(buffer.floatChannelData)
+            for channel in 0..<2 {
+                channels[channel].append(contentsOf: UnsafeBufferPointer(start: data[channel], count: Int(buffer.frameLength)))
+            }
+            guard file.framePosition == Int64(channels[0].count) else { throw DecodeFailure.incomplete }
+        }
+        XCTAssertEqual(channels[0].count, Int(file.length))
+        XCTAssertEqual(channels[0].count, channels[1].count)
+        XCTAssertGreaterThanOrEqual(channels[0].count, frames)
+        XCTAssertLessThanOrEqual(channels[0].count, frames + 1024)
+        XCTAssertTrue(channels.allSatisfy { $0.allSatisfy { $0.isFinite } })
+        guard channels[0].count >= frames, channels[0].count == channels[1].count,
+              channels.allSatisfy({ $0.allSatisfy { $0.isFinite } }) else { throw DecodeFailure.incomplete }
+        let wav = XCTAttachment(data: decodedWAV(channels), uniformTypeIdentifier: "com.microsoft.waveform-audio")
+        wav.name = name + "-decoded.wav"
+        wav.lifetime = .keepAlways
+        add(wav)
+        return channels
+    }
+
+    private enum DecodeFailure: Error { case incomplete }
+
+    private func decodedWAV(_ channels: [[Float]]) -> Data {
+        let byteCount = channels[0].count * channels.count * 2
+        var data = Data()
+        func append<T: FixedWidthInteger>(_ value: T) {
+            var little = value.littleEndian
+            withUnsafeBytes(of: &little) { data.append(contentsOf: $0) }
+        }
+        data.append(contentsOf: "RIFF".utf8); append(UInt32(36 + byteCount))
+        data.append(contentsOf: "WAVEfmt ".utf8); append(UInt32(16)); append(UInt16(1))
+        append(UInt16(channels.count)); append(UInt32(rate)); append(UInt32(rate) * 4)
+        append(UInt16(4)); append(UInt16(16)); data.append(contentsOf: "data".utf8)
+        append(UInt32(byteCount))
+        for frame in channels[0].indices {
+            for channel in channels {
+                append(Int16(clamping: Int((Double(channel[frame]) * 32768).rounded())))
+            }
+        }
+        return data
+    }
+
+    private func rms(_ samples: ArraySlice<Float>) -> Double {
+        sqrt(samples.reduce(0) { $0 + Double($1) * Double($1) } / Double(samples.count))
+    }
+
+    private func assertGain(_ actual: [[Float]], relativeTo reference: [[Float]],
+                            expected: Double, file: StaticString = #filePath, line: UInt = #line) {
+        // Three regions spanning the note; avoid initial attack and the final note-off block.
+        for channel in 0..<2 {
+            for region in [4_410..<22_050, 30_870..<48_510, 61_740..<79_380] {
+                let baseline = rms(reference[channel][region])
+                XCTAssertGreaterThan(baseline, 0.0001, "The reference must be audible", file: file, line: line)
+                let ratio = rms(actual[channel][region]) / baseline
+                XCTAssertEqual(ratio, expected, accuracy: 0.035,
+                               "Decoded amplitude ratio in channel \(channel), region \(region)", file: file, line: line)
+            }
+        }
+    }
+
+    func testSoloExportsOnlySelectedMIDITrack() async throws {
+        let selected = track(solo: true)
+        let reference = try await render([selected], name: "solo-reference")
+        let selectedMix = try await render([selected, track(pitch: 77)], name: "solo-selected")
+        assertGain(selectedMix, relativeTo: reference, expected: 1)
+    }
+
+    func testMutedSoloDoesNotUnsoloOtherTracks() async throws {
+        let url = try await export([track(muted: true, solo: true), track(pitch: 77)], name: "muted-only-solo")
+        XCTAssertNil(url, "A muted solo still excludes non-solo tracks; no MIDI track is audible")
+    }
+
+    func testMutedSoloIsSilentBesideUnmutedSolo() async throws {
+        let selected = track(solo: true)
+        let reference = try await render([selected], name: "mixed-solo-reference")
+        let selectedMix = try await render([selected, track(pitch: 77, muted: true, solo: true),
+                                           track(pitch: 81)], name: "mixed-solo-selected")
+        assertGain(selectedMix, relativeTo: reference, expected: 1)
+    }
+
+    func testZeroVolumeProducesSilentAAC() async throws {
+        let reference = try await render([track()], name: "zero-reference")
+        let silent = try await render([track(volume: 0)], name: "zero-volume")
+        XCTAssertGreaterThan(rms(reference[0][4_410..<79_380]), 0.0001)
+        for channel in silent {
+            XCTAssertLessThanOrEqual(channel.map { abs($0) }.max() ?? 1, 0.000001,
+                                     "Zero fader must be silent for the entire decoded export")
+        }
+    }
+
+    func testHalfVolumeHalvesDecodedAmplitude() async throws {
+        let reference = try await render([track()], name: "gain-reference")
+        let half = try await render([track(volume: 0.5)], name: "gain-half")
+        assertGain(half, relativeTo: reference, expected: 0.5)
+    }
+
+    func testMissingAudibleInstrumentRejectsWholeExport() async throws {
+        // The bundled SoundFont has eight percussion programs; 127 is not one of them.
+        var missing = track(pitch: 36)
+        missing = Track(instrumentName: "Missing percussion preset", instrumentProgram: 127,
+                        isDrumKit: true, notes: missing.notes, volume: 1, recordedLengthBeats: 4)
+        let url = try await export([track(), missing], name: "missing-selected-instrument")
+        XCTAssertNil(url, "Do not report a partial mix after dropping a selected instrument")
     }
 }

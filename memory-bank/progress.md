@@ -9,8 +9,11 @@ Updated 2026-10-05. Entries below distinguish verified results from implementati
 - `9abbf646`: failure-aware save/recovery and recoverable Save UI, including prior-project identity protection; 217 full iPhone tests, four iPad save journeys and 20 post-integration persistence tests passed. Save-error screenshots were inspected on both layouts.
 - Exact candidate review, artifact hashes, remote staging verification and post-integration smoke are required for each integration. Main remains unchanged by these improvements.
 
+- `ca7229b9`: complete AAC writing and pure reversible musical edit values; 260 full tests, eight AAC writer tests and 43 post-integration checks passed. An independently measured actual decoded fixture retained duration, stereo content and the expected level ratio. This is not full audio-renderer parity or a user-facing assistant.
+
 ## In progress / not integrated
-- AAC export writer: complete stereo conversion, owned temporary outputs, full-file decode checks, eight new tests and retained AAC/WAV artifacts. Source review alone is not runtime proof.
+- Export mute/solo and linear fader behavior, session revision ownership, and numerical input hardening are isolated candidates requiring execution and review. The next renderer fixtures reproduce all six old mix defects, including a half fader retaining about 94.5% amplitude and a zero fader remaining audible.
+- The verified writer run retained the decoded WAV but its file-backed AAC attachment was absent from xcresult. A subsequent candidate captures AAC bytes eagerly; retention must be verified again.
 - Independent audits: export inclusion/solo/timing/gain, reversible edits, design direction, sound provenance.
 
 ## Required next evidence

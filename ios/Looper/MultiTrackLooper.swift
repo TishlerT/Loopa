@@ -1,5 +1,28 @@
 import Foundation
 import QuartzCore
+import Combine
+
+struct MusicalToken: Equatable {
+    let sessionID: UUID
+    let revision: UInt64
+}
+
+struct MusicalSnapshot {
+    let token: MusicalToken
+    let tracks: [Track]
+    let bpm: Double
+    let barCount: BarCount
+}
+
+struct MusicalEditCommit {
+    let token: MusicalToken
+    let inverse: MusicEditInverse
+}
+
+enum MusicalCommitError: Error, Equatable {
+    case stale, busy
+    case invalidEdit(MusicEditError)
+}
 
 /// Multi-track looper with bar-based recording
 final class MultiTrackLooper: ObservableObject {
@@ -9,10 +32,138 @@ final class MultiTrackLooper: ObservableObject {
 	@Published private(set) var tracks: [Track] = []
 	@Published private(set) var isRecording = false
 	@Published private(set) var isPlaying = false
-	@Published var barCount: BarCount = .four
+	@Published var barCount: BarCount = .four {
+        willSet { beginPropertyPublication() }
+        didSet {
+            if barCount != committedBarCount {
+                committedBarCount = barCount
+                recalculateLoopLength()
+                advanceRevision()
+            }
+            endPropertyPublication()
+        }
+    }
 	@Published var bpm: Double = 100 {
-		didSet { recalculateLoopLength() }
+        willSet { beginPropertyPublication() }
+        didSet {
+            if !bpm.isFinite || bpm <= 0 || !(60 / bpm).isFinite || 60 / bpm <= 0 {
+                bpm = committedBPM
+            } else if bpm != committedBPM {
+                committedBPM = bpm
+                recalculateLoopLength()
+                advanceRevision()
+            }
+            endPropertyPublication()
+        }
 	}
+
+    // The background timer and every mutation share this lock. Recursive entry
+    // permits existing transport helpers/callback reads; proposal commits and
+    // snapshots fail busy during an operation or synchronous publication.
+    private let stateLock = NSRecursiveLock()
+    private var operationDepth = 0
+    private var publicationDepth = 0
+    // Compare against values committed under the lock, not observer oldValue:
+    // a concurrent or recursive setter may have captured oldValue before locking.
+    private var committedBPM: Double = 100
+    private var committedBarCount: BarCount = .four
+    private var token = MusicalToken(sessionID: UUID(), revision: 0)
+    private var recordingID = UUID()
+    private var playbackGeneration = UUID()
+
+    var musicalToken: MusicalToken {
+        stateLock.lock(); defer { stateLock.unlock() }
+        return token
+    }
+
+    /// Use this bundle for proposal creation. Never pair a $tracks willSet value
+    /// with a separately read token; legacy Combine streams are display updates.
+    func musicSnapshot() throws -> MusicalSnapshot {
+        stateLock.lock(); defer { stateLock.unlock() }
+        guard operationDepth == 0, publicationDepth == 0 else { throw MusicalCommitError.busy }
+        return MusicalSnapshot(token: token, tracks: tracks, bpm: bpm, barCount: barCount)
+    }
+
+    func applyMusicEdits(_ edits: [MusicEdit], expectedToken: MusicalToken,
+                         protectedTrackIDs: Set<UUID> = [],
+                         protectedNoteIDs: Set<UUID> = []) throws -> MusicalEditCommit {
+        stateLock.lock(); defer { stateLock.unlock() }
+        try checkCommit(expectedToken)
+        operationDepth += 1; defer { operationDepth -= 1 }
+        do {
+            let result = try MusicEdit.apply(edits, to: tracks,
+                                             protectedTrackIDs: protectedTrackIDs,
+                                             protectedNoteIDs: protectedNoteIDs)
+            publishTracks(result.tracks)
+            return MusicalEditCommit(token: token, inverse: result.inverse)
+        } catch let error as MusicEditError {
+            throw MusicalCommitError.invalidEdit(error)
+        }
+    }
+
+    @discardableResult
+    func applyMusicInverse(_ inverse: MusicEditInverse, expectedToken: MusicalToken) throws -> MusicalToken {
+        stateLock.lock(); defer { stateLock.unlock() }
+        try checkCommit(expectedToken)
+        operationDepth += 1; defer { operationDepth -= 1 }
+        do {
+            let restored = try inverse.apply(to: tracks)
+            publishTracks(restored)
+            return token
+        } catch let error as MusicEditError {
+            throw MusicalCommitError.invalidEdit(error)
+        }
+    }
+
+    private func checkCommit(_ expected: MusicalToken) throws {
+        // Model-only boundary. Future adapters must also update samplers and fence
+        // already-enqueued external audio callbacks before claiming audible cutover.
+        guard operationDepth == 0, publicationDepth == 0, !isPlaying, !isRecording else {
+            throw MusicalCommitError.busy
+        }
+        guard expected == token else { throw MusicalCommitError.stale }
+    }
+
+    private func beginPropertyPublication() {
+        stateLock.lock()
+        publicationDepth += 1
+    }
+
+    private func endPropertyPublication() {
+        publicationDepth -= 1
+        stateLock.unlock()
+    }
+
+    private func advanceRevision() {
+        if token.revision == UInt64.max {
+            token = MusicalToken(sessionID: UUID(), revision: 0)
+        } else {
+            token = MusicalToken(sessionID: token.sessionID, revision: token.revision + 1)
+        }
+    }
+
+    private func publishTracks(_ candidate: [Track], replaceSession: Bool = false) {
+        publicationDepth += 1; defer { publicationDepth -= 1 }
+        let changed = !Self.sameTracks(tracks, candidate)
+        guard changed || replaceSession else { return }
+        // Advance only after the legacy willSet publication has finished. Reentrant
+        // commits/snapshots are busy throughout, so no mixed state can be accepted.
+        tracks = candidate // Session replacements also retain the legacy publication.
+        if replaceSession { token = MusicalToken(sessionID: UUID(), revision: 0) }
+        else { advanceRevision() }
+        recalculateLoopLength()
+    }
+
+    private static func sameTracks(_ lhs: [Track], _ rhs: [Track]) -> Bool {
+        guard lhs.count == rhs.count else { return false }
+        return zip(lhs, rhs).allSatisfy { a, b in
+            a.id == b.id && a.trackType == b.trackType && a.instrumentName == b.instrumentName &&
+            a.instrumentProgram == b.instrumentProgram && a.isDrumKit == b.isDrumKit &&
+            a.notes == b.notes && a.audioFileName == b.audioFileName && a.recordedAt == b.recordedAt &&
+            a.isMuted == b.isMuted && a.isSolo == b.isSolo && a.volume.bitPattern == b.volume.bitPattern &&
+            a.recordedLengthBeats.bitPattern == b.recordedLengthBeats.bitPattern && a.isLooping == b.isLooping
+        }
+    }
 	
 	// MARK: - Loop Timing
 	
@@ -21,11 +172,13 @@ final class MultiTrackLooper: ObservableObject {
 	
 	/// Recording loop length in beats (based on barCount setting)
 	var recordingLoopLengthBeats: Double {
-		Double(barCount.rawValue) * 4.0
+        stateLock.lock(); defer { stateLock.unlock() }
+		return Double(barCount.rawValue) * 4.0
 	}
 	
 	/// Effective loop length in beats (longest track's recorded length, or barCount if no tracks)
 	var loopLengthBeats: Double {
+        stateLock.lock(); defer { stateLock.unlock() }
 		if tracks.isEmpty {
 			return recordingLoopLengthBeats
 		}
@@ -56,7 +209,11 @@ final class MultiTrackLooper: ObservableObject {
 	// MARK: - Quantization
 	
 	/// Quantizer for snapping MIDI events to the beat grid
-	var quantizer: Quantizer?
+    private var storedQuantizer: Quantizer?
+    var quantizer: Quantizer? {
+        get { stateLock.lock(); defer { stateLock.unlock() }; return storedQuantizer }
+        set { stateLock.lock(); defer { stateLock.unlock() }; storedQuantizer = newValue }
+    }
 	
 	// MARK: - Playback State
 	
@@ -74,6 +231,7 @@ final class MultiTrackLooper: ObservableObject {
 	
 	/// Total elapsed playback time since start (doesn't wrap around like position)
 	var playbackElapsedTime: TimeInterval {
+        stateLock.lock(); defer { stateLock.unlock() }
 		guard isPlaying else { return 0 }
 		return CACurrentMediaTime() - playStartTime
 	}
@@ -81,6 +239,7 @@ final class MultiTrackLooper: ObservableObject {
 	/// Current playback position calculated identically to tick() for UI synchronization
 	/// This is the single source of truth for both audio dispatch and visual display
 	var synchronizedPlaybackPosition: Double {
+        stateLock.lock(); defer { stateLock.unlock() }
 		guard isPlaying, loopLength > 0 else {
 			// When paused, return the paused position
 			if isPaused { return pausedPosition }
@@ -94,6 +253,7 @@ final class MultiTrackLooper: ObservableObject {
 	/// Current playback fraction (0.0 to 1.0) for UI display
 	/// Calculated identically to tick() to ensure audio-visual sync
 	var synchronizedPlaybackFraction: Double {
+        stateLock.lock(); defer { stateLock.unlock() }
 		guard loopLength > 0 else { return 0 }
 		return synchronizedPlaybackPosition / loopLength
 	}
@@ -105,7 +265,8 @@ final class MultiTrackLooper: ObservableObject {
 	
 	/// Whether any track has solo enabled
 	var anyTrackSoloed: Bool {
-		tracks.contains { $0.isSolo }
+        stateLock.lock(); defer { stateLock.unlock() }
+		return tracks.contains { $0.isSolo }
 	}
 	
 	// MARK: - Callbacks
@@ -128,14 +289,18 @@ final class MultiTrackLooper: ObservableObject {
 	// MARK: - Loop Length
 	
 	private func recalculateLoopLength() {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
 		let secondsPerBeat = 60.0 / bpm
 		// Use effective loop length (based on longest track, or barCount if no tracks)
 		loopLength = loopLengthBeats * secondsPerBeat
 	}
 	
 	func setBarCount(_ count: BarCount) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		barCount = count
-		recalculateLoopLength()
 	}
 	
 	// MARK: - Recording
@@ -145,8 +310,13 @@ final class MultiTrackLooper: ObservableObject {
 	///   - instrument: The instrument to record
 	///   - fromPosition: Position to start from (nil = start from 0, resetting playback)
 	func startRecording(instrument: Instrument, fromPosition: Double? = nil) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		guard !isRecording else { return }
 		
+        recordingID = UUID()
+        advanceRevision() // Even an empty/cancelled recording invalidates a pending request.
 		recordingEvents.removeAll()
 		recordingInstrument = instrument
 		recordStartTime = CACurrentMediaTime()
@@ -178,6 +348,9 @@ final class MultiTrackLooper: ObservableObject {
 	}
 	
 	func addLiveEvent(note: UInt8, velocity: UInt8, isNoteOn: Bool) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		guard isRecording else { return }
 		
 		let now = CACurrentMediaTime()
@@ -198,8 +371,12 @@ final class MultiTrackLooper: ObservableObject {
 	}
 	
 	func stopRecording() {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		guard isRecording else { return }
 		isRecording = false
+        var candidate = tracks
 		
 		// Create track from recorded events
 		if !recordingEvents.isEmpty {
@@ -233,7 +410,7 @@ final class MultiTrackLooper: ObservableObject {
 				existingNotes.removeAll { $0.startBeat >= punchInBeat }
 				existingNotes.append(contentsOf: notes)
 				existingNotes.sort { $0.startBeat < $1.startBeat }
-				tracks[trackIndex].notes = existingNotes
+				candidate[trackIndex].notes = existingNotes
 			} else {
 				// Normal recording: create new track with its recorded length (based on barCount setting)
 				let track = Track(
@@ -244,10 +421,11 @@ final class MultiTrackLooper: ObservableObject {
 					recordedLengthBeats: recordingLoopLengthBeats,  // Use the barCount-based length, not global loop length
 					isLooping: true  // Default to looping enabled
 				)
-				tracks.append(track)
+				candidate.append(track)
 			}
 		}
 		
+        publishTracks(candidate)
 		recordingEvents.removeAll()
 		punchInTrackId = nil
 		punchInPosition = 0
@@ -257,6 +435,9 @@ final class MultiTrackLooper: ObservableObject {
 	// MARK: - Playback
 	
 	func startPlayback() {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		guard !isPlaying else { return }
 		
 		recalculateLoopLength()
@@ -271,6 +452,9 @@ final class MultiTrackLooper: ObservableObject {
 	}
 	
 	func stopPlayback() {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		isPlaying = false
 		isRecording = false
 		isPaused = false
@@ -286,6 +470,9 @@ final class MultiTrackLooper: ObservableObject {
 	
 	/// Pause playback, preserving the current position for later resume
 	func pausePlayback() {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		guard isPlaying else { return }
 		
 		// Save current position before stopping
@@ -301,6 +488,9 @@ final class MultiTrackLooper: ObservableObject {
 	
 	/// Resume playback from where it was paused
 	func resumePlayback() {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		guard isPaused, loopLength > 0 else {
 			// If not paused, just start from beginning
 			startPlayback()
@@ -327,6 +517,9 @@ final class MultiTrackLooper: ObservableObject {
 	}
 	
 	func togglePlayback() {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		if isPlaying {
 			stopPlayback()
 		} else {
@@ -336,6 +529,9 @@ final class MultiTrackLooper: ObservableObject {
 	
 	/// Seek to a specific position in the loop
 	func seekTo(position: Double) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		let clampedPosition = max(0, min(position, loopLength))
 		
 		// Send noteOff for all notes to prevent stuck notes
@@ -362,6 +558,8 @@ final class MultiTrackLooper: ObservableObject {
 	
 	/// Send noteOff for all notes that might be playing (prevents stuck notes)
 	private func sendAllNotesOff() {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
 		for (_, activeNote) in activeNotes {
 			let noteOff = MidiEvent(
 				time: 0,
@@ -392,87 +590,154 @@ final class MultiTrackLooper: ObservableObject {
 	// MARK: - Track Management
 	
 	func deleteTrack(_ track: Track) {
-		tracks.removeAll { $0.id == track.id }
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
+        publishTracks(tracks.filter { $0.id != track.id })
 	}
 	
 	func toggleMute(_ track: Track) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		if let index = tracks.firstIndex(where: { $0.id == track.id }) {
-			tracks[index].isMuted.toggle()
+            var candidate = tracks
+            candidate[index].isMuted.toggle()
+            publishTracks(candidate)
 		}
 	}
 	
 	func toggleSolo(_ track: Track) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		if let index = tracks.firstIndex(where: { $0.id == track.id }) {
-			tracks[index].isSolo.toggle()
+            var candidate = tracks
+            candidate[index].isSolo.toggle()
+            publishTracks(candidate)
 		}
 	}
 	
 	func toggleLoop(_ track: Track) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		if let index = tracks.firstIndex(where: { $0.id == track.id }) {
-			tracks[index].isLooping.toggle()
+            var candidate = tracks
+            candidate[index].isLooping.toggle()
+            publishTracks(candidate)
 		}
 	}
 	
 	func setTrackSolo(_ trackId: UUID, solo: Bool) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		if let index = tracks.firstIndex(where: { $0.id == trackId }) {
-			tracks[index].isSolo = solo
+            var candidate = tracks
+            candidate[index].isSolo = solo
+            publishTracks(candidate)
 		}
 	}
 	
 	func clearAllTracks() {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		stopPlayback()
-		tracks.removeAll()
+        publishTracks([], replaceSession: true)
 	}
 	
 	func undoLastTrack() {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		guard !tracks.isEmpty else { return }
-		tracks.removeLast()
+        var candidate = tracks
+        candidate.removeLast()
+        publishTracks(candidate)
 	}
 	
 	func setTrackVolume(_ trackId: UUID, volume: Float) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
+        guard volume.isFinite else { return }
 		if let index = tracks.firstIndex(where: { $0.id == trackId }) {
-			tracks[index].volume = max(0, min(1, volume))
+            var candidate = tracks
+            candidate[index].volume = max(0, min(1, volume))
+            publishTracks(candidate)
 		}
 	}
 	
 	func setTrackInstrument(_ trackId: UUID, instrument: Instrument) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		if let index = tracks.firstIndex(where: { $0.id == trackId }) {
-			tracks[index].instrumentName = instrument.rawValue
-			tracks[index].instrumentProgram = instrument.programNumber
+            var candidate = tracks
+            candidate[index].instrumentName = instrument.rawValue
+            candidate[index].instrumentProgram = instrument.programNumber
+            publishTracks(candidate)
 		}
 	}
 	
 	func loadTracks(_ newTracks: [Track]) {
-		tracks = newTracks
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
+        stopPlayback()
+        publishTracks(newTracks, replaceSession: true)
 	}
 	
 	func addAudioTrack(_ track: Track) {
-		tracks.append(track)
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
+        publishTracks(tracks + [track])
 	}
 	
 	/// Update a specific track (for note editing)
 	func updateTrack(_ track: Track) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		if let index = tracks.firstIndex(where: { $0.id == track.id }) {
-			tracks[index] = track
+            // This legacy route is for note editing. It must not restore stale
+            // mixer metadata. Stale note detection belongs to the EDIT-005 adapter.
+            guard tracks[index].trackType == .midi, track.trackType == .midi else { return }
+            var candidate = tracks
+            candidate[index].notes = track.notes
+            publishTracks(candidate)
 		}
 	}
 	
 	/// Get a track by ID
 	func track(withId id: UUID) -> Track? {
-		tracks.first { $0.id == id }
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+		return tracks.first { $0.id == id }
 	}
 	
 	/// Quantize all notes in a track
 	func quantizeTrack(_ trackId: UUID, division: QuantizeDivision) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+        guard publicationDepth == 0 else { return }
 		guard let index = tracks.firstIndex(where: { $0.id == trackId }) else { return }
 		
 		let quantizer = Quantizer(bpm: bpm, division: division)
-		tracks[index].notes = quantizer.quantize(notes: tracks[index].notes, loopLengthBeats: loopLengthBeats)
+        guard tracks[index].trackType == .midi else { return }
+        var candidate = tracks
+        candidate[index].notes = quantizer.quantize(notes: tracks[index].notes, loopLengthBeats: loopLengthBeats)
+        publishTracks(candidate)
 	}
 	
 	// MARK: - Private Playback
 	
 	private func resetPlaybackState() {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
 		lastTickPosition = 0
 		currentLoopCycle = 0
 		currentPosition = 0
@@ -482,16 +747,22 @@ final class MultiTrackLooper: ObservableObject {
 	}
 	
 	private func scheduleTimer() {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
 		timer?.cancel()
+        playbackGeneration = UUID()
+        let generation = playbackGeneration
 		let source = DispatchSource.makeTimerSource(queue: .global(qos: .userInteractive))
 		source.schedule(deadline: .now(), repeating: 0.002, leeway: .microseconds(500))
-		source.setEventHandler { [weak self] in self?.tick() }
+		source.setEventHandler { [weak self] in self?.tick(generation: generation) }
 		source.resume()
 		timer = source
 	}
 	
-	private func tick() {
-		guard isPlaying, loopLength > 0 else { return }
+	private func tick(generation: UUID) {
+        stateLock.lock(); operationDepth += 1
+        defer { operationDepth -= 1; stateLock.unlock() }
+		guard generation == playbackGeneration, isPlaying, loopLength > 0 else { return }
 		
 		let now = CACurrentMediaTime()
 		let elapsed = now - playStartTime
@@ -512,10 +783,14 @@ final class MultiTrackLooper: ObservableObject {
 		// Detect beat change
 		if newBeat != currentBeat {
 			let isDownbeat = (newBeat % 4) == 0
-			DispatchQueue.main.async { [weak self] in
-				self?.currentBeat = newBeat
-				self?.onBeat?(newBeat, isDownbeat)
-			}
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.stateLock.lock(); self.operationDepth += 1
+                defer { self.operationDepth -= 1; self.stateLock.unlock() }
+                guard self.isPlaying, generation == self.playbackGeneration else { return }
+                self.currentBeat = newBeat
+                self.onBeat?(newBeat, isDownbeat)
+            }
 		}
 		
 		// Detect loop wrap-around (for playback of existing tracks)
@@ -539,10 +814,15 @@ final class MultiTrackLooper: ObservableObject {
 			}
 			
 			if recordingElapsed >= recordingLoopSeconds {
-				DispatchQueue.main.async { [weak self] in
-					self?.stopRecording()
-					self?.onRecordingAutoStop?()
-				}
+                let recording = recordingID
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.stateLock.lock(); self.operationDepth += 1
+                    defer { self.operationDepth -= 1; self.stateLock.unlock() }
+                    guard self.isRecording, recording == self.recordingID else { return }
+                    self.stopRecording()
+                    self.onRecordingAutoStop?()
+                }
 			}
 		}
 		
