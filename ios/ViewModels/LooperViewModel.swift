@@ -18,6 +18,7 @@ final class LooperViewModel: ObservableObject {
 	}
 	@Published var isMetronomeOn: Bool = false
 	@Published var audioError: String? = nil
+	@Published var persistenceError: String? = nil
 	@Published var quantizeDivision: QuantizeDivision = .off {
 		didSet { updateQuantizer() }
 	}
@@ -109,6 +110,8 @@ final class LooperViewModel: ObservableObject {
 	@Published var showingLoadSheet = false
 	@Published var showingSettings = false
 	private var currentSessionId: UUID?
+	private let storage: SessionStorage
+	private let persistenceSuccessFeedback: () -> Void
 	
 	// MARK: - Tracks Screen State
 	
@@ -192,7 +195,37 @@ final class LooperViewModel: ObservableObject {
 	
 	// MARK: - Initialization
 	
-	init() {
+	init(storage: SessionStorage = .shared,
+		 persistenceSuccessFeedback: @escaping () -> Void = { HapticManager.shared.loopSet() }) {
+		self.persistenceSuccessFeedback = persistenceSuccessFeedback
+		var storageSetupError: String?
+		#if DEBUG
+		if storage === SessionStorage.shared,
+		   ProcessInfo.processInfo.arguments.contains("--loopa-ui-test-save-failure") {
+			// This launch fixture cannot touch Documents and creates no synthetic tracks.
+			let directory = FileManager.default.temporaryDirectory
+				.appendingPathComponent("LoopaSaveFailure-\(UUID().uuidString)", isDirectory: true)
+			do {
+				try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+			} catch {
+				// Keep the isolated path even on setup failure; never fall back to real data.
+				storageSetupError = "Couldn't prepare temporary storage for this test."
+			}
+			var failFirstNamedWrite = true
+			self.storage = SessionStorage(directoryURL: directory, writeData: { data, url, options in
+				if url.lastPathComponent == "sessions.json", failFirstNamedWrite {
+					failFirstNamedWrite = false
+					throw CocoaError(.fileWriteOutOfSpace)
+				}
+				try data.write(to: url, options: options)
+			})
+		} else {
+			self.storage = storage
+		}
+		#else
+		self.storage = storage
+		#endif
+		persistenceError = storageSetupError
 		setupAudio()
 		setupBindings()
 		setupDisplayLink()
@@ -670,19 +703,29 @@ final class LooperViewModel: ObservableObject {
 		isPaused = false
 	}
 	
-	func clearAll() {
+	@discardableResult
+	func clearAll() -> Bool {
+		persistenceError = nil
+		guard case .success = storage.clearWorkingSession() else {
+			persistenceError = "Couldn't clear this beat's recovery copy. Your current work is still here. Try again."
+			return false
+		}
+		resetCurrentSession()
+		HapticManager.shared.warning()
+		return true
+	}
+
+	/// Reset live state only after the caller has completed any required persistence.
+	private func resetCurrentSession() {
 		looper.clearAllTracks()
 		audio.clearAllTrackSamplers()
 		audio.stopAllNotes()
 		vocalRecorder.stopAll()
 		preparedTrackIds.removeAll()
 		
-		// Clear working session since user explicitly cleared
-		SessionStorage.shared.clearWorkingSession()
 		currentSessionId = nil
 		currentSessionName = ""
-		
-		HapticManager.shared.warning()
+		isPaused = false
 	}
 	
 	func undoLastTrack() {
@@ -909,41 +952,81 @@ final class LooperViewModel: ObservableObject {
 	
 	// MARK: - Save/Load Sessions
 	
-	func loadSavedSessions() {
-		savedSessions = SessionStorage.shared.loadSessions()
+	@discardableResult
+	func loadSavedSessions() -> Bool {
+		persistenceError = nil
+		return refreshSavedSessions()
 	}
-	
-	func saveCurrentSession(name: String) {
-		guard !tracks.isEmpty else { return }
+
+	private func refreshSavedSessions(
+		failureMessage: String = "Couldn't read your saved beats. The last loaded list is still shown. Try again."
+	) -> Bool {
+		switch storage.readSessionsResult() {
+		case .success(let sessions):
+			savedSessions = sessions
+			return true
+		case .failure:
+			appendPersistenceWarning(failureMessage)
+			return false
+		}
+	}
+
+	private func appendPersistenceWarning(_ message: String) {
+		if let existing = persistenceError {
+			persistenceError = existing + " " + message
+		} else {
+			persistenceError = message
+		}
+	}
+
+	/// True means the named session is durable, even if recovery cleanup warns.
+	@discardableResult
+	func saveCurrentSession(name: String) -> Bool {
+		persistenceError = nil
+		// The published copy can lag behind restore/recording by a Combine delivery.
+		let currentTracks = looper.tracks
+		guard !currentTracks.isEmpty else {
+			persistenceError = "Record at least one track before saving this beat."
+			return false
+		}
 		
 		let session = SavedSession(
 			id: currentSessionId ?? UUID(),
 			name: name,
 			bpm: bpm,
 			barCount: barCount.rawValue,
-			tracks: tracks
+			tracks: currentTracks
 		)
 		
-		SessionStorage.shared.saveSession(session)
+		guard case .success = storage.saveSession(session) else {
+			persistenceError = "Couldn't save this beat. Your current work is still here. Try again."
+			return false
+		}
 		currentSessionId = session.id
 		currentSessionName = name
-		loadSavedSessions()
-		
-		// Clear working session since user explicitly saved
-		SessionStorage.shared.clearWorkingSession()
-		
-		HapticManager.shared.loopSet()
+		_ = refreshSavedSessions(failureMessage: "Your beat was saved, but the saved-beat list couldn't be refreshed.")
+		if case .failure = storage.clearWorkingSession() {
+			appendPersistenceWarning("Your beat was saved, but its recovery copy couldn't be cleared. The saved beat is safe.")
+		}
+		persistenceSuccessFeedback()
+		return true
 	}
 	
 	// MARK: - Auto-Save / Auto-Restore (Working Session)
 	
 	/// Save current state as the working session (for auto-restore on next launch)
-	func saveWorkingSession() {
+	@discardableResult
+	func saveWorkingSession() -> Bool {
+		persistenceError = nil
+		let currentTracks = looper.tracks
 		// Only save if there's something to restore
-		guard !tracks.isEmpty else {
+		guard !currentTracks.isEmpty else {
 			// Clear any existing working session if user has no tracks
-			SessionStorage.shared.clearWorkingSession()
-			return
+			guard case .success = storage.clearWorkingSession() else {
+				persistenceError = "Couldn't clear the recovery copy. It has been kept. Try again."
+				return false
+			}
+			return true
 		}
 		
 		let session = SavedSession(
@@ -951,18 +1034,37 @@ final class LooperViewModel: ObservableObject {
 			name: currentSessionName.isEmpty ? "Autosave" : currentSessionName,
 			bpm: bpm,
 			barCount: barCount.rawValue,
-			tracks: tracks
+			tracks: currentTracks
 		)
 		
-		SessionStorage.shared.saveWorkingSession(session)
+		guard case .success = storage.saveWorkingSession(session) else {
+			persistenceError = "Couldn't save a recovery copy. Keep this beat open and try saving it again."
+			return false
+		}
+		return true
 	}
 	
 	/// Restore the working session from last app use (if any)
-	func restoreWorkingSession() {
-		guard let session = SessionStorage.shared.loadWorkingSession() else {
-			return
+	@discardableResult
+	func restoreWorkingSession() -> Bool {
+		persistenceError = nil
+		switch storage.readWorkingSessionResult() {
+		case .failure:
+			persistenceError = "Couldn't restore the recovery copy. It has been kept, and your current work is unchanged."
+			return false
+		case .success(nil):
+			return true
+		case .success(let session?):
+			applySession(session)
+			currentSessionName = session.name == "Autosave" ? "" : session.name
+			return true
 		}
-		
+	}
+
+	/// Apply a session without changing its recovery file.
+	private func applySession(_ session: SavedSession) {
+		stopPlayback()
+		resetCurrentSession()
 		// Load session settings
 		bpm = session.bpm
 		if let bc = BarCount(rawValue: session.barCount) {
@@ -987,42 +1089,30 @@ final class LooperViewModel: ObservableObject {
 		
 		// Restore session identity (so saving updates the same session)
 		currentSessionId = session.id
-		currentSessionName = session.name == "Autosave" ? "" : session.name
-		
-		print("✓ Restored working session with \(session.tracks.count) tracks")
-	}
-	
-	func loadSession(_ session: SavedSession) {
-		// Stop current playback
-		stopPlayback()
-		clearAll()
-		
-		// Load session settings
-		bpm = session.bpm
-		if let bc = BarCount(rawValue: session.barCount) {
-			barCount = bc
-			looper.setBarCount(bc)
-		}
-		
-		// Load tracks into looper
-		looper.loadTracks(session.tracks)
-		
-		// Prepare samplers for all tracks
-		for track in session.tracks {
-			if let instrument = Instrument(rawValue: track.instrumentName) {
-				audio.prepareSampler(for: track.id, instrument: instrument)
-				audio.setTrackVolume(track.id, volume: track.volume, instrument: instrument)
-			}
-		}
-		
-		currentSessionId = session.id
 		currentSessionName = session.name
-		HapticManager.shared.selectionChanged()
 	}
 	
-	func deleteSession(_ session: SavedSession) {
-		SessionStorage.shared.deleteSession(session)
-		loadSavedSessions()
+	@discardableResult
+	func loadSession(_ session: SavedSession) -> Bool {
+		persistenceError = nil
+		guard case .success = storage.clearWorkingSession() else {
+			persistenceError = "Couldn't clear the previous recovery copy. Your current beat is still open. Try again."
+			return false
+		}
+		applySession(session)
+		HapticManager.shared.selectionChanged()
+		return true
+	}
+	
+	@discardableResult
+	func deleteSession(_ session: SavedSession) -> Bool {
+		persistenceError = nil
+		guard case .success = storage.deleteSession(session) else {
+			persistenceError = "Couldn't delete this saved beat. It has been kept. Try again."
+			return false
+		}
+		_ = refreshSavedSessions(failureMessage: "The beat was deleted, but the saved-beat list couldn't be refreshed.")
+		return true
 	}
 	
 	// MARK: - Share & Export
@@ -1070,19 +1160,22 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	/// Load an imported session (from .loopa file)
-	func loadImportedSession(_ session: SavedSession) {
+	@discardableResult
+	func loadImportedSession(_ session: SavedSession) -> Bool {
+		persistenceError = nil
 		// Save the imported session first
-		SessionStorage.shared.saveSession(session)
-		loadSavedSessions()
-		
-		// Then load it into the app
-		loadSession(session)
-		
-		// Update session name
-		currentSessionName = session.name
-		currentSessionId = session.id
-		
-		print("✓ Loaded imported session: \(session.name)")
+		guard case .success = storage.saveSession(session) else {
+			persistenceError = "Couldn't save the imported beat. Your current work is still here. Try again."
+			return false
+		}
+		_ = refreshSavedSessions(failureMessage: "The imported beat was saved, but the saved-beat list couldn't be refreshed.")
+		guard case .success = storage.clearWorkingSession() else {
+			appendPersistenceWarning("The imported beat was saved, but the previous recovery copy couldn't be cleared. Your current beat is still open.")
+			return false
+		}
+		applySession(session)
+		persistenceSuccessFeedback()
+		return true
 	}
 	
 	// MARK: - Metronome
@@ -1223,4 +1316,3 @@ private final class DisplayLinkTarget {
 		callback()
 	}
 }
-

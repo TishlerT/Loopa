@@ -61,6 +61,17 @@ struct LooperView: View {
 					if let error = vm.audioError {
 						errorBanner(error)
 					}
+					if let error = vm.persistenceError, !vm.showingSaveSheet && !vm.showingLoadSheet {
+						HStack(alignment: .top) {
+							Text(error).font(.callout)
+								.accessibilityIdentifier("persistenceErrorBanner")
+							Spacer()
+							Button("Dismiss") { vm.persistenceError = nil }
+								.accessibilityIdentifier("dismissPersistenceErrorButton")
+						}
+						.padding(12)
+						.background(Color.orange.opacity(0.15))
+					}
 					
 					// Top controls
 					topBar(geo: geo)
@@ -155,6 +166,9 @@ struct LooperView: View {
 										vm.noteOff(note)
 									}
 								}
+								.accessibilityElement(children: .contain)
+								.accessibilityLabel("Instrument keyboard")
+								.accessibilityIdentifier("instrumentKeyboard")
 							}
 							
 							// Octave up button
@@ -220,31 +234,35 @@ struct LooperView: View {
 		.fullScreenCover(item: $vm.selectedTrackForFocus) { track in
 			TrackFocusViewWrapper(track: track, looperVM: vm)
 		}
-		.sheet(isPresented: $vm.showingSaveSheet) {
+		.sheet(isPresented: $vm.showingSaveSheet, onDismiss: {
+			shouldClearAfterSave = false
+		}) {
 			SaveSessionSheet(
 				sessionName: vm.currentSessionName.isEmpty ? "Session \(vm.savedSessions.count + 1)" : vm.currentSessionName,
+				errorMessage: vm.persistenceError,
 				onSave: { name in
-					vm.saveCurrentSession(name: name)
-					vm.showingSaveSheet = false
+					guard vm.saveCurrentSession(name: name) else { return }
 					// If triggered from New Session, clear after saving
 					if shouldClearAfterSave {
-						vm.clearAll()
-						vm.currentSessionName = ""
+						guard vm.clearAll() else { return }
 						shouldClearAfterSave = false
 					}
+					vm.showingSaveSheet = false
 				},
 				onCancel: {
 					vm.showingSaveSheet = false
 					shouldClearAfterSave = false
 				}
 			)
-			.presentationDetents([.height(200)])
+			.presentationDetents([.height(vm.persistenceError == nil ? 220 : 300)])
+			.presentationCompactAdaptation(.sheet)
+			.presentationDragIndicator(.visible)
 		}
 		.sheet(isPresented: $vm.showingLoadSheet) {
 			LoadSessionSheet(
 				sessions: vm.savedSessions,
 				onLoad: { session in
-					vm.loadSession(session)
+					guard vm.loadSession(session) else { return }
 					vm.showingLoadSheet = false
 				},
 				onDelete: { session in
@@ -254,6 +272,12 @@ struct LooperView: View {
 					vm.showingLoadSheet = false
 				}
 			)
+			.safeAreaInset(edge: .top) {
+				if let error = vm.persistenceError {
+					Text(error).font(.callout).padding(12)
+						.accessibilityIdentifier("sessionLoadError")
+				}
+			}
 			.presentationDetents([.medium, .large])
 		}
 		.alert("Microphone Access Required", isPresented: $vm.showMicPermissionAlert) {
@@ -281,7 +305,6 @@ struct LooperView: View {
 			}
 			Button("Don't Save", role: .destructive) {
 				vm.clearAll()
-				vm.currentSessionName = ""
 			}
 			Button("Cancel", role: .cancel) {}
 		} message: {
@@ -347,6 +370,7 @@ struct LooperView: View {
 					)
 				}
 				.accessibilityIdentifier("tracksButton")
+				.accessibilityValue("\(vm.tracks.count)")
 				.padding(.trailing, isIPad ? 8 : 0)
 				.offset(x: isIPad ? 0 : 4) // Only offset on iPhone for edge effect
 			}
@@ -495,8 +519,8 @@ struct LooperView: View {
 			Menu {
 				Button {
 					if vm.tracks.isEmpty {
-						// No tracks, just reset session name
-						vm.currentSessionName = ""
+						// A new empty project must also release the previous saved ID.
+						vm.clearAll()
 					} else {
 						// Show save confirmation
 						showNewSessionAlert = true
@@ -508,6 +532,8 @@ struct LooperView: View {
 				Divider()
 				
 				Button {
+					shouldClearAfterSave = false
+					vm.persistenceError = nil
 					vm.showingSaveSheet = true
 				} label: {
 					Label("Save Session", systemImage: "square.and.arrow.down")
@@ -567,6 +593,8 @@ struct LooperView: View {
 					}
 				}
 			}
+			.accessibilityLabel("Session menu")
+			.accessibilityIdentifier("sessionMenu")
 			.padding(topBarButtonPadV)
 			.background(Color(hex: "2A2A4A"))
 			.cornerRadius(isIPad ? 10 : 8)
@@ -736,6 +764,8 @@ struct LooperView: View {
 				.animation(.easeInOut(duration: 0.15), value: vm.countInBeat)
 			}
 			.accessibilityIdentifier("recordButton")
+			.accessibilityLabel(vm.isRecording || vm.isRecordingVocals ? "Stop recording" : "Record")
+			.accessibilityValue(vm.isCountingIn ? "Counting in" : (vm.isRecording || vm.isRecordingVocals ? "Recording" : "Ready"))
 			
 			// Play/Pause button
 			Button {
@@ -840,18 +870,29 @@ struct LooperView: View {
 
 struct SaveSessionSheet: View {
 	@State var sessionName: String
+	@FocusState private var isEditingName: Bool
+	var errorMessage: String? = nil
 	let onSave: (String) -> Void
 	let onCancel: () -> Void
 	
 	var body: some View {
 		NavigationView {
-			VStack(spacing: 20) {
-				TextField("Session Name", text: $sessionName)
-					.textFieldStyle(.roundedBorder)
-					.font(.system(size: 18))
-					.padding(.horizontal)
-				
-				Spacer()
+			ScrollView {
+				VStack(alignment: .leading, spacing: 12) {
+					TextField("Session Name", text: $sessionName)
+						.focused($isEditingName)
+						.onSubmit { isEditingName = false }
+						.accessibilityIdentifier("sessionNameField")
+						.textFieldStyle(.roundedBorder)
+						.font(.system(size: 18))
+					if let errorMessage {
+						Text(errorMessage)
+							.font(.callout)
+							.foregroundStyle(.orange)
+							.accessibilityIdentifier("sessionSaveError")
+					}
+				}
+				.padding(.horizontal)
 			}
 			.padding(.top, 20)
 			.navigationTitle("Save Session")
@@ -859,12 +900,15 @@ struct SaveSessionSheet: View {
 			.toolbar {
 				ToolbarItem(placement: .cancellationAction) {
 					Button("Cancel", action: onCancel)
+						.accessibilityIdentifier("cancelSaveSessionButton")
 				}
 				ToolbarItem(placement: .confirmationAction) {
 					Button("Save") {
+						isEditingName = false
 						onSave(sessionName)
 					}
-					.disabled(sessionName.isEmpty)
+						.disabled(sessionName.isEmpty)
+						.accessibilityIdentifier("saveSessionButton")
 				}
 			}
 		}
