@@ -689,9 +689,7 @@ final class LooperViewModel: ObservableObject {
 		if let lastTrack = tracks.last {
 			if lastTrack.isVocal {
 				vocalRecorder.removePlayer(for: lastTrack.id)
-				if let filename = lastTrack.audioFileName {
-					vocalRecorder.deleteAudioFile(filename)
-				}
+				// Keep the recording until cleanup can check references from saved sessions.
 			} else {
 				audio.removeSampler(for: lastTrack.id)
 			}
@@ -703,9 +701,7 @@ final class LooperViewModel: ObservableObject {
 	func deleteTrack(_ track: Track) {
 		if track.isVocal {
 			vocalRecorder.removePlayer(for: track.id)
-			if let filename = track.audioFileName {
-				vocalRecorder.deleteAudioFile(filename)
-			}
+			// Keep the recording until cleanup can check references from saved sessions.
 		} else {
 			audio.removeSampler(for: track.id)
 		}
