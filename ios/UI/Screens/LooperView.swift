@@ -255,6 +255,8 @@ struct LooperView: View {
 				}
 			)
 			.presentationDetents([.height(vm.persistenceError == nil ? 220 : 300)])
+			.presentationCompactAdaptation(.sheet)
+			.presentationDragIndicator(.visible)
 		}
 		.sheet(isPresented: $vm.showingLoadSheet) {
 			LoadSessionSheet(
@@ -868,6 +870,7 @@ struct LooperView: View {
 
 struct SaveSessionSheet: View {
 	@State var sessionName: String
+	@FocusState private var isEditingName: Bool
 	var errorMessage: String? = nil
 	let onSave: (String) -> Void
 	let onCancel: () -> Void
@@ -877,6 +880,8 @@ struct SaveSessionSheet: View {
 			ScrollView {
 				VStack(alignment: .leading, spacing: 12) {
 					TextField("Session Name", text: $sessionName)
+						.focused($isEditingName)
+						.onSubmit { isEditingName = false }
 						.accessibilityIdentifier("sessionNameField")
 						.textFieldStyle(.roundedBorder)
 						.font(.system(size: 18))
@@ -899,6 +904,7 @@ struct SaveSessionSheet: View {
 				}
 				ToolbarItem(placement: .confirmationAction) {
 					Button("Save") {
+						isEditingName = false
 						onSave(sessionName)
 					}
 						.disabled(sessionName.isEmpty)

@@ -67,6 +67,10 @@ final class SessionSaveFailureUITests: XCTestCase {
 
         let error = app.staticTexts["sessionSaveError"]
         XCTAssertTrue(error.waitForExistence(timeout: 5), "A failed save must keep its sheet and show a useful error")
+        let keyboardDismissed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"),
+                                                         object: app.keyboards.firstMatch)
+        XCTAssertEqual(XCTWaiter.wait(for: [keyboardDismissed], timeout: 5), .completed,
+                       "After Save, the keyboard must make room for the retained name and error")
         XCTAssertEqual(app.textFields["sessionNameField"].value as? String, "Safety Beat")
         XCTAssertTrue(app.buttons["saveSessionButton"].isEnabled)
 
@@ -112,7 +116,9 @@ final class SessionSaveFailureUITests: XCTestCase {
         XCTAssertTrue(save.waitForExistence(timeout: 5))
         save.tap()
         XCTAssertTrue(app.staticTexts["sessionSaveError"].waitForExistence(timeout: 5))
-        app.navigationBars["Save Session"].swipeDown()
+        let bar = app.navigationBars["Save Session"]
+        bar.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            .press(forDuration: 0.1, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98)))
         let dismissed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"),
                                                  object: app.textFields["sessionNameField"])
         XCTAssertEqual(XCTWaiter.wait(for: [dismissed], timeout: 5), .completed)
