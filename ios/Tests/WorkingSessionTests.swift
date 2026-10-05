@@ -1,13 +1,32 @@
 import XCTest
+import AVFoundation
+import Combine
 @testable import Loopa
 
 /// Tests for auto-save/auto-restore working session functionality
 final class WorkingSessionTests: XCTestCase {
+	private var originalWorkingSessionData: Data?
+	private var workingSessionURL: URL {
+		FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+			.appendingPathComponent("working_session.json")
+	}
 	
-	override func tearDown() {
-		// Clean up working session after each test
+	override func setUpWithError() throws {
+		try super.setUpWithError()
+		if FileManager.default.fileExists(atPath: workingSessionURL.path) {
+			originalWorkingSessionData = try Data(contentsOf: workingSessionURL)
+		}
+		// Tests use an empty working session and restore any pre-existing bytes.
 		SessionStorage.shared.clearWorkingSession()
-		super.tearDown()
+	}
+
+	override func tearDownWithError() throws {
+		if let originalWorkingSessionData {
+			try originalWorkingSessionData.write(to: workingSessionURL, options: .atomic)
+		} else {
+			SessionStorage.shared.clearWorkingSession()
+		}
+		try super.tearDownWithError()
 	}
 	
 	// MARK: - SessionStorage Tests
@@ -151,5 +170,102 @@ final class WorkingSessionTests: XCTestCase {
 		// Working session should be cleared
 		XCTAssertNil(SessionStorage.shared.loadWorkingSession())
 	}
-}
 
+	@MainActor
+	func testDeletingVocalPreservesAudioInSavedSession() async throws {
+		try await assertSavedVocalSurvivesRemoval(undo: false)
+	}
+
+	@MainActor
+	func testUndoingVocalPreservesAudioInSavedSession() async throws {
+		try await assertSavedVocalSurvivesRemoval(undo: true)
+	}
+
+	@MainActor
+	private func assertSavedVocalSurvivesRemoval(undo: Bool) async throws {
+		let fileManager = FileManager.default
+		let sessionsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+			.appendingPathComponent("sessions.json")
+		// Do not let saveSession replace an unreadable pre-existing registry.
+		if fileManager.fileExists(atPath: sessionsURL.path) {
+			_ = try JSONDecoder().decode([SavedSession].self, from: Data(contentsOf: sessionsURL))
+		}
+
+		let vm = LooperViewModel()
+		let filename = "working-session-test-\(UUID().uuidString).wav"
+		let audioURL = vm.vocalRecorder.getAudioURL(for: filename)
+		let vocal = Track(audioFileName: filename, recordedLengthBeats: 4)
+		let session = SavedSession(name: "Vocal fixture \(UUID().uuidString)",
+			bpm: 100, barCount: 1, tracks: [vocal])
+		var savedFixture = false
+		defer {
+			vm.stopPlayback()
+			vm.vocalRecorder.removePlayer(for: vocal.id)
+			// Remove only this test's uniquely identified session and audio file.
+			if savedFixture { SessionStorage.shared.deleteSession(session) }
+			try? fileManager.removeItem(at: audioURL)
+		}
+
+		try writeSyntheticVocal(to: audioURL)
+		let originalAudio = try Data(contentsOf: audioURL)
+		try assertDecodableVocal(at: audioURL)
+		vm.loadSession(session)
+		await waitForTracks(in: vm, ids: [vocal.id])
+		vm.saveCurrentSession(name: session.name)
+		savedFixture = true
+		XCTAssertNotNil(SessionStorage.shared.loadSessions().first { $0.id == session.id })
+
+		if undo {
+			vm.undoLastTrack()
+		} else {
+			vm.deleteTrack(vocal)
+		}
+		await waitForTracks(in: vm, ids: [])
+		XCTAssertTrue(vm.looper.tracks.isEmpty, "Removing the vocal must still remove the current track")
+
+		let saved = try XCTUnwrap(SessionStorage.shared.loadSessions().first { $0.id == session.id })
+		XCTAssertEqual(saved.tracks.map(\.id), [vocal.id], "Editing the current loop must not rewrite its saved version")
+		vm.loadSession(saved)
+		await waitForTracks(in: vm, ids: [vocal.id])
+		let restored = try XCTUnwrap(vm.tracks.first)
+		XCTAssertTrue(restored.isVocal)
+		let restoredURL = vm.vocalRecorder.getAudioURL(for: try XCTUnwrap(restored.audioFileName))
+		XCTAssertTrue(fileManager.fileExists(atPath: restoredURL.path), "The saved vocal must retain its media after track removal")
+		try assertDecodableVocal(at: restoredURL)
+		XCTAssertEqual(try Data(contentsOf: restoredURL), originalAudio, "The saved recording must remain unchanged")
+	}
+
+	@MainActor
+	private func waitForTracks(in vm: LooperViewModel, ids: [UUID]) async {
+		let updated = expectation(description: "Published tracks match \(ids)")
+		let subscription = vm.$tracks
+			.first { $0.map(\.id) == ids }
+			.sink { _ in updated.fulfill() }
+		await fulfillment(of: [updated], timeout: 3)
+		withExtendedLifetime(subscription) {}
+	}
+
+	private func writeSyntheticVocal(to url: URL) throws {
+		let format = try XCTUnwrap(AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1))
+		let buffer = try XCTUnwrap(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 4_410))
+		buffer.frameLength = 4_410
+		let channel = try XCTUnwrap(buffer.floatChannelData)[0]
+		for frame in 0..<Int(buffer.frameLength) {
+			channel[frame] = Float(0.2 * sin(2 * Double.pi * 440 * Double(frame) / format.sampleRate))
+		}
+		let file = try AVAudioFile(forWriting: url, settings: format.settings)
+		try file.write(from: buffer)
+	}
+
+	private func assertDecodableVocal(at url: URL) throws {
+		let file = try AVAudioFile(forReading: url)
+		XCTAssertEqual(file.length, 4_410)
+		XCTAssertEqual(file.processingFormat.sampleRate, 44_100)
+		let buffer = try XCTUnwrap(AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: 4_410))
+		try file.read(into: buffer)
+		XCTAssertEqual(buffer.frameLength, 4_410)
+		let channel = try XCTUnwrap(buffer.floatChannelData)[0]
+		let peak = (0..<Int(buffer.frameLength)).map { abs(channel[$0]) }.max() ?? 0
+		XCTAssertGreaterThan(peak, 0.19, "The decoded vocal must contain the fixture's audible signal")
+	}
+}
