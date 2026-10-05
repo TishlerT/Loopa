@@ -155,6 +155,9 @@ struct LooperView: View {
 										vm.noteOff(note)
 									}
 								}
+								.accessibilityElement(children: .contain)
+								.accessibilityLabel("Instrument keyboard")
+								.accessibilityIdentifier("instrumentKeyboard")
 							}
 							
 							// Octave up button
@@ -347,6 +350,7 @@ struct LooperView: View {
 					)
 				}
 				.accessibilityIdentifier("tracksButton")
+				.accessibilityValue("\(vm.tracks.count)")
 				.padding(.trailing, isIPad ? 8 : 0)
 				.offset(x: isIPad ? 0 : 4) // Only offset on iPhone for edge effect
 			}
@@ -567,6 +571,8 @@ struct LooperView: View {
 					}
 				}
 			}
+			.accessibilityLabel("Session menu")
+			.accessibilityIdentifier("sessionMenu")
 			.padding(topBarButtonPadV)
 			.background(Color(hex: "2A2A4A"))
 			.cornerRadius(isIPad ? 10 : 8)
@@ -736,6 +742,8 @@ struct LooperView: View {
 				.animation(.easeInOut(duration: 0.15), value: vm.countInBeat)
 			}
 			.accessibilityIdentifier("recordButton")
+			.accessibilityLabel(vm.isRecording || vm.isRecordingVocals ? "Stop recording" : "Record")
+			.accessibilityValue(vm.isCountingIn ? "Counting in" : (vm.isRecording || vm.isRecordingVocals ? "Recording" : "Ready"))
 			
 			// Play/Pause button
 			Button {
@@ -847,6 +855,7 @@ struct SaveSessionSheet: View {
 		NavigationView {
 			VStack(spacing: 20) {
 				TextField("Session Name", text: $sessionName)
+					.accessibilityIdentifier("sessionNameField")
 					.textFieldStyle(.roundedBorder)
 					.font(.system(size: 18))
 					.padding(.horizontal)
@@ -859,12 +868,14 @@ struct SaveSessionSheet: View {
 			.toolbar {
 				ToolbarItem(placement: .cancellationAction) {
 					Button("Cancel", action: onCancel)
+						.accessibilityIdentifier("cancelSaveSessionButton")
 				}
 				ToolbarItem(placement: .confirmationAction) {
 					Button("Save") {
 						onSave(sessionName)
 					}
-					.disabled(sessionName.isEmpty)
+						.disabled(sessionName.isEmpty)
+						.accessibilityIdentifier("saveSessionButton")
 				}
 			}
 		}
