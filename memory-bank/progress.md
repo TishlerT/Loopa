@@ -1,32 +1,33 @@
 # Progress
 
-Updated 2026-10-05. Entries below distinguish verified results from implementation and earlier migration claims.
+Updated 2026-10-05. Completed entries require exact source, independent review, executed tests, verified staging identity and post-integration checks.
 
-## Verified in current iOS staging
-- `2d849969`: strict test runner with unique result bundles, explicit test-count expectations and fail-closed result parsing; full 178-test suite and post-integration smoke passed.
-- `c4d8dfd5`: retain vocal media referenced by saved projects when removing live tracks; 180 app tests and 8 focused smoke tests passed. Tests decode actual recorded-file fixtures and check byte preservation.
-- `70855dfb`: explicit storage results, isolated fault injection and preservation of corrupt/unreadable session files; 193 app tests and 13 post-integration storage tests passed. Three intentional negative controls reproduced the previous destructive behavior.
-- `9abbf646`: failure-aware save/recovery and recoverable Save UI, including prior-project identity protection; 217 full iPhone tests, four iPad save journeys and 20 post-integration persistence tests passed. Save-error screenshots were inspected on both layouts.
-- Exact candidate review, artifact hashes, remote staging verification and post-integration smoke are required for each integration. Main remains unchanged by these improvements.
+## Verified staging milestones
 
-- `ca7229b9`: complete AAC writing and pure reversible musical edit values; 260 full tests, eight AAC writer tests and 43 post-integration checks passed. An independently measured actual decoded fixture retained duration, stereo content and the expected level ratio. This is not full audio-renderer parity or a user-facing assistant.
+- `2d849969`: strict runner and fail-closed result parsing; 178 baseline tests.
+- `c4d8dfd5`: preserve saved vocal media during live track deletion/undo; 180 full tests and eight focused checks.
+- `70855dfb`: explicit storage outcomes and corrupt/unreadable-file preservation; 193 full tests and 13 storage checks. Negative controls reproduced the old data-loss behavior.
+- `9abbf646`: recoverable Save UI, recovery/load/import/delete errors and new-project identity protection; 217 full iPhone tests, four iPad save journeys and 20 persistence checks.
+- `ca7229b9`: complete stereo AAC writing and pure reversible edits; 260 full tests, eight AAC checks and 43 post-integration checks. The original incomplete-writer candidate failed and was not integrated.
+- `6b42316b`: session revision ownership, strict edit guards and correct offline mute/solo/linear MIDI faders; 292 full tests and 268 post-integration unit checks.
+- `42a85cbc`: offline vocal inclusion, resampling, stereo content, period padding/trimming and mixed vocal/MIDI output; 303 full tests, 17 focused checks and 17 post-integration checks. Independent decoding verified synthetic vocal presence, near-half amplitude at half gain and silence at zero. This does not prove live/export parity or musical quality.
+- `f41b792e`: scoped assistant payload decoding, stale-safe model proposal/Keep/Undo lifecycle and captured vocal lengths with production permission cancellation; 381 full tests and 29 post-integration checks. The first candidate passed 368 tests but source review rejected a delayed-permission bug; that candidate was never integrated.
 
-## In progress / not integrated
-- Export mute/solo and linear fader behavior, session revision ownership, and numerical input hardening are isolated candidates requiring execution and review. The next renderer fixtures reproduce all six old mix defects, including a half fader retaining about 94.5% amplitude and a zero fader remaining audible.
-- The verified writer run retained the decoded WAV but its file-backed AAC attachment was absent from xcresult. A subsequent candidate captures AAC bytes eagerly; retention must be verified again.
-- Independent audits: export inclusion/solo/timing/gain, reversible edits, design direction, sound provenance.
+## Implemented separately, not complete product features
 
-## Required next evidence
-- Actual AAC decode validation, then vocal inclusion, mute/solo, musical timing and consistent relative levels in the full exporter.
-- Core journey covering record, layer, edit, audition, undo, save, relaunch and export with content assertions.
-- Shared reversible edit proposals with stale-response, cancellation, scope, retry and offline tests; text before a bounded voice experiment.
-- Current iPhone and iPad screenshots, coherent style guidance, useful sound palette with established provenance, and a final listening/usability comparison.
-- Physical-device audio QA and current distribution tooling before release; neither is certified by simulator success.
+- Original/Change preview rendering/player controls and shared export reservation are under verification. They require host transport cutover and visible UI integration.
+- Initial Mac ChatGPT sign-in grant component passed 70 offline synthetic tests and independent review. A reproduced browser-launch hang was repaired. Protected credential storage, refresh, bounded proposal streaming, local pairing and real-account testing remain separate work.
+- Design, musical command, export and sound provenance audits are retained. Suggestions are not proof of implementation or rights.
 
-## Known limitations and deferred work
-- Retained orphan vocal files need reference-aware cleanup. Already deleted historical recordings cannot be recovered by the retention fix.
-- Current exporter still omits vocals and lacks verified solo, gain and sample-accurate event parity; fixing encoding alone will not complete export correctness.
-- Existing screenshot tests may pass without capturing their intended screens outside Fastlane. Use actual retained xcresult/simulator images and inspect them.
-- Session JSON test injection does not isolate every audio component; use a disposable app container.
-- Android migration artifacts and historical passing JVM counts are retained, but do not establish a working Android exporter, device behavior or Play publication.
-- Prior Android screenshot gaps remain historical gaps, not completed QA.
+## Completion still required
+
+- A real text request through the user's own ChatGPT account produces a checked, audible proposal in the local app. No real authentication or model request has happened yet.
+- Original/Change comparison, Keep, discard, Undo and useful error/cancel/offline states in the user interface, without overlapping playback or unintended project changes.
+- Durable applied edits and honest failure handling through save, relaunch and export; one complete recorded/layered/edited project journey with content assertions.
+- Resolve MIDI timing/live gain and vocal looping differences before claiming faithful live/export parity.
+- Coherent styling, inspected iPhone/iPad layouts, sound licensing/provenance and user listening/usability review.
+- A separate public-release decision after local testing; no store submission or Android publication is established.
+
+## Known limitations
+
+Old orphan vocal files need reference-aware cleanup. Historical deleted recordings cannot be recovered by the retention fix. Proposal history is bounded and in memory. Physical audio latency, microphone routing and Bluetooth behavior are not certified by simulator tests. Newer upload tooling and the Apple agreement remain deferred. Never relabel synthetic audio as a human recording or automated checks as a listening judgment.

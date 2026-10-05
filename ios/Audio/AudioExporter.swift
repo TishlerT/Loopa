@@ -15,6 +15,37 @@ final class AudioExporter {
     @Published private(set) var isExporting: Bool = false
     
     private init() {}
+
+    // Set before Published notifications so synchronous observers cannot reserve twice.
+    @MainActor private var exportLease: UUID?
+
+    @MainActor private func reserveExport() -> UUID? {
+        guard exportLease == nil, !Task.isCancelled else { return nil }
+        let lease = UUID()
+        exportLease = lease
+        isExporting = true
+        progress = 0
+        return lease
+    }
+
+    @MainActor private func releaseExport(_ lease: UUID) {
+        guard exportLease == lease else { return }
+        isExporting = false
+        exportLease = nil
+    }
+
+    /// Shared admission path for every real render. Cancellation cannot release an
+    /// in-progress renderer early; its returned file still belongs to the caller.
+    func withExclusiveExport<Value>(_ operation: () async -> Value) async -> Value? {
+        guard !Task.isCancelled, let lease = await reserveExport() else { return nil }
+        if Task.isCancelled {
+            await releaseExport(lease)
+            return nil
+        }
+        let result = await operation()
+        await releaseExport(lease)
+        return result
+    }
     
     // MARK: - MIDI Event for Offline Rendering
     
@@ -50,6 +81,17 @@ final class AudioExporter {
         soundFontURL: URL,
         vocalsDirectory: URL? = nil
     ) async -> URL? {
+        await withExclusiveExport {
+            await self.renderToM4A(tracks: tracks, bpm: bpm, loopLengthBeats: loopLengthBeats,
+                                  sessionName: sessionName, soundFontURL: soundFontURL,
+                                  vocalsDirectory: vocalsDirectory)
+        } ?? nil
+    }
+
+    private func renderToM4A(
+        tracks: [Track], bpm: Double, loopLengthBeats: Double, sessionName: String,
+        soundFontURL: URL, vocalsDirectory: URL?
+    ) async -> URL? {
         // Bound frame conversions, output allocation (about 106 MB), and event work.
         guard !tracks.isEmpty, tracks.count <= 64,
               bpm.isFinite, bpm > 0, loopLengthBeats.isFinite, loopLengthBeats > 0 else {
@@ -79,17 +121,6 @@ final class AudioExporter {
         }
         let vocalTracks = selectedTracks.filter { $0.isVocal }
 
-        await MainActor.run {
-            isExporting = true
-            progress = 0
-        }
-        
-        defer {
-            Task { @MainActor in
-                isExporting = false
-            }
-        }
-        
         // Calculate duration
         print("🎵 Exporting \(tracks.count) tracks, \(loopLengthBeats) beats, \(duration)s duration")
         
@@ -237,7 +268,7 @@ final class AudioExporter {
                     
                     // Update progress
                     let newProgress = Double(currentFrame) / totalFramesDouble
-                    Task { @MainActor in
+                    await MainActor.run {
                         self.progress = newProgress
                     }
                     
