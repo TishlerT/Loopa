@@ -40,7 +40,9 @@ final class SessionSaveFailureUITests: XCTestCase {
     }
 
     private func menu(_ item: String) {
-        app.buttons["sessionMenu"].tap()
+        // SwiftUI Menu exposes a nested button whose outer AX element cannot
+        // scroll-to-visible. Use that visible element's live frame for the tap.
+        app.buttons["sessionMenu"].coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
         let button = app.buttons[item]
         XCTAssertTrue(button.waitForExistence(timeout: 5))
         button.tap()
@@ -98,5 +100,71 @@ final class SessionSaveFailureUITests: XCTestCase {
         app.buttons["cancelSaveSessionButton"].tap()
         wait(app.buttons["tracksButton"], value: "1")
         XCTAssertTrue(app.buttons["playPauseButton"].isEnabled)
+    }
+
+    func testSwipingAwaySaveBeforeNewDoesNotClearOnLaterOrdinarySave() {
+        recordBeat()
+        menu("New Session")
+        let confirmation = app.alerts["Save Session?"]
+        XCTAssertTrue(confirmation.waitForExistence(timeout: 5))
+        confirmation.buttons["Save"].tap()
+        let save = app.buttons["saveSessionButton"]
+        XCTAssertTrue(save.waitForExistence(timeout: 5))
+        save.tap()
+        XCTAssertTrue(app.staticTexts["sessionSaveError"].waitForExistence(timeout: 5))
+        app.navigationBars["Save Session"].swipeDown()
+        let dismissed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"),
+                                                 object: app.textFields["sessionNameField"])
+        XCTAssertEqual(XCTWaiter.wait(for: [dismissed], timeout: 5), .completed)
+        wait(app.buttons["tracksButton"], value: "1")
+
+        menu("Save Session")
+        XCTAssertTrue(save.waitForExistence(timeout: 5))
+        save.tap()
+        let saved = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"),
+                                             object: app.textFields["sessionNameField"])
+        XCTAssertEqual(XCTWaiter.wait(for: [saved], timeout: 5), .completed)
+        wait(app.buttons["tracksButton"], value: "1")
+        XCTAssertTrue(app.buttons["playPauseButton"].isEnabled)
+    }
+
+    func testNewAfterDeletingLastTrackDoesNotOverwriteEarlierSavedProject() {
+        recordBeat()
+        menu("Save Session")
+        nameSession("Original Beat")
+        app.buttons["saveSessionButton"].tap()
+        XCTAssertTrue(app.staticTexts["sessionSaveError"].waitForExistence(timeout: 5))
+        app.buttons["saveSessionButton"].tap()
+        let firstSaved = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"),
+                                                  object: app.textFields["sessionNameField"])
+        XCTAssertEqual(XCTWaiter.wait(for: [firstSaved], timeout: 5), .completed)
+
+        app.buttons["tracksButton"].tap()
+        let delete = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'deleteButton_'" )).firstMatch
+        XCTAssertTrue(delete.waitForExistence(timeout: 5))
+        delete.tap()
+        let confirmation = app.alerts["Delete Track?"]
+        XCTAssertTrue(confirmation.waitForExistence(timeout: 5))
+        confirmation.buttons["Delete"].tap()
+        app.buttons["Done"].tap()
+        wait(app.buttons["tracksButton"], value: "0")
+        menu("New Session")
+
+        recordBeat()
+        menu("Save Session")
+        nameSession("Second Beat")
+        app.buttons["saveSessionButton"].tap()
+        let secondSaved = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"),
+                                                   object: app.textFields["sessionNameField"])
+        XCTAssertEqual(XCTWaiter.wait(for: [secondSaved], timeout: 5), .completed)
+        menu("Load Session")
+        let original = app.buttons.containing(.staticText, identifier: "Original Beat")
+        let second = app.buttons.containing(.staticText, identifier: "Second Beat")
+        XCTAssertTrue(original.firstMatch.waitForExistence(timeout: 5), "Starting a new empty project must preserve the old saved project")
+        XCTAssertTrue(second.firstMatch.exists)
+        XCTAssertEqual(original.count, 1)
+        XCTAssertEqual(second.count, 1)
+        original.firstMatch.tap()
+        wait(app.buttons["tracksButton"], value: "1")
     }
 }
