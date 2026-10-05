@@ -6,19 +6,25 @@ final class SessionStorage {
 	
 	private let sessionsKey = "savedSessions"
 	private let fileManager = FileManager.default
+	private let directoryURL: URL
 	
 	private var sessionsURL: URL {
-		let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-		return documents.appendingPathComponent("sessions.json")
+		return directoryURL.appendingPathComponent("sessions.json")
 	}
 	
 	/// URL for the auto-saved working session (separate from named sessions)
 	private var workingSessionURL: URL {
-		let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-		return documents.appendingPathComponent("working_session.json")
+		return directoryURL.appendingPathComponent("working_session.json")
 	}
 	
-	private init() {}
+	private convenience init() {
+		self.init(directoryURL: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
+	}
+
+	/// Explicit directory injection keeps safety tests out of shared app Documents.
+	init(directoryURL: URL) {
+		self.directoryURL = directoryURL
+	}
 	
 	// MARK: - Public API
 	
@@ -127,4 +133,3 @@ final class SessionStorage {
 		}
 	}
 }
-
