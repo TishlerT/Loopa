@@ -310,6 +310,13 @@ final class AudioExporterMixTests: XCTestCase {
     private var ownedOutputs: [URL] = []
     private let rate = 44_100.0
     private let frames = 88_200 // Four beats at 120 BPM.
+    private var vocalsDirectory: URL!
+
+    override func setUpWithError() throws {
+        vocalsDirectory = FileManager.default.temporaryDirectory
+            .appendingPathComponent("VocalExportTests-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: vocalsDirectory, withIntermediateDirectories: false)
+    }
 
     override func tearDownWithError() throws {
         for output in ownedOutputs {
@@ -317,6 +324,7 @@ final class AudioExporterMixTests: XCTestCase {
             try FileManager.default.removeItem(at: output.deletingLastPathComponent())
         }
         ownedOutputs = []
+        try FileManager.default.removeItem(at: vocalsDirectory)
     }
 
     private func track(pitch: UInt8 = 69, volume: Float = 1,
@@ -327,12 +335,12 @@ final class AudioExporterMixTests: XCTestCase {
               isLooping: false)
     }
 
-    private func export(_ tracks: [Track], name: String) async throws -> URL? {
+    private func export(_ tracks: [Track], name: String, bpm: Double = 120, beats: Double = 4) async throws -> URL? {
         let soundFont = try XCTUnwrap(Bundle.main.url(forResource: "GM", withExtension: "sf2"),
                                      "The real bundled SoundFont is required; missing audio cannot pass.")
         let url = await AudioExporter.shared.exportToM4A(
-            tracks: tracks, bpm: 120, loopLengthBeats: 4,
-            sessionName: name, soundFontURL: soundFont)
+            tracks: tracks, bpm: bpm, loopLengthBeats: beats,
+            sessionName: name, soundFontURL: soundFont, vocalsDirectory: vocalsDirectory)
         if let url {
             ownedOutputs.append(url)
             let attachment = XCTAttachment(data: try Data(contentsOf: url), uniformTypeIdentifier: "public.mpeg-4-audio")
@@ -461,4 +469,177 @@ final class AudioExporterMixTests: XCTestCase {
         let url = try await export([track(), missing], name: "missing-selected-instrument")
         XCTAssertNil(url, "Do not report a partial mix after dropping a selected instrument")
     }
+
+    // All vocal media is synthetic, privately owned by this test, and never read from Documents.
+    private func vocalFixture(rate sourceRate: Double = 44_100, stereo: Bool = false,
+                              seconds: Double = 2, switchesAt: Double? = nil,
+                              aac: Bool = false) throws -> URL {
+        let format = try XCTUnwrap(AVAudioFormat(standardFormatWithSampleRate: sourceRate,
+                                               channels: stereo ? 2 : 1))
+        let buffer = try XCTUnwrap(AVAudioPCMBuffer(pcmFormat: format,
+                                                   frameCapacity: AVAudioFrameCount(sourceRate * seconds)))
+        buffer.frameLength = buffer.frameCapacity
+        let samples = try XCTUnwrap(buffer.floatChannelData)
+        for channel in 0..<Int(format.channelCount) {
+            for frame in 0..<Int(buffer.frameLength) {
+                let time = Double(frame) / sourceRate
+                let frequency = switchesAt.map { time >= $0 } == true ? 1997.0 : (channel == 0 ? 997.0 : 1597.0)
+                samples[channel][frame] = Float(0.16 * sin(2 * .pi * frequency * time))
+            }
+        }
+        let url = vocalsDirectory.appendingPathComponent(UUID().uuidString + (aac ? ".m4a" : ".wav"))
+        let settings: [String: Any] = aac ? [AVFormatIDKey: kAudioFormatMPEG4AAC,
+            AVSampleRateKey: sourceRate, AVNumberOfChannelsKey: format.channelCount,
+            AVEncoderBitRateKey: 96_000] : format.settings
+        try autoreleasepool {
+            let file = try AVAudioFile(forWriting: url, settings: settings,
+                                       commonFormat: .pcmFormatFloat32, interleaved: false)
+            try file.write(from: buffer)
+        }
+        return url
+    }
+
+    private func vocal(_ url: URL, volume: Float = 1, period: Double = 4,
+                       looping: Bool = false, muted: Bool = false, solo: Bool = false) -> Track {
+        Track(audioFileName: url.lastPathComponent, isMuted: muted, isSolo: solo,
+              volume: volume, recordedLengthBeats: period, isLooping: looping)
+    }
+
+    private func tone(_ samples: [Float], frequency: Double, start: Double = 0.15,
+                      end: Double = 0.85) -> Double {
+        let range = Int(start * rate)..<Int(end * rate)
+        var real = 0.0, imaginary = 0.0
+        for frame in range {
+            let phase = 2 * .pi * frequency * Double(frame) / rate
+            real += Double(samples[frame]) * cos(phase)
+            imaginary += Double(samples[frame]) * sin(phase)
+        }
+        return 2 * hypot(real, imaginary) / Double(range.count)
+    }
+
+    func testVocalOnlyMonoRecordingExportsAndPreservesSource() async throws {
+        let source = try vocalFixture(aac: true)
+        let original = try Data(contentsOf: source)
+        let output = try await render([vocal(source)], name: "vocal-only-mono")
+        for channel in output {
+            XCTAssertGreaterThan(tone(channel, frequency: 997), 0.10)
+            XCTAssertGreaterThan(tone(channel, frequency: 997, start: 1.15, end: 1.85), 0.10)
+        }
+        XCTAssertEqual(try Data(contentsOf: source), original)
+    }
+
+    func testStereo48kVocalRetainsBothChannelsAndPitch() async throws {
+        let source = try vocalFixture(rate: 48_000, stereo: true)
+        let output = try await render([vocal(source)], name: "vocal-stereo-48k")
+        XCTAssertGreaterThan(tone(output[0], frequency: 997), 0.10)
+        XCTAssertGreaterThan(tone(output[1], frequency: 1597), 0.10)
+        XCTAssertLessThan(tone(output[0], frequency: 1597), 0.008)
+        XCTAssertLessThan(tone(output[1], frequency: 997), 0.008)
+    }
+
+    func testVocalAndMIDIMixContainsBothWithMissingVocalNegativeControl() async throws {
+        let source = try vocalFixture()
+        let midi = try await render([track(volume: 0.3)], name: "vocal-omission-negative-control")
+        let mix = try await render([track(volume: 0.3), vocal(source)], name: "vocal-and-midi")
+        XCTAssertLessThan(tone(midi[0], frequency: 997), 0.008,
+                          "The off-harmonic vocal oracle must reject MIDI alone")
+        XCTAssertGreaterThan(tone(mix[0], frequency: 997), 0.10)
+        let backing = tone(midi[0], frequency: 440)
+        XCTAssertGreaterThan(backing, 0.0001)
+        XCTAssertEqual(tone(mix[0], frequency: 440) / backing, 1, accuracy: 0.15)
+    }
+
+    func testVocalZeroAndHalfGainAreLinearInDecodedAAC() async throws {
+        let source = try vocalFixture()
+        let reference = try await render([vocal(source)], name: "vocal-gain-reference")
+        let half = try await render([vocal(source, volume: 0.5)], name: "vocal-gain-half")
+        assertGain(half, relativeTo: reference, expected: 0.5)
+        let silent = try await render([vocal(source, volume: 0)], name: "vocal-gain-zero")
+        XCTAssertTrue(silent.allSatisfy { ($0.map { abs($0) }.max() ?? 1) < 0.000001 })
+    }
+
+    func testVocalSelectionSkipsMutedAndUnsoloedMissingSources() async throws {
+        let source = try vocalFixture()
+        let absent = vocalsDirectory.appendingPathComponent("absent.m4a")
+        let reference = try await render([vocal(source, solo: true)], name: "vocal-solo-reference")
+        let selected = try await render([vocal(source, solo: true), vocal(absent),
+                                        vocal(absent, muted: true, solo: true), track()], name: "vocal-solo-selected")
+        assertGain(selected, relativeTo: reference, expected: 1)
+        let muted = try await render([vocal(source), vocal(absent, muted: true)], name: "vocal-muted-missing")
+        assertGain(muted, relativeTo: reference, expected: 1)
+        let excluded = try await export([vocal(absent, muted: true, solo: true), track()], name: "vocal-muted-only-solo")
+        XCTAssertNil(excluded)
+    }
+
+    func testShortVocalPadsEachRecordedPeriodThenLoops() async throws {
+        let source = try vocalFixture(seconds: 0.4)
+        let output = try await render([vocal(source, period: 2, looping: true)], name: "vocal-short-padded-loop")
+        for channel in output {
+            XCTAssertGreaterThan(tone(channel, frequency: 997, start: 0.08, end: 0.32), 0.10)
+            XCTAssertGreaterThan(tone(channel, frequency: 997, start: 1.08, end: 1.32), 0.10)
+            XCTAssertLessThan(rms(channel[26_460..<39_690]), 0.00001)
+            XCTAssertLessThan(rms(channel[70_560..<83_790]), 0.00001)
+        }
+    }
+
+    func testOneShotVocalDoesNotRepeatAfterRecordedPeriod() async throws {
+        let source = try vocalFixture(seconds: 1)
+        let output = try await render([vocal(source, period: 2)], name: "vocal-one-shot")
+        XCTAssertGreaterThan(tone(output[0], frequency: 997), 0.10)
+        XCTAssertLessThan(rms(output[0][52_920..<83_790]), 0.00001)
+    }
+
+    func testLongVocalTrimsToRecordedPeriodBeforeRepeating() async throws {
+        let source = try vocalFixture(switchesAt: 1)
+        let output = try await render([vocal(source, period: 2, looping: true)], name: "vocal-long-trimmed-loop")
+        XCTAssertGreaterThan(tone(output[0], frequency: 997, start: 1.15, end: 1.85), 0.10)
+        XCTAssertLessThan(tone(output[0], frequency: 1997, start: 1.15, end: 1.85), 0.008)
+    }
+
+    func testMissingAndCorruptSelectedVocalsRejectWholeMix() async throws {
+        let corrupt = vocalsDirectory.appendingPathComponent("corrupt.m4a")
+        let bytes = Data("not an audio recording".utf8)
+        try bytes.write(to: corrupt)
+        let valid = try vocalFixture()
+        for source in [vocalsDirectory.appendingPathComponent("missing.m4a"), corrupt] {
+            let result = try await export([track(), vocal(valid), vocal(source)], name: "selected-broken-vocal")
+            XCTAssertNil(result, "A valid backing track cannot hide a lost recording")
+        }
+        XCTAssertEqual(try Data(contentsOf: corrupt), bytes)
+        var missingName = vocal(valid)
+        missingName.audioFileName = nil
+        let result = try await export([track(), missingName], name: "selected-vocal-without-name")
+        XCTAssertNil(result)
+    }
+
+    func testVocalPathTraversalAndSymlinkAreRejected() async throws {
+        let source = try vocalFixture()
+        let nested = vocalsDirectory.appendingPathComponent("nested", isDirectory: true)
+        try FileManager.default.createDirectory(at: nested, withIntermediateDirectories: false)
+        let link = vocalsDirectory.appendingPathComponent("linked.wav")
+        try FileManager.default.createSymbolicLink(at: link, withDestinationURL: source)
+        for name in ["../" + vocalsDirectory.lastPathComponent + "/" + source.lastPathComponent,
+                     "nested/../" + source.lastPathComponent, source.path, link.lastPathComponent] {
+            let result = try await export([track(), Track(audioFileName: name)], name: "invalid-vocal-path")
+            XCTAssertNil(result)
+        }
+        XCTAssertTrue(FileManager.default.fileExists(atPath: source.path))
+    }
+
+    func testInvalidExportAndVocalDurationsFailBeforeAllocation() async throws {
+        let source = try vocalFixture()
+        for beats in [Double.nan, Double.infinity, 0, -1, 1_000_000] {
+            let result = try await export([vocal(source)], name: "invalid-export-duration", beats: beats)
+            XCTAssertNil(result)
+        }
+        for bpm in [Double.nan, Double.infinity, 0, -1, 0.00001] {
+            let result = try await export([vocal(source)], name: "invalid-export-tempo", bpm: bpm)
+            XCTAssertNil(result)
+        }
+        for period in [Double.nan, Double.infinity, 0, -1, 1e-12] {
+            let result = try await export([vocal(source, period: period)], name: "invalid-vocal-period")
+            XCTAssertNil(result)
+        }
+    }
+
 }

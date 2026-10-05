@@ -40,19 +40,45 @@ final class AudioExporter {
     ///   - loopLengthBeats: Total loop length in beats
     ///   - sessionName: Name for the output file
     ///   - soundFontURL: URL to the SoundFont file
+    ///   - vocalsDirectory: Internal fixture seam; production defaults to Documents/Vocals.
     /// - Returns: URL to the exported M4A file, or nil if export failed
     func exportToM4A(
         tracks: [Track],
         bpm: Double,
         loopLengthBeats: Double,
         sessionName: String,
-        soundFontURL: URL
+        soundFontURL: URL,
+        vocalsDirectory: URL? = nil
     ) async -> URL? {
-        guard !tracks.isEmpty else {
+        // Bound frame conversions, output allocation (about 106 MB), and event work.
+        guard !tracks.isEmpty, tracks.count <= 64,
+              bpm.isFinite, bpm > 0, loopLengthBeats.isFinite, loopLengthBeats > 0 else {
             print("❌ No tracks to export")
             return nil
         }
         
+        let secondsPerBeat = 60.0 / bpm
+        let duration = loopLengthBeats * secondsPerBeat
+        let sampleRate = 44_100.0
+        guard duration.isFinite, duration >= 1 / sampleRate, duration <= 300 else { return nil }
+        let anyTrackSoloed = tracks.contains { $0.isSolo }
+        let selectedTracks = tracks.filter { $0.isAudible(anyTrackSoloed: anyTrackSoloed) }
+        var eventBudget = 0.0
+        for track in selectedTracks {
+            let period = track.recordedLengthBeats * secondsPerBeat
+            guard track.volume.isFinite, (0...1).contains(track.volume),
+                  period.isFinite, period >= 1 / sampleRate, period <= 600 else { return nil }
+            if !track.isVocal {
+                guard track.notes.count <= 10_000, track.notes.allSatisfy({
+                    $0.startBeat.isFinite && $0.startBeat >= 0 && $0.endBeat.isFinite &&
+                    $0.endBeat >= $0.startBeat && $0.pitch < 128 && $0.velocity < 128
+                }) else { return nil }
+                eventBudget += Double(track.notes.count) * 2 * (track.isLooping ? ceil(duration / period) : 1)
+                guard eventBudget <= 200_000 else { return nil }
+            }
+        }
+        let vocalTracks = selectedTracks.filter { $0.isVocal }
+
         await MainActor.run {
             isExporting = true
             progress = 0
@@ -65,13 +91,9 @@ final class AudioExporter {
         }
         
         // Calculate duration
-        let secondsPerBeat = 60.0 / bpm
-        let duration = loopLengthBeats * secondsPerBeat
-        
         print("🎵 Exporting \(tracks.count) tracks, \(loopLengthBeats) beats, \(duration)s duration")
         
         // Setup audio format
-        let sampleRate: Double = 44100
         let channels: AVAudioChannelCount = 2
         
         guard let format = AVAudioFormat(
@@ -89,9 +111,8 @@ final class AudioExporter {
         // Create samplers for each track
         var samplers: [AVAudioUnitSampler] = []
         var validTracks: [Track] = []
-        let anyTrackSoloed = tracks.contains { $0.isSolo }
         
-        for track in tracks where !track.isVocal && !track.notes.isEmpty && track.isAudible(anyTrackSoloed: anyTrackSoloed) {
+        for track in selectedTracks where !track.isVocal && !track.notes.isEmpty {
             let sampler = AVAudioUnitSampler()
             engine.attach(sampler)
             engine.connect(sampler, to: mainMixer, format: nil)
@@ -116,7 +137,7 @@ final class AudioExporter {
             }
         }
         
-        guard !samplers.isEmpty else {
+        guard !samplers.isEmpty || !vocalTracks.isEmpty else {
             print("❌ No valid tracks to export")
             return nil
         }
@@ -133,13 +154,16 @@ final class AudioExporter {
         print("📝 Scheduled \(midiEvents.count) MIDI events")
         
         // Prepare engine for manual rendering
+        defer { engine.stop() }
         do {
-            try engine.enableManualRenderingMode(
-                .offline,
-                format: format,
-                maximumFrameCount: 4096
-            )
-            try engine.start()
+            if !samplers.isEmpty {
+                try engine.enableManualRenderingMode(
+                    .offline,
+                    format: format,
+                    maximumFrameCount: 4096
+                )
+                try engine.start()
+            }
         } catch {
             print("❌ Failed to start offline engine: \(error)")
             return nil
@@ -159,12 +183,17 @@ final class AudioExporter {
             return nil
         }
         
+        guard let outputData = outputBuffer.floatChannelData else { return nil }
+        for channel in 0..<Int(channels) {
+            outputData[channel].initialize(repeating: 0, count: Int(totalFrames))
+        }
+
         // Render audio with inline MIDI event triggering
         var currentFrame: Int64 = 0
         let totalFramesDouble = Double(totalFrames)
         var eventIndex = 0
         
-        while currentFrame < Int64(totalFrames) {
+        while !samplers.isEmpty && currentFrame < Int64(totalFrames) {
             let framesToRender = min(bufferSize, AVAudioFrameCount(Int64(totalFrames) - currentFrame))
             let frameRangeEnd = currentFrame + Int64(framesToRender)
             
@@ -185,7 +214,7 @@ final class AudioExporter {
                 pcmFormat: format,
                 frameCapacity: framesToRender
             ) else {
-                break
+                return nil
             }
             
             do {
@@ -193,6 +222,8 @@ final class AudioExporter {
                 
                 switch status {
                 case .success:
+                    guard renderBuffer.frameLength == framesToRender,
+                          renderBuffer.floatChannelData != nil else { return nil }
                     // Copy rendered frames to output buffer
                     if let outputFloatData = outputBuffer.floatChannelData,
                        let renderFloatData = renderBuffer.floatChannelData {
@@ -210,13 +241,9 @@ final class AudioExporter {
                         self.progress = newProgress
                     }
                     
-                case .insufficientDataFromInputNode:
-                    // Continue rendering
-                    currentFrame += Int64(framesToRender)
-                    
-                case .cannotDoInCurrentContext:
-                    print("⚠️ Cannot render in current context")
-                    break
+                case .insufficientDataFromInputNode, .cannotDoInCurrentContext:
+                    // A partial or stalled render must never become a successful export.
+                    return nil
                     
                 case .error:
                     print("❌ Render error")
@@ -224,7 +251,7 @@ final class AudioExporter {
                     return nil
                     
                 @unknown default:
-                    break
+                    return nil
                 }
             } catch {
                 print("❌ Render failed: \(error)")
@@ -244,6 +271,13 @@ final class AudioExporter {
         engine.stop()
         
         do {
+            let sourceDirectory = vocalsDirectory ?? fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                .appendingPathComponent("Vocals", isDirectory: true)
+            var sourceSecondsRemaining = 600.0
+            for track in vocalTracks {
+                try mixVocal(track, from: sourceDirectory, into: outputBuffer,
+                             secondsPerBeat: secondsPerBeat, sourceSecondsRemaining: &sourceSecondsRemaining)
+            }
             let outputURL = try encodePCMToM4A(outputBuffer, sessionName: sessionName)
             print("✓ Exported audio to: \(outputURL.path)")
             
@@ -258,6 +292,130 @@ final class AudioExporter {
         }
     }
     
+    // MARK: - Recorded Audio
+
+    /// Read only one direct regular file under the owned media directory. No path components or
+    /// symlinks are accepted, including a symlink whose target happens to be inside the directory.
+    private func vocalURL(_ filename: String?, in directory: URL) throws -> URL {
+        guard directory.isFileURL, let filename, !filename.isEmpty,
+              filename != ".", filename != "..",
+              !filename.contains("/"), !filename.contains("\\"), !filename.contains("\0") else {
+            throw ExportError.invalidFormat
+        }
+        let root = directory.resolvingSymlinksInPath().standardizedFileURL
+        let url = root.appendingPathComponent(filename)
+        let values = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+        guard values.isRegularFile == true, values.isSymbolicLink != true,
+              url.resolvingSymlinksInPath().deletingLastPathComponent().standardizedFileURL == root else {
+            throw ExportError.invalidFormat
+        }
+        return url
+    }
+
+    /// Source duration does not define musical timing: trim a long source at recordedLengthBeats,
+    /// pad a short source with silence, then repeat that period only when isLooping is true.
+    /// AVAudioConverter performs sample-rate conversion; mono is duplicated at unity to L/R.
+    /// Decode the entire selected source even beyond the trim, so corrupt/nonfinite tails fail.
+    private func mixVocal(_ track: Track, from directory: URL, into output: AVAudioPCMBuffer,
+                          secondsPerBeat: Double, sourceSecondsRemaining: inout Double) throws {
+        let file = try AVAudioFile(forReading: vocalURL(track.audioFileName, in: directory),
+                                   commonFormat: .pcmFormatFloat32, interleaved: false)
+        let sourceFormat = file.processingFormat
+        let sourceRate = sourceFormat.sampleRate
+        guard sourceRate.isFinite, (8_000...192_000).contains(sourceRate),
+              (1...2).contains(sourceFormat.channelCount), file.length > 0 else {
+            throw ExportError.invalidFormat
+        }
+        let sourceSeconds = Double(file.length) / sourceRate
+        guard sourceSeconds.isFinite, sourceSeconds <= sourceSecondsRemaining else {
+            throw ExportError.invalidFormat
+        }
+        sourceSecondsRemaining -= sourceSeconds
+        let periodFrames = Int((track.recordedLengthBeats * secondsPerBeat * output.format.sampleRate).rounded(.down))
+        let retainedFrames = min(periodFrames, Int(output.frameLength))
+        guard let clip = AVAudioPCMBuffer(pcmFormat: output.format, frameCapacity: AVAudioFrameCount(retainedFrames)),
+              let clipData = clip.floatChannelData, let outputData = output.floatChannelData,
+              let input = AVAudioPCMBuffer(pcmFormat: sourceFormat, frameCapacity: 4096),
+              let converted = AVAudioPCMBuffer(pcmFormat: output.format, frameCapacity: 4096),
+              let converter = AVAudioConverter(from: sourceFormat, to: output.format) else {
+            throw ExportError.invalidFormat
+        }
+        converter.channelMap = sourceFormat.channelCount == 1 ? [0, 0] : [0, 1]
+        converter.primeMethod = .normal
+        clip.frameLength = clip.frameCapacity
+        for channel in 0..<2 { clipData[channel].initialize(repeating: 0, count: retainedFrames) }
+        let expectedFrames = Int((sourceSeconds * output.format.sampleRate).rounded(.down))
+        var decodedFrames = 0
+        var readFailure: Error?
+        var completed = false
+        // Two extra blocks accommodate the converter's terminal call and rounding, never retries.
+        let maximumCalls = (expectedFrames + 4095) / 4096 + 2
+        for _ in 0..<maximumCalls {
+            let before = file.framePosition
+            var conversionError: NSError?
+            converted.frameLength = 0
+            let status = converter.convert(to: converted, error: &conversionError) { requested, status in
+                guard readFailure == nil, file.framePosition < file.length else {
+                    status.pointee = .endOfStream
+                    return nil
+                }
+                do {
+                    let count = AVAudioFrameCount(min(Int64(min(requested, input.frameCapacity)),
+                                                     file.length - file.framePosition))
+                    let start = file.framePosition
+                    guard count > 0 else { throw ExportError.incompleteOutput }
+                    try file.read(into: input, frameCount: count)
+                    guard input.frameLength == count, file.framePosition == start + Int64(count),
+                          let data = input.floatChannelData else { throw ExportError.incompleteOutput }
+                    for channel in 0..<Int(sourceFormat.channelCount) {
+                        for frame in 0..<Int(count) where !data[channel][frame].isFinite {
+                            throw ExportError.invalidFormat
+                        }
+                    }
+                    status.pointee = .haveData
+                    return input
+                } catch {
+                    readFailure = error
+                    status.pointee = .endOfStream
+                    return nil
+                }
+            }
+            if let readFailure { throw readFailure }
+            if let conversionError { throw conversionError }
+            guard status != .error, let data = converted.floatChannelData,
+                  converted.frameLength <= converted.frameCapacity else { throw ExportError.incompleteOutput }
+            let count = Int(converted.frameLength)
+            guard decodedFrames + count <= expectedFrames + 4096 else { throw ExportError.incompleteOutput }
+            for channel in 0..<2 {
+                for frame in 0..<count {
+                    let sample = data[channel][frame]
+                    guard sample.isFinite else { throw ExportError.invalidFormat }
+                    if decodedFrames + frame < retainedFrames { clipData[channel][decodedFrames + frame] = sample }
+                }
+            }
+            decodedFrames += count
+            if status == .endOfStream {
+                completed = true
+                break
+            }
+            guard count > 0 || file.framePosition > before else { throw ExportError.incompleteOutput }
+        }
+        // PCM sample-rate conversion can round by one frame. Larger loss is not silent padding.
+        guard completed, file.framePosition == file.length,
+              decodedFrames >= max(1, expectedFrames - 1), decodedFrames <= expectedFrames + 1 else {
+            throw ExportError.incompleteOutput
+        }
+        // Sum at each track's linear fader; do not normalize the backing or change its gain.
+        // As with the existing MIDI mixer, excessive combined peaks can clip during AAC encoding.
+        for frame in 0..<Int(output.frameLength) {
+            if !track.isLooping && frame >= periodFrames { break }
+            let sourceFrame = track.isLooping ? frame % periodFrames : frame
+            for channel in 0..<2 {
+                outputData[channel][frame] += clipData[channel][sourceFrame] * track.volume
+            }
+        }
+    }
+
     // MARK: - MIDI Event Building
     
     /// Build a sorted list of all MIDI events with their sample positions
