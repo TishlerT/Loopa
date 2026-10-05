@@ -6,6 +6,133 @@ import Foundation
 /// ViewModel for the multi-track looper
 @MainActor
 final class LooperViewModel: ObservableObject {
+
+	/// UI owns the matching MusicPreview. Stop that preview BEFORE ending this token.
+	struct MusicPreviewAudioToken: Equatable {
+		fileprivate let id: UUID
+	}
+	enum MusicPreviewAudioError: Error, Equatable {
+		case busy, recording, couldNotPause
+	}
+	/// Observation follows the real hardware call, allowing offline callback-fencing tests.
+	enum CanonicalAudioAction: Equatable { case midi, beat, vocal, liveNote, editorNote }
+	private let canonicalAudioObserver: (CanonicalAudioAction) -> Void
+	private let canonicalAudioFence = CanonicalAudioFence()
+	private var previewAudioRequestID: UUID?
+	private var previewAudioReady = false
+	private var previewAudioStopping = false
+	private var previewAudioCancellationRequested = false
+	private var previewSavedMixerVolume: Float?
+
+	/// Includes acquisition while queued canonical callbacks are being drained.
+	var isMusicPreviewAudioOwned: Bool { previewAudioRequestID != nil }
+	var canonicalAudioControlsEnabled: Bool { !isMusicPreviewAudioOwned }
+
+	/// Pause without seeking, invalidate permission work, silence all canonical outputs,
+	/// then drain the main queue. No recording or count-in is interrupted to acquire audio.
+	/// The UI must stop preview/end this token before edits, project replacement, background
+	/// or interruption handling. This host does not own MusicPreview or its lifecycle.
+	func beginMusicPreviewAudio() async throws -> MusicPreviewAudioToken {
+		try Task.checkCancellation()
+		guard previewAudioRequestID == nil else { throw MusicPreviewAudioError.busy }
+		guard !looper.isRecording, !isRecordingVocals, !vocalRecorder.isRecording,
+			  !isCountingIn else { throw MusicPreviewAudioError.recording }
+		let token = MusicPreviewAudioToken(id: UUID())
+		previewAudioRequestID = token.id // Reserve before any synchronous publisher callback.
+		previewAudioReady = false
+		previewAudioStopping = true
+		previewAudioCancellationRequested = false
+		previewSavedMixerVolume = audio.engine.mainMixerNode.outputVolume
+		canonicalAudioFence.invalidate()
+		invalidatePendingVocalRecordingStart()
+		looper.pausePlayback()
+		// A synchronous looper publication can reject a reentrant pause.
+		guard previewAudioRequestID == token.id else { throw CancellationError() }
+		guard !looper.isPlaying else {
+			releaseMusicPreviewAudio(token)
+			throw MusicPreviewAudioError.couldNotPause
+		}
+		audio.engine.mainMixerNode.outputVolume = 0
+		audio.stopAllNotes()
+		audio.clickSampler.stopAll()
+		vocalRecorder.stopAll()
+		vocalRecorder.stopMonitoring()
+		audio.engine.pause()
+		stopDisplayLink()
+		isPlaying = false
+		isPaused = looper.isPaused
+		currentPosition = looper.synchronizedPlaybackPosition
+		objectWillChange.send()
+		// Publish the paused mirror before honoring synchronous cancellation. Otherwise
+		// fenced Combine updates could leave the controls displaying the old playing state.
+		previewAudioStopping = false
+		if previewAudioCancellationRequested {
+			releaseMusicPreviewAudio(token)
+			throw CancellationError()
+		}
+		guard previewAudioRequestID == token.id else { throw CancellationError() }
+		// MIDI callbacks enqueue under the looper lock; pause has already joined that lock.
+		// The epoch rejects work already enqueued before acquisition or release.
+		await withCheckedContinuation { continuation in
+			DispatchQueue.main.async { continuation.resume() }
+		}
+		guard previewAudioRequestID == token.id else { throw CancellationError() }
+		do { try Task.checkCancellation() } catch {
+			releaseMusicPreviewAudio(token)
+			throw error
+		}
+		previewAudioReady = true
+		guard musicPreviewAudioIsStopped(for: token) else {
+			releaseMusicPreviewAudio(token)
+			throw MusicPreviewAudioError.couldNotPause
+		}
+		objectWillChange.send()
+		do { try Task.checkCancellation() } catch {
+			releaseMusicPreviewAudio(token)
+			throw error
+		}
+		return token
+	}
+
+	/// Pass this live predicate to MusicPreview.canonicalPlaybackIsStopped.
+	func musicPreviewAudioIsStopped(for token: MusicPreviewAudioToken) -> Bool {
+		previewAudioRequestID == token.id && previewAudioReady && !looper.isPlaying &&
+			!looper.isRecording && !isRecordingVocals && !vocalRecorder.isRecording &&
+			!isCountingIn && !vocalRecorder.isMonitoring &&
+			audio.engine.mainMixerNode.outputVolume == 0
+	}
+
+	/// Only the pending acquisition is cancelled. A ready comparison needs stop + end.
+	func cancelMusicPreviewAudioPreparation() {
+		guard !previewAudioReady, let id = previewAudioRequestID else { return }
+		// Recorder/looper publishers can reenter during synchronous hardware shutdown.
+		// Keep controls reserved until those calls return; do not start new audio mid-stop.
+		if previewAudioStopping {
+			previewAudioCancellationRequested = true
+			return
+		}
+		releaseMusicPreviewAudio(MusicPreviewAudioToken(id: id))
+	}
+
+	/// Call after MusicPreview.stop(). Never automatically resumes canonical playback.
+	func endMusicPreviewAudio(_ token: MusicPreviewAudioToken) {
+		releaseMusicPreviewAudio(token)
+	}
+
+	private func releaseMusicPreviewAudio(_ token: MusicPreviewAudioToken) {
+		guard previewAudioRequestID == token.id else { return }
+		previewAudioRequestID = nil
+		previewAudioReady = false
+		previewAudioStopping = false
+		previewAudioCancellationRequested = false
+		canonicalAudioFence.invalidate()
+		// An AVAudioSession interruption may have restarted the muted engine meanwhile.
+		audio.engine.pause()
+		if let volume = previewSavedMixerVolume { audio.engine.mainMixerNode.outputVolume = volume }
+		previewSavedMixerVolume = nil
+		objectWillChange.send() // Publish only after the entire release is coherent.
+	}
+
 	
 	// MARK: - Published State
 	
@@ -205,7 +332,9 @@ final class LooperViewModel: ObservableObject {
 	// MARK: - Initialization
 	
 	init(storage: SessionStorage = .shared,
-		 persistenceSuccessFeedback: @escaping () -> Void = { HapticManager.shared.loopSet() }) {
+		 persistenceSuccessFeedback: @escaping () -> Void = { HapticManager.shared.loopSet() },
+		 canonicalAudioObserver: @escaping (CanonicalAudioAction) -> Void = { _ in }) {
+		self.canonicalAudioObserver = canonicalAudioObserver
 		self.persistenceSuccessFeedback = persistenceSuccessFeedback
 		var storageSetupError: String?
 		#if DEBUG
@@ -326,9 +455,11 @@ final class LooperViewModel: ObservableObject {
 			.assign(to: &$isRecording)
 		
 		looper.$isPlaying
+			.map { [canonicalAudioFence] in ($0, canonicalAudioFence.current) }
 			.receive(on: DispatchQueue.main)
-			.sink { [weak self] playing in
-				guard let self = self else { return }
+			.sink { [weak self] playing, generation in
+				guard let self, self.canonicalAudioFence.current == generation,
+					  !self.isMusicPreviewAudioOwned, playing == self.looper.isPlaying else { return }
 				self.isPlaying = playing
 				// Start/stop DisplayLink for synchronized UI updates
 				if playing {
@@ -363,16 +494,22 @@ final class LooperViewModel: ObservableObject {
 			.assign(to: &$recordingProgress)
 		
 		// Handle playback events (on main thread for safety)
-		looper.onPlayEvent = { [weak self] event, track in
+		looper.onPlayEvent = { [weak self, canonicalAudioFence] event, track in
+			let generation = canonicalAudioFence.current
 			DispatchQueue.main.async {
-				self?.handlePlaybackEvent(event, track: track)
+				guard let self, self.canonicalAudioFence.current == generation,
+					  !self.isMusicPreviewAudioOwned else { return }
+				self.handlePlaybackEvent(event, track: track)
 			}
 		}
 		
 		// Handle beats
-		looper.onBeat = { [weak self] beat, isDownbeat in
+		looper.onBeat = { [weak self, canonicalAudioFence] beat, isDownbeat in
+			let generation = canonicalAudioFence.current
 			DispatchQueue.main.async {
-				self?.handleBeat(beat, isDownbeat: isDownbeat)
+				guard let self, self.canonicalAudioFence.current == generation,
+					  !self.isMusicPreviewAudioOwned else { return }
+				self.handleBeat(beat, isDownbeat: isDownbeat)
 			}
 		}
 		
@@ -399,6 +536,7 @@ final class LooperViewModel: ObservableObject {
 			let soloActive = anyTrackSoloed
 			for track in tracks where track.isVocal && track.isAudible(anyTrackSoloed: soloActive) {
 				vocalRecorder.play(trackId: track.id, at: currentPosition)
+				canonicalAudioObserver(.vocal)
 			}
 		} else {
 			// Stop all vocal tracks
@@ -409,6 +547,7 @@ final class LooperViewModel: ObservableObject {
 	// MARK: - Instrument Selection
 	
 	func selectInstrument(_ instrument: Instrument) {
+		guard !isMusicPreviewAudioOwned else { return }
 		// Prevent changing instruments while recording to avoid mixing instruments on one track
 		guard !isRecording else { return }
 		invalidatePendingVocalRecordingStart()
@@ -425,6 +564,7 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func enableVocalMode() {
+		guard !isMusicPreviewAudioOwned else { return }
 		guard !isRecording && !isRecordingVocals else { return }
 		isVocalMode = true
 		HapticManager.shared.selectionChanged()
@@ -439,6 +579,8 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func startRecording() {
+		guard !isMusicPreviewAudioOwned else { return }
+		audio.ensureRunning()
 		invalidatePendingVocalRecordingStart()
 		looper.setBarCount(barCount)
 		looper.startRecording(instrument: currentInstrument)
@@ -446,6 +588,7 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func stopRecording() {
+		guard !isMusicPreviewAudioOwned else { return }
 		invalidatePendingVocalRecordingStart()
 		looper.stopRecording()
 		HapticManager.shared.loopSet()
@@ -457,6 +600,7 @@ final class LooperViewModel: ObservableObject {
 	/// - If recording: stop recording and pause playback
 	/// - If counting in: cancel the count-in
 	func toggleRecordingWithResume() {
+		guard !isMusicPreviewAudioOwned else { return }
 		invalidatePendingVocalRecordingStart()
 		if isRecording {
 			// Stop recording and pause playback
@@ -481,6 +625,8 @@ final class LooperViewModel: ObservableObject {
 	private var countInStartPosition: Double = 0
 	
 	private func startCountIn() {
+		guard !isMusicPreviewAudioOwned else { return }
+		audio.ensureRunning()
 		isCountingIn = true
 		countInBeat = countInBeats // Start at 4
 		
@@ -538,6 +684,7 @@ final class LooperViewModel: ObservableObject {
 	
 	/// Toggle vocal recording with smart resume behavior
 	func toggleVocalRecordingWithResume() {
+		guard !isMusicPreviewAudioOwned else { return }
 		if vocalRecordingRequestID != nil {
 			invalidatePendingVocalRecordingStart()
 			return
@@ -561,6 +708,8 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	private func startVocalCountIn() {
+		guard !isMusicPreviewAudioOwned else { return }
+		audio.ensureRunning()
 		isCountingIn = true
 		countInBeat = countInBeats
 		
@@ -619,6 +768,8 @@ final class LooperViewModel: ObservableObject {
 	/// Simple play/pause toggle - pauses preserving position, or resumes from where paused
 	/// If recording, also stops the recording
 	func togglePlayPause() {
+		guard !isMusicPreviewAudioOwned else { return }
+		audio.ensureRunning()
 		invalidatePendingVocalRecordingStart()
 		if isPlaying {
 			// If recording, stop recording first
@@ -652,6 +803,8 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func togglePlayback() {
+		guard !isMusicPreviewAudioOwned else { return }
+		audio.ensureRunning()
 		invalidatePendingVocalRecordingStart()
 		looper.togglePlayback()
 		isPaused = false
@@ -659,6 +812,7 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func pausePlayback() {
+		guard !isMusicPreviewAudioOwned else { return }
 		invalidatePendingVocalRecordingStart()
 		if isPlaying {
 			looper.pausePlayback()
@@ -670,6 +824,8 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func restartPlayback() {
+		guard !isMusicPreviewAudioOwned else { return }
+		audio.ensureRunning()
 		invalidatePendingVocalRecordingStart()
 		// Remember if we were paused
 		let wasPaused = isPaused
@@ -694,6 +850,7 @@ final class LooperViewModel: ObservableObject {
 	
 	/// Seek to a specific position in the loop (from tap gesture)
 	func seekToPosition(_ position: Double) {
+		guard !isMusicPreviewAudioOwned else { return }
 		// Ignore during recording or count-in
 		guard !isRecording && !isRecordingVocals && !isCountingIn else { return }
 		invalidatePendingVocalRecordingStart()
@@ -711,6 +868,8 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func resumePlayback() {
+		guard !isMusicPreviewAudioOwned else { return }
+		audio.ensureRunning()
 		invalidatePendingVocalRecordingStart()
 		// Resume from paused state
 		if isPaused {
@@ -721,6 +880,7 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func stopPlayback() {
+		guard !isMusicPreviewAudioOwned else { return }
 		invalidatePendingVocalRecordingStart()
 		looper.stopPlayback()
 		audio.stopAllNotes()
@@ -730,6 +890,7 @@ final class LooperViewModel: ObservableObject {
 	
 	@discardableResult
 	func clearAll() -> Bool {
+		guard !isMusicPreviewAudioOwned else { return false }
 		invalidatePendingVocalRecordingStart()
 		persistenceError = nil
 		guard case .success = storage.clearWorkingSession() else {
@@ -804,6 +965,7 @@ final class LooperViewModel: ObservableObject {
 	/// Call this after any mute/solo change during playback
 	/// Uses looper.tracks directly (not self.tracks) because self.tracks is updated async via Combine
 	private func updateVocalPlaybackStates() {
+		guard !isMusicPreviewAudioOwned else { return }
 		let soloActive = looper.anyTrackSoloed
 		for track in looper.tracks where track.isVocal {
 			if track.isAudible(anyTrackSoloed: soloActive) {
@@ -870,11 +1032,13 @@ final class LooperViewModel: ObservableObject {
 	private let vocalRecordingVolumeMultiplier: Float = 0.75
 	
 	func startVocalRecording() {
+		guard !isMusicPreviewAudioOwned else { return }
 		proceedWithVocalRecording()
 	}
 	
 	/// Called after user dismisses the headphone recommendation
 	func continueVocalRecordingAfterRecommendation() {
+		guard !isMusicPreviewAudioOwned else { return }
 		showHeadphoneRecommendation = false
 		// Now start the count-in (which leads to recording)
 		startVocalCountIn()
@@ -882,6 +1046,7 @@ final class LooperViewModel: ObservableObject {
 	
 	/// Proceeds with actual vocal recording (after recommendation or on subsequent recordings)
 	private func proceedWithVocalRecording() {
+		guard !isMusicPreviewAudioOwned else { return }
 		guard !isRecordingVocals, vocalRecordingRequestID == nil else { return }
 		// If permission already granted, start immediately (no async delay)
 		if vocalRecorder.hasPermission {
@@ -904,7 +1069,7 @@ final class LooperViewModel: ObservableObject {
 		requestPermission: @escaping () async -> Bool,
 		startRecording: @escaping () -> String?
 	) -> Task<Void, Never>? {
-		guard !isRecordingVocals, vocalRecordingRequestID == nil else { return nil }
+		guard !isMusicPreviewAudioOwned, !isRecordingVocals, vocalRecordingRequestID == nil else { return nil }
 		let requestID = UUID()
 		vocalRecordingRequestID = requestID
 		return Task { [weak self] in
@@ -922,7 +1087,8 @@ final class LooperViewModel: ObservableObject {
 	/// Capture the selected phrase when the recorder starts, not when the eventual stop arrives.
 	@discardableResult
 	func beginVocalRecording(startRecording: () -> String?) -> Bool {
-		guard !isRecordingVocals else { return false }
+		guard !isMusicPreviewAudioOwned, !isRecordingVocals else { return false }
+		audio.ensureRunning()
 		vocalRecordingSession = nil
 		let lengthBeats = Double(barCount.rawValue * 4)
 		let recordingBPM = bpm
@@ -1016,6 +1182,7 @@ final class LooperViewModel: ObservableObject {
 	}
 	
 	func toggleVocalRecording() {
+		guard !isMusicPreviewAudioOwned else { return }
 		if vocalRecordingRequestID != nil {
 			invalidatePendingVocalRecordingStart()
 			return
@@ -1124,6 +1291,7 @@ final class LooperViewModel: ObservableObject {
 	/// Restore the working session from last app use (if any)
 	@discardableResult
 	func restoreWorkingSession() -> Bool {
+		guard !isMusicPreviewAudioOwned else { return false }
 		invalidatePendingVocalRecordingStart()
 		persistenceError = nil
 		switch storage.readWorkingSessionResult() {
@@ -1173,6 +1341,7 @@ final class LooperViewModel: ObservableObject {
 	
 	@discardableResult
 	func loadSession(_ session: SavedSession) -> Bool {
+		guard !isMusicPreviewAudioOwned else { return false }
 		invalidatePendingVocalRecordingStart()
 		persistenceError = nil
 		guard case .success = storage.clearWorkingSession() else {
@@ -1242,6 +1411,7 @@ final class LooperViewModel: ObservableObject {
 	/// Load an imported session (from .loopa file)
 	@discardableResult
 	func loadImportedSession(_ session: SavedSession) -> Bool {
+		guard !isMusicPreviewAudioOwned else { return false }
 		invalidatePendingVocalRecordingStart()
 		persistenceError = nil
 		// Save the imported session first
@@ -1296,15 +1466,19 @@ final class LooperViewModel: ObservableObject {
 	// MARK: - Note Playing
 	
 	func noteOn(_ note: UInt8, velocity: UInt8) {
+		guard !isMusicPreviewAudioOwned else { return }
+		audio.ensureRunning()
 		let effectiveNote = currentInstrument.isDrumKit ? mapToDrum(note) : note
 		
 		audio.playNote(effectiveNote, velocity: velocity)
+		canonicalAudioObserver(.liveNote)
 		looper.addLiveEvent(note: effectiveNote, velocity: velocity, isNoteOn: true)
 		
 		HapticManager.shared.keyPressed(velocity: Double(velocity) / 127.0)
 	}
 	
 	func noteOff(_ note: UInt8) {
+		guard !isMusicPreviewAudioOwned else { return }
 		let effectiveNote = currentInstrument.isDrumKit ? mapToDrum(note) : note
 		
 		audio.stopNote(effectiveNote)
@@ -1323,20 +1497,27 @@ final class LooperViewModel: ObservableObject {
 	
 	/// Play a short preview of a note (for editor feedback when adding notes)
 	func previewNote(pitch: UInt8, velocity: UInt8, trackId: UUID, duration: TimeInterval = 0.15) {
+		guard !isMusicPreviewAudioOwned else { return }
+		audio.ensureRunning()
 		guard let track = track(withId: trackId),
 			  let instrument = Instrument(rawValue: track.instrumentName) else { return }
 		
 		audio.playTrackNote(pitch, velocity: velocity, trackId: trackId, instrument: instrument, volume: track.volume)
+		canonicalAudioObserver(.editorNote)
 		
-		// Auto-stop after short duration
+		// Auto-stop after short duration, fenced against later comparisons/playback.
+		let generation = canonicalAudioFence.current
 		DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
-			self?.audio.stopTrackNote(pitch, trackId: trackId, instrument: instrument)
+			guard let self, !self.isMusicPreviewAudioOwned,
+				  self.canonicalAudioFence.current == generation else { return }
+			self.audio.stopTrackNote(pitch, trackId: trackId, instrument: instrument)
 		}
 	}
 	
 	// MARK: - Playback Handling
 	
 	private func handlePlaybackEvent(_ event: MidiEvent, track: Track) {
+		guard !isMusicPreviewAudioOwned else { return }
 		guard let instrument = Instrument(rawValue: track.instrumentName) else { return }
 		
 		if event.isNoteOn {
@@ -1344,11 +1525,14 @@ final class LooperViewModel: ObservableObject {
 		} else {
 			audio.stopTrackNote(event.note, trackId: track.id, instrument: instrument)
 		}
+		canonicalAudioObserver(.midi)
 	}
 	
 	private func handleBeat(_ beat: Int, isDownbeat: Bool) {
+		guard !isMusicPreviewAudioOwned else { return }
 		if isMetronomeOn {
 			audio.clickBeat(isDownbeat: isDownbeat)
+			canonicalAudioObserver(.beat)
 		}
 		
 		if isDownbeat {
@@ -1395,5 +1579,20 @@ private final class DisplayLinkTarget {
 	
 	@objc func tick() {
 		callback()
+	}
+}
+
+/// A tiny cross-queue generation stamp: the looper invokes MIDI callbacks on its timer queue.
+/// Never hold this lock while calling looper/audio code (the looper has its own state lock).
+private final class CanonicalAudioFence: @unchecked Sendable {
+	private let lock = NSLock()
+	private var generation = UUID()
+	var current: UUID {
+		lock.lock(); defer { lock.unlock() }
+		return generation
+	}
+	func invalidate() {
+		lock.lock(); defer { lock.unlock() }
+		generation = UUID()
 	}
 }

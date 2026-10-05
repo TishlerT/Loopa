@@ -563,3 +563,464 @@ final class AudioFlowIntegrationTests: XCTestCase {
 		XCTAssertNoThrow(try engine.setRightDrums(), "Setting right drums should not crash")
 	}
 }
+
+// MARK: - Comparison Audio Ownership
+
+@MainActor
+final class MusicPreviewHostTests: XCTestCase {
+    private func makeViewModel(
+        observer: @escaping (LooperViewModel.CanonicalAudioAction) -> Void = { _ in }
+    ) throws -> LooperViewModel {
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent("MusicPreviewHost-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        let vm = LooperViewModel(storage: SessionStorage(directoryURL: directory),
+                                 persistenceSuccessFeedback: {}, canonicalAudioObserver: observer)
+        addTeardownBlock {
+            await MainActor.run {
+                vm.cancelMusicPreviewAudioPreparation()
+                vm.looper.stopPlayback()
+                vm.audio.stopAllNotes()
+                vm.audio.clickSampler.stopAll()
+                vm.vocalRecorder.stopAll()
+                vm.audio.engine.stop()
+            }
+            try FileManager.default.removeItem(at: directory)
+        }
+        return vm
+    }
+
+    private func drainMainQueue() async {
+        await withCheckedContinuation { continuation in
+            DispatchQueue.main.async { continuation.resume() }
+        }
+    }
+
+    private var midiTrack: Track {
+        Track(instrumentName: Instrument.piano.rawValue, instrumentProgram: 0,
+              isDrumKit: false, recordedLengthBeats: 16)
+    }
+    private var note: MidiEvent {
+        MidiEvent(time: 0, note: 60, velocity: 90, isNoteOn: true, isLeft: true)
+    }
+
+    func testBeginPausesRealTransportPreservesPositionAndProject() async throws {
+        let vm = try makeViewModel()
+        let track = midiTrack
+        vm.looper.loadTracks([track])
+        vm.looper.startPlayback()
+        vm.looper.seekTo(position: 1.25)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+        let before = try encoder.encode(vm.looper.tracks)
+        let token = try await vm.beginMusicPreviewAudio()
+        XCTAssertTrue(vm.musicPreviewAudioIsStopped(for: token))
+        XCTAssertFalse(vm.looper.isPlaying)
+        XCTAssertFalse(vm.isPlaying)
+        XCTAssertTrue(vm.isPaused)
+        XCTAssertEqual(vm.synchronizedPosition, 1.25, accuracy: 0.03)
+        XCTAssertEqual(vm.currentPosition, vm.synchronizedPosition, accuracy: 0.03)
+        XCTAssertEqual(try encoder.encode(vm.looper.tracks), before)
+        XCTAssertEqual(vm.audio.engine.mainMixerNode.outputVolume, 0)
+        XCTAssertFalse(vm.audio.engine.isRunning)
+        vm.endMusicPreviewAudio(token)
+    }
+
+    func testProductionMIDICallbackAndBeatReachHardwareBeforeOwnership() async throws {
+        var actions: [LooperViewModel.CanonicalAudioAction] = []
+        let vm = try makeViewModel { actions.append($0) }
+        vm.isMetronomeOn = true
+        // These are the exact closures installed by production setupBindings.
+        vm.looper.onPlayEvent?(note, midiTrack)
+        vm.looper.onBeat?(0, true)
+        await drainMainQueue()
+        XCTAssertEqual(actions, [.midi, .beat])
+    }
+
+    func testQueuedProductionMIDIAndBeatCannotCrossAcquisition() async throws {
+        var actions: [LooperViewModel.CanonicalAudioAction] = []
+        let vm = try makeViewModel { actions.append($0) }
+        vm.isMetronomeOn = true
+        vm.looper.onPlayEvent?(note, midiTrack)
+        vm.looper.onBeat?(0, true)
+        let token = try await vm.beginMusicPreviewAudio()
+        XCTAssertTrue(actions.isEmpty)
+        XCTAssertTrue(vm.musicPreviewAudioIsStopped(for: token))
+        vm.endMusicPreviewAudio(token)
+    }
+
+    func testCallbacksQueuedDuringOwnershipCannotCrossEnd() async throws {
+        var actions: [LooperViewModel.CanonicalAudioAction] = []
+        let vm = try makeViewModel { actions.append($0) }
+        vm.isMetronomeOn = true
+        let token = try await vm.beginMusicPreviewAudio()
+        vm.looper.onPlayEvent?(note, midiTrack)
+        vm.looper.onBeat?(0, true)
+        vm.endMusicPreviewAudio(token)
+        await drainMainQueue()
+        XCTAssertTrue(actions.isEmpty)
+        vm.looper.onPlayEvent?(note, midiTrack)
+        vm.looper.onBeat?(1, false)
+        await drainMainQueue()
+        XCTAssertEqual(actions, [.midi, .beat], "Fresh production callbacks remain usable after release")
+    }
+
+    func testBackgroundMIDICallbackIsFencedByAcquisition() async throws {
+        var actions: [LooperViewModel.CanonicalAudioAction] = []
+        let vm = try makeViewModel { actions.append($0) }
+        let callback = try XCTUnwrap(vm.looper.onPlayEvent)
+        let event = note
+        let track = midiTrack
+        // The background callback runs while main is synchronously occupied, exactly
+        // as a timer callback queued just before the user begins comparison would.
+        DispatchQueue.global().sync { callback(event, track) }
+        let token = try await vm.beginMusicPreviewAudio()
+        XCTAssertTrue(actions.isEmpty)
+        vm.endMusicPreviewAudio(token)
+    }
+
+    func testStalePublishedPlayingDoesNotRestartVocalAudio() async throws {
+        var actions: [LooperViewModel.CanonicalAudioAction] = []
+        let vm = try makeViewModel { actions.append($0) }
+        vm.looper.loadTracks([Track(audioFileName: "missing-host-fixture.m4a")])
+        await drainMainQueue()
+        vm.looper.startPlayback() // true is now queued by the actual Combine subscription.
+        let token = try await vm.beginMusicPreviewAudio()
+        XCTAssertFalse(actions.contains(.vocal))
+        XCTAssertFalse(vm.isPlaying)
+        vm.endMusicPreviewAudio(token)
+        await drainMainQueue()
+        XCTAssertFalse(actions.contains(.vocal))
+        XCTAssertFalse(vm.looper.isPlaying)
+    }
+
+    func testOrdinaryPlayingPublisherStillStartsVocalPathAfterRelease() async throws {
+        var actions: [LooperViewModel.CanonicalAudioAction] = []
+        let vm = try makeViewModel { actions.append($0) }
+        vm.looper.loadTracks([Track(audioFileName: "missing-host-fixture.m4a")])
+        await drainMainQueue()
+        let token = try await vm.beginMusicPreviewAudio()
+        vm.endMusicPreviewAudio(token)
+        vm.togglePlayPause()
+        await drainMainQueue()
+        XCTAssertTrue(vm.looper.isPlaying)
+        XCTAssertTrue(actions.contains(.vocal))
+    }
+
+    func testOwnedAudioBlocksTransportRecordingAndNoteEntryPoints() async throws {
+        var actions: [LooperViewModel.CanonicalAudioAction] = []
+        let vm = try makeViewModel { actions.append($0) }
+        let track = midiTrack
+        vm.looper.loadTracks([track])
+        await drainMainQueue()
+        let token = try await vm.beginMusicPreviewAudio()
+        vm.togglePlayPause(); vm.togglePlayback(); vm.resumePlayback(); vm.restartPlayback()
+        vm.startRecording(); vm.toggleRecordingWithResume(); vm.toggleVocalRecordingWithResume()
+        vm.startVocalRecording(); vm.continueVocalRecordingAfterRecommendation()
+        vm.toggleVocalRecording()
+        vm.noteOn(60, velocity: 100); vm.noteOff(60)
+        vm.previewNote(pitch: 60, velocity: 100, trackId: track.id)
+        var recorderStarts = 0
+        XCTAssertFalse(vm.beginVocalRecording { recorderStarts += 1; return "must-not-record.m4a" })
+        XCTAssertNil(vm.requestVocalRecordingPermission(requestPermission: { XCTFail("Must not request permission"); return true },
+                                                        startRecording: { recorderStarts += 1; return nil }))
+        await drainMainQueue()
+        XCTAssertEqual(recorderStarts, 0)
+        XCTAssertTrue(actions.isEmpty)
+        XCTAssertFalse(vm.looper.isPlaying)
+        XCTAssertFalse(vm.looper.isRecording)
+        XCTAssertFalse(vm.isCountingIn)
+        XCTAssertTrue(vm.musicPreviewAudioIsStopped(for: token))
+        vm.endMusicPreviewAudio(token)
+    }
+
+    func testOwnedTransportStopAndSeekCannotResetPreservedPosition() async throws {
+        let vm = try makeViewModel()
+        vm.looper.startPlayback()
+        vm.looper.seekTo(position: 1.5)
+        let token = try await vm.beginMusicPreviewAudio()
+        let position = vm.synchronizedPosition
+        vm.stopPlayback(); vm.pausePlayback(); vm.seekToPosition(0); vm.restartPlayback()
+        XCTAssertEqual(vm.synchronizedPosition, position, accuracy: 0.001)
+        XCTAssertTrue(vm.musicPreviewAudioIsStopped(for: token))
+        vm.endMusicPreviewAudio(token)
+        vm.resumePlayback()
+        XCTAssertTrue(vm.looper.isPlaying)
+        XCTAssertEqual(vm.synchronizedPosition, position, accuracy: 0.03)
+    }
+
+    func testEndRestoresVolumeAndControlsWithoutAutomaticResume() async throws {
+        var actions: [LooperViewModel.CanonicalAudioAction] = []
+        let vm = try makeViewModel { actions.append($0) }
+        vm.looper.loadTracks([midiTrack])
+        vm.audio.engine.mainMixerNode.outputVolume = 0.42
+        let token = try await vm.beginMusicPreviewAudio()
+        vm.endMusicPreviewAudio(token)
+        XCTAssertTrue(vm.canonicalAudioControlsEnabled)
+        XCTAssertFalse(vm.musicPreviewAudioIsStopped(for: token))
+        XCTAssertFalse(vm.looper.isPlaying)
+        XCTAssertFalse(vm.audio.engine.isRunning)
+        XCTAssertEqual(vm.audio.engine.mainMixerNode.outputVolume, 0.42, accuracy: 0.001)
+        vm.noteOn(60, velocity: 100)
+        XCTAssertEqual(actions, [.liveNote])
+        XCTAssertTrue(vm.audio.engine.isRunning, "Explicit normal actions must restart the paused engine")
+        vm.noteOff(60)
+        vm.togglePlayPause()
+        XCTAssertTrue(vm.looper.isPlaying)
+    }
+
+    func testDuplicateBeginAndOldEndCannotStealNewOwnership() async throws {
+        let vm = try makeViewModel()
+        let first = try await vm.beginMusicPreviewAudio()
+        do { _ = try await vm.beginMusicPreviewAudio(); XCTFail("Duplicate acquisition must fail") }
+        catch { XCTAssertEqual(error as? LooperViewModel.MusicPreviewAudioError, .busy) }
+        vm.cancelMusicPreviewAudioPreparation() // Ready ownership is unaffected.
+        XCTAssertTrue(vm.musicPreviewAudioIsStopped(for: first))
+        vm.endMusicPreviewAudio(first)
+        vm.endMusicPreviewAudio(first)
+        let second = try await vm.beginMusicPreviewAudio()
+        vm.endMusicPreviewAudio(first)
+        XCTAssertTrue(vm.musicPreviewAudioIsStopped(for: second))
+        vm.endMusicPreviewAudio(second)
+    }
+
+    func testMIDIRecordingRefusedWithoutStoppingOrSavingTake() async throws {
+        let vm = try makeViewModel()
+        vm.startRecording()
+        do { _ = try await vm.beginMusicPreviewAudio(); XCTFail("Active take must refuse comparison") }
+        catch { XCTAssertEqual(error as? LooperViewModel.MusicPreviewAudioError, .recording) }
+        XCTAssertTrue(vm.looper.isRecording)
+        XCTAssertTrue(vm.looper.isPlaying)
+        XCTAssertTrue(vm.canonicalAudioControlsEnabled)
+        XCTAssertTrue(vm.looper.tracks.isEmpty)
+        vm.stopRecording()
+    }
+
+    func testVocalRecordingRefusedAndTakeCanStillFinish() async throws {
+        let vm = try makeViewModel()
+        XCTAssertTrue(vm.beginVocalRecording { "kept-host-take.m4a" })
+        do { _ = try await vm.beginMusicPreviewAudio(); XCTFail("Active take must refuse comparison") }
+        catch { XCTAssertEqual(error as? LooperViewModel.MusicPreviewAudioError, .recording) }
+        XCTAssertTrue(vm.isRecordingVocals)
+        vm.finishVocalRecording { true }
+        XCTAssertEqual(vm.looper.tracks.first?.audioFileName, "kept-host-take.m4a")
+    }
+
+    func testCountInRefusedWithoutCancellingCountIn() async throws {
+        let vm = try makeViewModel()
+        vm.toggleRecordingWithResume()
+        XCTAssertTrue(vm.isCountingIn)
+        let beat = vm.countInBeat
+        do { _ = try await vm.beginMusicPreviewAudio(); XCTFail("Count-in must refuse comparison") }
+        catch { XCTAssertEqual(error as? LooperViewModel.MusicPreviewAudioError, .recording) }
+        XCTAssertTrue(vm.isCountingIn)
+        XCTAssertEqual(vm.countInBeat, beat)
+        XCTAssertTrue(vm.canonicalAudioControlsEnabled)
+        vm.toggleRecordingWithResume()
+    }
+
+    func testLatePermissionGrantCannotStartRecordingAfterComparisonEnds() async throws {
+        let vm = try makeViewModel()
+        let entered = expectation(description: "Permission requested")
+        var decision: CheckedContinuation<Bool, Never>?
+        var starts = 0
+        let permission = try XCTUnwrap(vm.requestVocalRecordingPermission(requestPermission: {
+            await withCheckedContinuation { decision = $0; entered.fulfill() }
+        }, startRecording: { starts += 1; return "must-not-record.m4a" }))
+        await fulfillment(of: [entered], timeout: 1)
+        let token = try await vm.beginMusicPreviewAudio()
+        vm.endMusicPreviewAudio(token)
+        decision?.resume(returning: true)
+        await permission.value
+        XCTAssertEqual(starts, 0)
+        XCTAssertFalse(vm.isRecordingVocals)
+        XCTAssertFalse(vm.looper.isPlaying)
+        XCTAssertFalse(vm.showMicPermissionAlert)
+    }
+
+    func testLatePermissionDenialCannotShowAlertDuringComparison() async throws {
+        let vm = try makeViewModel()
+        let entered = expectation(description: "Permission requested")
+        var decision: CheckedContinuation<Bool, Never>?
+        let permission = try XCTUnwrap(vm.requestVocalRecordingPermission(requestPermission: {
+            await withCheckedContinuation { decision = $0; entered.fulfill() }
+        }, startRecording: { XCTFail("Denied permission"); return nil }))
+        await fulfillment(of: [entered], timeout: 1)
+        let token = try await vm.beginMusicPreviewAudio()
+        decision?.resume(returning: false)
+        await permission.value
+        XCTAssertFalse(vm.showMicPermissionAlert)
+        XCTAssertTrue(vm.musicPreviewAudioIsStopped(for: token))
+        vm.endMusicPreviewAudio(token)
+    }
+
+    func testCancellationInsideLooperPauseKeepsControlsReservedUntilShutdownFinishes() async throws {
+        var actions: [LooperViewModel.CanonicalAudioAction] = []
+        let vm = try makeViewModel { actions.append($0) }
+        let initialVolume = vm.audio.engine.mainMixerNode.outputVolume
+        vm.looper.startPlayback()
+        await drainMainQueue()
+        XCTAssertTrue(vm.isPlaying)
+        var cancelled = false
+        let observation = vm.looper.$isPlaying.sink { playing in
+            guard !playing, vm.isMusicPreviewAudioOwned, !cancelled else { return }
+            cancelled = true
+            vm.cancelMusicPreviewAudioPreparation()
+            XCTAssertTrue(vm.isMusicPreviewAudioOwned, "A synchronous hardware stop must finish before release")
+            vm.noteOn(60, velocity: 90)
+            XCTAssertTrue(actions.isEmpty)
+        }
+        do { _ = try await vm.beginMusicPreviewAudio(); XCTFail("Cancelled cutover must fail") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        withExtendedLifetime(observation) {}
+        XCTAssertTrue(cancelled)
+        XCTAssertTrue(vm.canonicalAudioControlsEnabled)
+        XCTAssertFalse(vm.looper.isPlaying)
+        XCTAssertFalse(vm.isPlaying)
+        XCTAssertTrue(vm.isPaused)
+        XCTAssertFalse(vm.audio.engine.isRunning)
+        XCTAssertEqual(vm.audio.engine.mainMixerNode.outputVolume, initialVolume)
+        vm.noteOn(60, velocity: 90)
+        XCTAssertEqual(actions, [.liveNote])
+        vm.noteOff(60)
+    }
+
+    func testCancellationDuringPublishedReentryCannotResurrectOwnership() async throws {
+        let vm = try makeViewModel()
+        let initialVolume = vm.audio.engine.mainMixerNode.outputVolume
+        var cancelled = false
+        let observation = vm.objectWillChange.sink {
+            guard vm.isMusicPreviewAudioOwned, !cancelled else { return }
+            cancelled = true
+            vm.cancelMusicPreviewAudioPreparation()
+        }
+        do { _ = try await vm.beginMusicPreviewAudio(); XCTFail("Cancelled acquisition must fail") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        withExtendedLifetime(observation) {}
+        XCTAssertTrue(cancelled)
+        XCTAssertTrue(vm.canonicalAudioControlsEnabled)
+        XCTAssertFalse(vm.looper.isPlaying)
+        XCTAssertEqual(vm.audio.engine.mainMixerNode.outputVolume, initialVolume)
+    }
+
+    func testPublishedCancellationBlocksReentrantPlayUntilCutoverEnds() async throws {
+        let vm = try makeViewModel()
+        let initialVolume = vm.audio.engine.mainMixerNode.outputVolume
+        vm.looper.loadTracks([midiTrack])
+        var cancelled = false
+        let observation = vm.objectWillChange.sink {
+            guard vm.isMusicPreviewAudioOwned, !cancelled else { return }
+            cancelled = true
+            vm.cancelMusicPreviewAudioPreparation()
+            vm.togglePlayPause()
+        }
+        do { _ = try await vm.beginMusicPreviewAudio(); XCTFail("Cancelled acquisition must fail") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        await drainMainQueue()
+        withExtendedLifetime(observation) {}
+        XCTAssertTrue(vm.canonicalAudioControlsEnabled)
+        XCTAssertFalse(vm.looper.isPlaying)
+        XCTAssertFalse(vm.isPlaying)
+        XCTAssertFalse(vm.audio.engine.isRunning)
+        vm.togglePlayPause()
+        await drainMainQueue()
+        XCTAssertTrue(vm.looper.isPlaying)
+        XCTAssertTrue(vm.isPlaying)
+        XCTAssertTrue(vm.audio.engine.isRunning)
+        XCTAssertEqual(vm.audio.engine.mainMixerNode.outputVolume, initialVolume)
+    }
+
+    func testCancelledOldAcquisitionCannotReleaseReentrantNewAcquisition() async throws {
+        let vm = try makeViewModel()
+        var replacement: Task<LooperViewModel.MusicPreviewAudioToken, Error>?
+        var cancelled = false
+        let observation = vm.objectWillChange.sink {
+            guard vm.isMusicPreviewAudioOwned, !cancelled else { return }
+            cancelled = true
+            vm.cancelMusicPreviewAudioPreparation()
+            replacement = Task { try await vm.beginMusicPreviewAudio() }
+        }
+        do { _ = try await vm.beginMusicPreviewAudio(); XCTFail("Old acquisition must fail") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        let task = try XCTUnwrap(replacement)
+        let current = try await task.value
+        withExtendedLifetime(observation) {}
+        XCTAssertTrue(vm.musicPreviewAudioIsStopped(for: current))
+        vm.endMusicPreviewAudio(current)
+    }
+
+    func testTaskCancellationDuringAcquisitionReleasesOwnership() async throws {
+        let vm = try makeViewModel()
+        var task: Task<LooperViewModel.MusicPreviewAudioToken, Error>?
+        let observation = vm.objectWillChange.sink {
+            if vm.isMusicPreviewAudioOwned { task?.cancel() }
+        }
+        task = Task { try await vm.beginMusicPreviewAudio() }
+        do { _ = try await task!.value; XCTFail("Cancelled task must not return a ready token") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        withExtendedLifetime(observation) {}
+        XCTAssertTrue(vm.canonicalAudioControlsEnabled)
+        XCTAssertFalse(vm.looper.isPlaying)
+    }
+
+    func testAlreadyCancelledTaskDoesNotPauseCanonicalPlayback() async throws {
+        let vm = try makeViewModel()
+        vm.looper.startPlayback()
+        let task = Task { try await vm.beginMusicPreviewAudio() }
+        task.cancel()
+        do { _ = try await task.value; XCTFail("Pre-cancelled begin must fail") }
+        catch { XCTAssertTrue(error is CancellationError) }
+        XCTAssertTrue(vm.looper.isPlaying)
+        XCTAssertTrue(vm.canonicalAudioControlsEnabled)
+    }
+
+    func testReleasePublicationCanResumeWithoutOldEndMutingNewAudio() async throws {
+        var actions: [LooperViewModel.CanonicalAudioAction] = []
+        let vm = try makeViewModel { actions.append($0) }
+        let initialVolume = vm.audio.engine.mainMixerNode.outputVolume
+        let token = try await vm.beginMusicPreviewAudio()
+        var resumed = false
+        let observation = vm.objectWillChange.sink {
+            guard vm.canonicalAudioControlsEnabled, !resumed else { return }
+            resumed = true
+            vm.noteOn(60, velocity: 90)
+        }
+        vm.endMusicPreviewAudio(token)
+        vm.endMusicPreviewAudio(token)
+        withExtendedLifetime(observation) {}
+        XCTAssertTrue(resumed)
+        XCTAssertEqual(actions, [.liveNote])
+        XCTAssertTrue(vm.audio.engine.isRunning)
+        XCTAssertEqual(vm.audio.engine.mainMixerNode.outputVolume, initialVolume)
+        vm.noteOff(60)
+    }
+
+    func testSessionReplacementIsRejectedUntilPreviewOwnerEnds() async throws {
+        let vm = try makeViewModel()
+        let original = midiTrack
+        vm.looper.loadTracks([original])
+        let incoming = SavedSession(name: "Replacement", bpm: 120, barCount: 4, tracks: [])
+        let token = try await vm.beginMusicPreviewAudio()
+        XCTAssertFalse(vm.clearAll())
+        XCTAssertFalse(vm.loadSession(incoming))
+        XCTAssertFalse(vm.loadImportedSession(incoming))
+        XCTAssertFalse(vm.restoreWorkingSession())
+        XCTAssertEqual(vm.looper.tracks.map(\.id), [original.id])
+        XCTAssertTrue(vm.musicPreviewAudioIsStopped(for: token))
+        vm.endMusicPreviewAudio(token)
+        XCTAssertTrue(vm.loadSession(incoming))
+        XCTAssertTrue(vm.looper.tracks.isEmpty)
+    }
+
+    func testLivePredicateRejectsExternalTransportRestart() async throws {
+        let vm = try makeViewModel()
+        let token = try await vm.beginMusicPreviewAudio()
+        vm.looper.startPlayback() // Deliberate bypass: direct component access is not a host action.
+        XCTAssertFalse(vm.musicPreviewAudioIsStopped(for: token))
+        await drainMainQueue()
+        XCTAssertFalse(vm.isPlaying, "The queued publisher cannot restart vocal output while owned")
+        XCTAssertEqual(vm.audio.engine.mainMixerNode.outputVolume, 0)
+        vm.looper.pausePlayback()
+        vm.endMusicPreviewAudio(token)
+    }
+}
